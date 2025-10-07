@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  api-gateway:
+    build: .
+    container_name: api-gateway
+    ports:
+      - "8080:8080"   # puerto público → interno del contenedor
+    env_file:
+      - .env
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker

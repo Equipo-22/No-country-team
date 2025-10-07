@@ -7,13 +7,13 @@ export const RegisterMutationsService = () => {
     
     const QueryC = useQueryClient()
     
-    const GetCategoria = useQuery({
+  /*   const GetCategoria = useQuery({
         queryKey: ["data_register"],
         queryFn: postRegister,
     });
+     */
     
-    
-    const mutationPostCategoria = useMutation({
+    const mutationPostRegister = useMutation({
         mutationFn: (data: RegisterType) => {
             return postRegister(data)
         },
@@ -25,7 +25,7 @@ export const RegisterMutationsService = () => {
     })
 
     return {
-        mutationPostCategoria,
-        GetCategoria
+        mutationPostRegister,
+        /* GetCategoria */
     }
 }

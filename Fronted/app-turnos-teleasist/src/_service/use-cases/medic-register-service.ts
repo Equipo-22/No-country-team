@@ -14,7 +14,7 @@ import { apiRegister } from "../general-api";
 export const postRegister = async (data: RegisterType) => {
     try {
         const res = await apiRegister.post("/register", data)
-        console.log("Categoria creado")
+        console.log("Registro creado")
         return res.data
     } catch (error) {
         console.log(error)

@@ -8,15 +8,14 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button } from "@/components/ui/button"
 import {
   Form,
-  FormControl,
+ /*  FormControl, */
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+/*   FormMessage, */
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { formSchema } from "@/_schemas/register-schema"
-import { Label } from "@radix-ui/react-label"
 import { RegisterMutationsService } from "@/_service/use-mutation-services/register-mutation-services"
 import { useState } from "react"
 import { useRouter } from "next/navigation";
@@ -35,13 +34,13 @@ const router =  useRouter()
       confirmpassword: ""
     },
   })
-  const { mutationPostCategoria } = RegisterMutationsService()
+  const { mutationPostRegister} = RegisterMutationsService()
 
-  const [inputsViewpassword, setinputsViewpass] = useState(false)
-  const [inputsViewconfpassword, setinputsViewconfpass] = useState(false)
+  const [inputsViewpassword, setinputsViewpass] = useState(true)
+  const [inputsViewconfpassword, setinputsViewconfpass] = useState(true)
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    mutationPostCategoria.mutate(values)
+    mutationPostRegister.mutate(values)
     console.log(values)
   }
   return (
@@ -96,7 +95,7 @@ const router =  useRouter()
                   <FaEyeSlash onClick={() => setinputsViewconfpass(!inputsViewconfpassword)} className="absolute top-[31px] right-2" />
               }
               <Input className="placeholder:p-[1.5rem] p-[1rem] bg-[#F2F4F7] w-full" type={`${inputsViewconfpassword ? "password" : "text"}`} 
-              placeholder="confirmar contraseña" id="password"  {...field} />
+              placeholder="confirmar contraseña" id="confirmpassword"  {...field} />
             </FormItem>
           )}
         />

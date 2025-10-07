@@ -8,7 +8,8 @@ services:
       POSTGRES_DB: ${SPRING_DATASOURCE_DB}
     ports:
       - "5432:5432"
-
+    volumes:
+      - db_data:/var/lib/postgresql/data
   app:
     build: .
     container_name: spring-app
@@ -18,3 +19,6 @@ services:
       - .env
     ports:
       - "8081:8081"
+
+volumes:
+  db_data:

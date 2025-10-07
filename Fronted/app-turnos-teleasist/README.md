@@ -1,0 +1,25 @@
+# Proyecto citas teleasistencia
+
+
+## Estructura de carpetas y archivos:
+
+| Carpeta                      | Descripción                                                                                                                                                                               | Formato para nombrar archivo                 |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| `/app`                       | Contiene toda el código de la app para producción(casos de uso, UI, configuraciones, etc)                                                                                                 | N/A                                          |
+| `/config`                    | Contiene archivos de configuración global para nuestra app(configuraciones de **APIs**, adaptadores, helpers, etc)                                                                        | N/A                                          |
+| `/config/adapter`            | Contiene adaptadores que son piezas de código de librerías externas que adapta funcionalidades para que sean flexibles al cambio                                                          | `/nombre-contexto/nombre-modulo.adapter.ts`  |
+| `/config/helpers`            | Contiene funciones que realizan tareas comunes y que pueden ser reutilizadas(por ejemplo, formatear fechas, montos, calculos, etc)                                                        | `nombre-descriptivo.ts`                      |
+| `/core`                      | Contiene la lógica de negocio de nuestra app, como las entidades y casos de uso (esta lógica es independiente a cualquier framework frontend)                                             | N/A                                          |
+| `/core/entities`             | Contiene las _"entidades"_ de nuestra app (objeto que contiene la lógica de negocio o datos que usaremos)                                                                                 | `nombreentidad.entity.ts`                    |
+| `/core/use-cases`            | Contiene los _"casos de uso"_ de nuestra app(un caso de uso es una operación específica que un usuario puede realizar. Ejemplo: _"Iniciar sesión", "Registrarse", "Crear producto", etc_) | `/nombre-modulo/nombre-caso-uso.use-case.ts` |
+| `/infrastructure`            | Es responsable de implementar los detalles de cómo nuestra app interactúa con las **APIs**, etc.                                                                                          | N/A                                          |
+| `/infrastructure/interfaces` | Contiene las interfaces que definen cómo nuestra app interactúa con los sistemas externos (**APIs**, etc)                                                                                 | `nombre-descriptivo.response.ts`             |
+| `/infrastructure/mappers`    | Son piezas de código que convierten datos de un formato a otro.                                                                                                                           | `nombreentidad.mapper.ts`                    |
+| `/presentation`              | Contiene código relacionado con la interfaz de usuario de nuestra aplicación.                                                                                                             | N/A                                          |
+| `/presentation/components`   | Contiene los componentes de React que se utilizan en nuestra aplicación.                                                                                                                  | `nombre-descriptivo/NombreComponente.tsx`    |
+| `/presentation/hooks`        | Contiene los hooks personalizados de React que se utilizan en nuestra aplicación.                                                                                                         | `modulo/useNombreHook.tsx`                   |
+| `/presentation/layouts`      | Contiene componentes de diseño de páginas que encapsulan la estructura general de una página.                                                                                             | `NombreLayout.tsx`                           |
+| `/presentation/pages`        | Contiene los componentes de página(corresponden a una ruta o pantalla en nuestra app).                                                                                                    | `nombre-descriptivo/NombrePagina.tsx`        |
+| `/presentation/store`        | Contiene el código relacionado con la gestión del estado de nuestra app(usando Zustand).                                                                                                  | `nombre-descriptivo-store.ts`                |
+
+---

@@ -19,6 +19,7 @@ import { formSchema } from "@/_schemas/login-schema"
 import { LoginMutationsService } from "@/_service/use-mutation-services/login-mutation-services"
 import { useState } from "react"
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 
 export default function LoginForm() {
@@ -43,7 +44,6 @@ export default function LoginForm() {
   return (
     <Form {...form} >
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-[300px] flex flex-col gap-[1rem] p-[1rem]">
-
         <FormField
           control={form.control}
           name="email"
@@ -54,7 +54,8 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-        <FormField
+        <div>
+          <FormField
           control={form.control}
           name="password"
           render={({ field }) => (
@@ -70,6 +71,8 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
+        <Link href={'/'}><p className="text-sm text-right">¿Olvidaste tu contraseña?</p></Link>
+        </div>
         <Button type="submit" className="bg-[#6C757D] p-[2rem] cursor-pointer">Iniciar sesión</Button>
         <Button onClick={() => router.push("/register")} className="border-[1px] border-black cursor-pointer" variant={"ghost"}>Registrarse</Button>
       </form>

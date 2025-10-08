@@ -27,6 +27,12 @@ public class AuthController {
         registrationService.register(registerUserRequestDTO);
     }
 
+    @GetMapping("/test")
+    @ResponseStatus(HttpStatus.OK)
+    public String test(){
+        return "test funciono!";
+    }
+
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public LoginUserResponseDTO login(@RequestBody LoginUserRequestDTO loginUserRequestDTO) throws MessagingException {

@@ -1,11 +1,24 @@
-# docker-compose.yml
 version: "3.8"
 services:
   db:
-    image: postgres
+    image: postgres:latest
     environment:
       POSTGRES_USER: ${SPRING_DATASOURCE_USERNAME}
       POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       POSTGRES_DB: ${SPRING_DATASOURCE_DB}
     ports:
       - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  app:
+    build: .
+    container_name: spring-app
+    depends_on:
+      - db
+    env_file:
+      - .env
+    ports:
+      - "8081:8081"
+
+volumes:
+  db_data:

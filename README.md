@@ -62,15 +62,17 @@ Nice-to-have
 
 
 
-📅 Roadmap (Sprints)
+📅 Roadmap (Épicas)
 
-        Sprint 1: Autenticación y base del sistema.
+        Épica 1: Autenticación y base del sistema
 
-        Sprint 2: Gestión de citas y calendario.
+        Épica 2: Gestión de citas y calendario
 
-        Sprint 3: Teleconsulta y conexión EHR.
+        Épica 3: Portal de teleconsultas y comunicación
+        
+        Épica 4: Interoperabilidad y conexión (EHR)
 
-        Sprint 4: Notificaciones, facturación y analítica.
+        Épica 5: Notificaciones, facturación y analítica
 
 
 

@@ -1,8 +1,8 @@
 package com.example.auth_service.Services;
 
 import com.example.auth_service.Exceptions.Customs.*;
-import com.example.auth_service.Models.Dtos.RegisterUserDTO;
-import com.example.auth_service.Models.Dtos.VerifyUserDTO;
+import com.example.auth_service.Models.Dtos.RegisterUserRequestDTO;
+import com.example.auth_service.Models.Dtos.VerifyUserRequestDTO;
 import com.example.auth_service.Models.Entities.ERole;
 import com.example.auth_service.Models.Entities.Role;
 import com.example.auth_service.Models.Entities.User;
@@ -28,18 +28,18 @@ public class RegistrationService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public void register(RegisterUserDTO registerUserDTO) throws MessagingException {
+    public void register(RegisterUserRequestDTO registerUserRequestDTO) throws MessagingException {
 
-        if(userRepository.existsByUsername(registerUserDTO.getUsername())){
-            throw new UserAlreadyExistsException(registerUserDTO.getUsername());
+        if(userRepository.existsByUsername(registerUserRequestDTO.getUsername())){
+            throw new UserAlreadyExistsException(registerUserRequestDTO.getUsername());
         }
-        if(userRepository.existsByEmail(registerUserDTO.getEmail())){
-            throw new UserAlreadyExistsException(registerUserDTO.getEmail());
+        if(userRepository.existsByEmail(registerUserRequestDTO.getEmail())){
+            throw new UserAlreadyExistsException(registerUserRequestDTO.getEmail());
         }
         User user=User.builder()
-                .username(registerUserDTO.getUsername())
-                .email(registerUserDTO.getEmail())
-                .password(passwordEncoder.encode(registerUserDTO.getPassword()))
+                .username(registerUserRequestDTO.getUsername())
+                .email(registerUserRequestDTO.getEmail())
+                .password(passwordEncoder.encode(registerUserRequestDTO.getPassword()))
                 .verificationCode(generarVerificacionCode())
                 .verificationCodeExpiresAt(LocalDateTime.now().plusMinutes(15))
                 .enabled(false)//para activacion por mail.
@@ -61,7 +61,7 @@ public class RegistrationService {
     }
 
     //verifica si el codigo de verificacion es el correcto
-    public void verifyUser(VerifyUserDTO input) {
+    public void verifyUser(VerifyUserRequestDTO input) {
         Optional<User> optionalUser = userRepository.findByEmail(input.getEmail());
 
         if (optionalUser.isPresent()) {
@@ -88,10 +88,8 @@ public class RegistrationService {
 
     //reenvia el codigo de verificacion
     public void reenviarCodigoVerificacion(String email) throws MessagingException {
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(()->new UserNotFoundException(email));
 
             if (user.isEnabled()) {
                 throw new AccountAlreadyVerifiedException(email);
@@ -101,13 +99,10 @@ public class RegistrationService {
             enviarVerificacionEmail(user);
 
             userRepository.save(user);
-        } else {
-            throw new UserNotFoundException(email);
-        }
     }
 
     //envia el codigo de verificacion
-    private void enviarVerificacionEmail(User user) throws MessagingException {
+    public void enviarVerificacionEmail(User user) throws MessagingException {
         String subject = "Verificacion de cuenta";
         String htmlMessage = "<html>"
                 + "<body style=\"font-family: Arial, sans-serif;\">"
@@ -125,7 +120,7 @@ public class RegistrationService {
         emailService.enviarNotificacionMail(user.getEmail(), subject, htmlMessage);
     }
     //genera el codigo de verificacion
-    private String generarVerificacionCode() {
+    public String generarVerificacionCode() {
         Random random = new Random();
         int code = random.nextInt(900000) + 100000;
         return String.valueOf(code);

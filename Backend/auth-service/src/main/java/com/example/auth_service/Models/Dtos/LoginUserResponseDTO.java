@@ -9,11 +9,13 @@ import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class LoginResponse {
-    private String token;
-    private String username;
+public class LoginUserResponseDTO {
+    private String message;
     private String email;
-    private List<String> roles;
+
+    public LoginUserResponseDTO(String email) {
+        this.message="Codigo de verificacion enviado al email";
+        this.email = email;
+    }
 }

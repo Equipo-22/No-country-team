@@ -23,20 +23,32 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public void register(@RequestBody RegisterUserDTO registerUserDTO) throws MessagingException {
-        registrationService.register(registerUserDTO);
+    public void register(@RequestBody RegisterUserRequestDTO registerUserRequestDTO) throws MessagingException {
+        registrationService.register(registerUserRequestDTO);
+    }
+
+    @GetMapping("/test")
+    @ResponseStatus(HttpStatus.OK)
+    public String test(){
+        return "test funciono!";
     }
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public LoginResponse login(@RequestBody LoginUserDTO loginUserDTO){
-        return authService.login(loginUserDTO);
+    public LoginUserResponseDTO login(@RequestBody LoginUserRequestDTO loginUserRequestDTO) throws MessagingException {
+        return authService.login(loginUserRequestDTO);
     }
 
-    @PostMapping("/verify")
+    @PostMapping("/login/verify-user")
     @ResponseStatus(HttpStatus.OK)
-    public void verifyUser(@RequestBody VerifyUserDTO verifyUserDTO){
-        registrationService.verifyUser(verifyUserDTO);
+    public VerifyUserResponseDTO verifyUserLogin (@RequestBody VerifyUserRequestDTO verifyUserRequestDTO){
+        return authService.verifyUser(verifyUserRequestDTO);
+    }
+
+    @PostMapping("/register/verify-user")
+    @ResponseStatus(HttpStatus.OK)
+    public void verifyUserRegister(@RequestBody VerifyUserRequestDTO verifyUserRequestDTO){
+        registrationService.verifyUser(verifyUserRequestDTO);
     }
 
     @PostMapping("/resend")
@@ -48,7 +60,7 @@ public class AuthController {
     @PostMapping("/change-password")
     @SecurityRequirement(name = "bearerAuth")
     @ResponseStatus(HttpStatus.OK)
-    public void changePassword(@RequestBody ChangePasswordDTO dto, Principal principal){
+    public void changePassword(@RequestBody ChangePasswordRequestDTO dto, Principal principal){
         passwordService.cambiarPassword(principal.getName(),dto);
     }
 
@@ -60,7 +72,7 @@ public class AuthController {
 
     @PostMapping("/reset-password")
     @ResponseStatus(HttpStatus.OK)
-    public void resetPassword(@RequestBody ResetPasswordDTO dto){
+    public void resetPassword(@RequestBody ResetPasswordRequestDTO dto){
         passwordService.resetPassword(dto);
     }
 }

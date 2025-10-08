@@ -4,8 +4,8 @@ import com.example.auth_service.Exceptions.Customs.IncorrectPasswordException;
 import com.example.auth_service.Exceptions.Customs.InvalidVerificationCodeException;
 import com.example.auth_service.Exceptions.Customs.UserNotFoundException;
 import com.example.auth_service.Exceptions.Customs.VerificationCodeExpiredException;
-import com.example.auth_service.Models.Dtos.ChangePasswordDTO;
-import com.example.auth_service.Models.Dtos.ResetPasswordDTO;
+import com.example.auth_service.Models.Dtos.ChangePasswordRequestDTO;
+import com.example.auth_service.Models.Dtos.ResetPasswordRequestDTO;
 import com.example.auth_service.Models.Entities.User;
 import com.example.auth_service.Repositories.UserRepository;
 import jakarta.mail.MessagingException;
@@ -30,14 +30,14 @@ public class PasswordService {
     private String resetPasswordBaseUrl;
 
     //cambio de password (cuando el user esta logueado)
-    public void cambiarPassword(String email , ChangePasswordDTO changePasswordDTO){
+    public void cambiarPassword(String email , ChangePasswordRequestDTO changePasswordRequestDTO){
         User user=userRepository.findByEmail(email)
                 .orElseThrow(()->new UserNotFoundException(email));
 
-        if(!passwordEncoder.matches(changePasswordDTO.getPasswordActual(), user.getPassword())){
+        if(!passwordEncoder.matches(changePasswordRequestDTO.getPasswordActual(), user.getPassword())){
             throw new IncorrectPasswordException();
         }
-        user.setPassword(passwordEncoder.encode(changePasswordDTO.getNuevaPassword()));
+        user.setPassword(passwordEncoder.encode(changePasswordRequestDTO.getNuevaPassword()));
         userRepository.save(user);
     }
 
@@ -60,7 +60,7 @@ public class PasswordService {
     }
 
     //verifica el token y cambia el password
-    public void resetPassword(ResetPasswordDTO dto){
+    public void resetPassword(ResetPasswordRequestDTO dto){
         User user=userRepository.findByVerificationCode(dto.getToken())
                 .orElseThrow(InvalidVerificationCodeException::new);
 

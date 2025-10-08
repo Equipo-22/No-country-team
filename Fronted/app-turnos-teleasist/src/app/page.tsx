@@ -8,7 +8,6 @@ export default function Home() {
   return (
     <div className="flex justify-center g-max-width w-full mx-auto g-height-page">
       <RegisterForm />
-
     </div>
   );
 }

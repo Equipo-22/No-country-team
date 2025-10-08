@@ -21,7 +21,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation";
 
 
-export function LoginForm() {
+export default function LoginForm() {
 
   const router = useRouter()
 

@@ -8,11 +8,11 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button } from "@/components/ui/button"
 import {
   Form,
- /*  FormControl, */
+  /*  FormControl, */
   FormField,
   FormItem,
   FormLabel,
-/*   FormMessage, */
+  /*   FormMessage, */
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { formSchema } from "@/_schemas/login-schema"
@@ -21,9 +21,9 @@ import { useState } from "react"
 import { useRouter } from "next/navigation";
 
 
-export function RegisterForm() {
-const router =  useRouter()
+export function LoginForm() {
 
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -32,7 +32,7 @@ const router =  useRouter()
       password: ""
     },
   })
-  const { mutationPostLogin} = LoginMutationsService()
+  const { mutationPostLogin } = LoginMutationsService()
 
   const [inputsViewpassword, setinputsViewpass] = useState(true)
 
@@ -43,7 +43,7 @@ const router =  useRouter()
   return (
     <Form {...form} >
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-[300px] flex flex-col gap-[1rem] p-[1rem]">
-        
+
         <FormField
           control={form.control}
           name="email"

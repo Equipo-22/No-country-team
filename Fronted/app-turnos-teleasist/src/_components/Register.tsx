@@ -24,7 +24,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 
-export function RegisterForm() {
+export default function RegisterForm() {
   const router = useRouter()
 
 

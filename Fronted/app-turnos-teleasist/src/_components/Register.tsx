@@ -22,7 +22,6 @@ import { RegisterMutationsService } from "@/_service/use-mutation-services/regis
 import { useState } from "react"
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import logo from "@/assets/logo.svg"
 
 
 export function RegisterForm() {
@@ -50,9 +49,10 @@ export function RegisterForm() {
   return (
     <>
       <Image
-        src={logo}
+        src='/logo.svg'
         alt="Logo Medihub"
         width={200}
+        height={50}
         className="mb-4"
       />
       <Form {...form} >

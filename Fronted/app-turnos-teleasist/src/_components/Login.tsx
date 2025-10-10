@@ -23,7 +23,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "@/assets/logo.svg"
+
 
 
 export default function LoginForm() {
@@ -48,9 +48,10 @@ export default function LoginForm() {
   return (
     <>
       <Image
-        src={logo}
+        src='/logo.svg'
         alt="Logo Medihub"
         width={200}
+        height={50}
         className="mb-4"
       />
       <Form {...form} >

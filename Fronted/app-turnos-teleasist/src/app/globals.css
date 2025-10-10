@@ -4,13 +4,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
-*,
+/* *,
 *::before,
 *::after {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box; 
-}
+} */
 
 body {
   background-color: var(--background);
@@ -22,6 +22,14 @@ body {
 
 .g-form{
 
+}
+
+.g-text-gradientcolor{
+	font-size: 2rem;
+	background: -webkit-linear-gradient(rgba(13, 129, 228, 1), rgba(17, 196, 212, 1));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-family: "Buenard", serif;
 }
 
 .g-height-page{

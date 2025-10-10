@@ -20,6 +20,8 @@ import { LoginMutationsService } from "@/_service/use-mutation-services/login-mu
 import { useState } from "react"
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
+import logo from "@/assets/logo.svg"
 
 
 export default function LoginForm() {
@@ -42,40 +44,51 @@ export default function LoginForm() {
     console.log(values)
   }
   return (
-    <Form {...form} >
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-[300px] flex flex-col gap-[1rem] p-[1rem]">
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem className="">
-              <FormLabel htmlFor="email">Correo electronico</FormLabel>
-              <Input className="placeholder:p-[1.5rem] p-[1rem] bg-[#F2F4F7] w-full" type="email" placeholder="email" id="email"   {...field} />
-            </FormItem>
-          )}
-        />
-        <div>
+    <>
+  
+      <Image
+        src={logo}
+        alt="Logo Medihub"
+        width={200}
+        className="mb-4"
+      />
+  
+      <Form {...form} >
+        <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-[300px] flex flex-col gap-[1rem] p-[1rem]">
+          <p className="text-2xl font-semibold mb-2">Iniciar sesión</p>
           <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem className="relative">
-              <FormLabel htmlFor="password">Contraseña</FormLabel>
-              {
-                inputsViewpassword ?
-                  <FaEye onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
-                  :
-                  <FaEyeSlash onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
-              }
-              <Input className="placeholder:p-[1.5rem] p-[1rem] bg-[#F2F4F7] w-full" type={`${inputsViewpassword ? "password" : "text"}`} placeholder="contraseña" id="password"  {...field} />
-            </FormItem>
-          )}
-        />
-        <Link href={'/'}><p className="text-sm text-right">¿Olvidaste tu contraseña?</p></Link>
-        </div>
-        <Button type="submit" className="bg-[#6C757D] p-[2rem] cursor-pointer">Iniciar sesión</Button>
-        <Button onClick={() => router.push("/register")} className="border-[1px] border-black cursor-pointer" variant={"ghost"}>Registrarse</Button>
-      </form>
-    </Form>
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="">
+                <FormLabel htmlFor="email">Correo electronico</FormLabel>
+                <Input className="p-[1rem] bg-[#F2F4F7] w-full" type="email" placeholder="email" id="email"   {...field} />
+              </FormItem>
+            )}
+          />
+          <div>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="relative">
+                  <FormLabel htmlFor="password">Contraseña</FormLabel>
+                  {
+                    inputsViewpassword ?
+                      <FaEye onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
+                      :
+                      <FaEyeSlash onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
+                  }
+                  <Input className="p-[1rem] bg-[#F2F4F7] w-full" type={`${inputsViewpassword ? "password" : "text"}`} placeholder="contraseña" id="password"  {...field} />
+                </FormItem>
+              )}
+            />
+            <Link href={'/'}><p className="text-sm text-right">¿Olvidaste tu contraseña?</p></Link>
+          </div>
+          <Button type="submit" className="cursor-pointer">Iniciar sesión</Button>
+          <Button onClick={() => router.push("/register")} className="border-[1px] border-black cursor-pointer" variant={"ghost"}>Registrarse</Button>
+        </form>
+      </Form>
+    </>
   )
 }

@@ -1,5 +1,5 @@
 import { RegisterType } from "@/_types/register-type";
-import { apiRegister } from "../general-api";
+import { apiGeneral } from "../general-api";
 
 
 // export const getCategoria = async () => {
@@ -13,7 +13,7 @@ import { apiRegister } from "../general-api";
 
 export const postRegister = async (data: RegisterType) => {
     try {
-        const res = await apiRegister.post("/register", data)
+        const res = await apiGeneral.post("/register", data)
         console.log("Registro creado")
         return res.data
     } catch (error) {

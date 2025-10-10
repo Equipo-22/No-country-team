@@ -38,7 +38,7 @@ export default function LoginForm() {
   const [inputsViewpassword, setinputsViewpass] = useState(true)
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    mutationPostLogin.mutate(values)
+    // mutationPostLogin.mutate(values)
     console.log(values)
   }
   return (
@@ -73,7 +73,7 @@ export default function LoginForm() {
         />
         <Link href={'/'}><p className="text-sm text-right">¿Olvidaste tu contraseña?</p></Link>
         </div>
-        <Button type="submit" className="bg-[#6C757D] p-[2rem] cursor-pointer">Iniciar sesión</Button>
+        <Button onClick={() => router.push("/register-patient")} type="submit" className="bg-[#6C757D] p-[2rem] cursor-pointer">Iniciar sesión</Button>
         <Button onClick={() => router.push("/register")} className="border-[1px] border-black cursor-pointer" variant={"ghost"}>Registrarse</Button>
       </form>
     </Form>

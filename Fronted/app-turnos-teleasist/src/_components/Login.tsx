@@ -8,10 +8,12 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button } from "@/components/ui/button"
 import {
   Form,
+  FormControl,
   /*  FormControl, */
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
   /*   FormMessage, */
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -20,6 +22,8 @@ import { LoginMutationsService } from "@/_service/use-mutation-services/login-mu
 import { useState } from "react"
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
+
 
 
 export default function LoginForm() {
@@ -42,40 +46,56 @@ export default function LoginForm() {
     console.log(values)
   }
   return (
-    <Form {...form} >
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-[300px] flex flex-col gap-[1rem] p-[1rem]">
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem className="">
-              <FormLabel htmlFor="email">Correo electronico</FormLabel>
-              <Input className="placeholder:p-[1.5rem] p-[1rem] bg-[#F2F4F7] w-full" type="email" placeholder="email" id="email"   {...field} />
-            </FormItem>
-          )}
-        />
-        <div>
+    <>
+      <Image
+        src='/logo.svg'
+        alt="Logo Medihub"
+        width={200}
+        height={50}
+        className="mb-4"
+      />
+      <Form {...form} >
+        <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-[300px] flex flex-col gap-[1rem] p-[1rem]">
+          <p className="text-2xl font-semibold mb-2">Iniciar sesión</p>
           <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem className="relative">
-              <FormLabel htmlFor="password">Contraseña</FormLabel>
-              {
-                inputsViewpassword ?
-                  <FaEye onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
-                  :
-                  <FaEyeSlash onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
-              }
-              <Input className="placeholder:p-[1.5rem] p-[1rem] bg-[#F2F4F7] w-full" type={`${inputsViewpassword ? "password" : "text"}`} placeholder="contraseña" id="password"  {...field} />
-            </FormItem>
-          )}
-        />
-        <Link href={'/'}><p className="text-sm text-right">¿Olvidaste tu contraseña?</p></Link>
-        </div>
-        <Button onClick={() => router.push("/register-patient")} type="submit" className="bg-[#6C757D] p-[2rem] cursor-pointer">Iniciar sesión</Button>
-        <Button onClick={() => router.push("/register")} className="border-[1px] border-black cursor-pointer" variant={"ghost"}>Registrarse</Button>
-      </form>
-    </Form>
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="">
+                <FormLabel htmlFor="email">Correo electronico</FormLabel>
+                <FormControl >
+                  <Input className="pl-5 bg-[#F2F4F7]" type="email" placeholder="email" id="email"   {...field} />
+                </FormControl>
+                <FormMessage className="text-xs"/>
+              </FormItem>
+            )}
+          />
+          <div>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="relative">
+                  <FormLabel htmlFor="password">Contraseña</FormLabel>
+                  {
+                    inputsViewpassword ?
+                      <FaEye onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
+                      :
+                      <FaEyeSlash onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
+                  }
+                  <FormControl>
+                    <Input className="pl-5 bg-[#F2F4F7]" type={`${inputsViewpassword ? "password" : "text"}`} placeholder="contraseña" id="password"  {...field} />
+                  </FormControl>
+                 <FormMessage className="text-xs mb-1"/>
+                </FormItem>
+              )}
+            />
+            <Link href={'/'}><p className="text-sm text-right">¿Olvidaste tu contraseña?</p></Link>
+          </div>
+          <Button type="submit" className="cursor-pointer">Iniciar sesión</Button>
+          <Button onClick={() => router.push("/register")} className="cursor-pointer" variant={"outline"}>Registrarse</Button>
+        </form>
+      </Form>
+    </>
   )
 }

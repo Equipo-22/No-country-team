@@ -42,7 +42,7 @@ export default function LoginForm() {
   const [inputsViewpassword, setinputsViewpass] = useState(true)
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // mutationPostLogin.mutate(values)
+    mutationPostLogin.mutate(values)
     console.log(values)
   }
   return (

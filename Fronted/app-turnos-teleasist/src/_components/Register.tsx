@@ -57,7 +57,7 @@ export default function RegisterForm() {
       />
       <Form {...form} >
         <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-[300px] flex flex-col gap-[1rem] p-[1rem]">
-          <p className="text-2xl font-semibold mb-2">Registrate</p>
+          <p className="text-2xl font-semibold mb-2">Registro</p>
           <FormField
             control={form.control}
             name="username"
@@ -65,7 +65,7 @@ export default function RegisterForm() {
               <FormItem className="">
                 <FormLabel htmlFor="username">Nombre y Apellido</FormLabel>
                 <FormControl>
-                  <Input type="text" className="pl-5 bg-[#F2F4F7]" placeholder="nombre" id="username"  {...field} />
+                  <Input type="text" className="pl-5 bg-[#F2F4F7] placeholder:text-sm" placeholder="Ingresa tu nombre y apellido" id="username"  {...field} />
                 </FormControl>
                <FormMessage className="text-xs"/>
               </FormItem>
@@ -78,7 +78,7 @@ export default function RegisterForm() {
               <FormItem className="">
                 <FormLabel htmlFor="email">Correo electronico</FormLabel>
                 <FormControl>
-                  <Input className="pl-5 bg-[#F2F4F7]" type="email" placeholder="email" id="email"   {...field} />
+                  <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type="email" placeholder="nombre@gmail.com" id="email"   {...field} />
                 </FormControl>
                 <FormMessage className="text-xs"/>
               </FormItem>
@@ -97,7 +97,7 @@ export default function RegisterForm() {
                     <FaEyeSlash onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
                 }
                 <FormControl>
-                  <Input className="pl-5 bg-[#F2F4F7]" type={`${inputsViewpassword ? "password" : "text"}`} placeholder="contraseña" id="password"  {...field} />
+                  <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type={`${inputsViewpassword ? "password" : "text"}`} placeholder="Ingresa tu contraseña" id="password"  {...field} />
                 </FormControl>
                 <FormMessage className="text-xs"/>
               </FormItem>
@@ -116,8 +116,8 @@ export default function RegisterForm() {
                     <FaEyeSlash onClick={() => setinputsViewconfpass(!inputsViewconfpassword)} className="absolute top-[31px] right-2" />
                 }
                 <FormControl>
-                  <Input className="pl-5 bg-[#F2F4F7]" type={`${inputsViewconfpassword ? "password" : "text"}`}
-                    placeholder="confirmar contraseña" id="confirmpassword"  {...field} />
+                  <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type={`${inputsViewconfpassword ? "password" : "text"}`}
+                    placeholder="Confirma tu contraseña" id="confirmpassword"  {...field} />
                 </FormControl>
                 <FormMessage className="text-xs"/>
               </FormItem>

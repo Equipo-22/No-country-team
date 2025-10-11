@@ -64,7 +64,7 @@ export default function LoginForm() {
               <FormItem className="">
                 <FormLabel htmlFor="email">Correo electronico</FormLabel>
                 <FormControl >
-                  <Input className="pl-5 bg-[#F2F4F7]" type="email" placeholder="email" id="email"   {...field} />
+                  <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type="email" placeholder="nombre@gmail.com" id="email"   {...field} />
                 </FormControl>
                 <FormMessage className="text-xs"/>
               </FormItem>
@@ -84,7 +84,7 @@ export default function LoginForm() {
                       <FaEyeSlash onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
                   }
                   <FormControl>
-                    <Input className="pl-5 bg-[#F2F4F7]" type={`${inputsViewpassword ? "password" : "text"}`} placeholder="contraseña" id="password"  {...field} />
+                    <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type={`${inputsViewpassword ? "password" : "text"}`} placeholder="Ingresa tu contraseña" id="password"  {...field} />
                   </FormControl>
                  <FormMessage className="text-xs mb-1"/>
                 </FormItem>

@@ -20,33 +20,15 @@ import java.util.Optional;
 public class AuthService {
 
     private final UserRepository userRepository;
-    private final RegistrationService registrationService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
 
     //verifica si el usuario existe y verifico la cuenta,
     //luego crea el token y devuelve un objeto con datos del user y el token.
 
-    public LoginUserResponseDTO login(LoginUserRequestDTO loginUserRequestDTO) throws MessagingException {
+    public VerifyUserResponseDTO login(LoginUserRequestDTO loginUserRequestDTO) throws MessagingException {
+
         User user=authenticate(loginUserRequestDTO);
-
-        String code=registrationService.generarVerificacionCode();
-
-        user.setVerificationCode(code);
-        user.setVerificationCodeExpiresAt(LocalDateTime.now().plusMinutes(15));
-
-        registrationService.enviarVerificacionEmail(user);
-
-        userRepository.save(user);
-
-        return new LoginUserResponseDTO(user.getEmail());
-    }
-
-    public VerifyUserResponseDTO verifyUser(VerifyUserRequestDTO verifyUserRequestDTO){
-        User user=userRepository.findByEmail(verifyUserRequestDTO.getEmail())
-                .orElseThrow(() -> new UserNotFoundException(verifyUserRequestDTO.getEmail()));
-
-        verifyCode(verifyUserRequestDTO);
 
         String jwtToken=jwtUtils.generateToken(user);
 
@@ -75,28 +57,6 @@ public class AuthService {
         }
 
         return user;
-    }
-
-    private void verifyCode(VerifyUserRequestDTO input) {
-        Optional<User> optionalUser = userRepository.findByEmail(input.getEmail());
-
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-
-            if (user.getVerificationCodeExpiresAt().isBefore(LocalDateTime.now())) {
-                throw new VerificationCodeExpiredException();
-            }
-            if (user.getVerificationCode().equals(input.getVerificationCode())) {
-                user.setEnabled(true);
-                user.setVerificationCode(null);
-                user.setVerificationCodeExpiresAt(null);
-                userRepository.save(user);
-            } else {
-                throw new InvalidVerificationCodeException();
-            }
-        } else {
-            throw new UserNotFoundException(input.getEmail());
-        }
     }
 
 }

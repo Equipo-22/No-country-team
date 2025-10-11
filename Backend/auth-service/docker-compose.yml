@@ -10,15 +10,22 @@ services:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+    networks:
+      - app-network
   app:
     build: .
-    container_name: spring-app
+    container_name: auth-app
     depends_on:
       - db
     env_file:
       - .env
     ports:
       - "8081:8081"
-
+    networks:
+      - app-network
 volumes:
   db_data:
+
+networks:
+  app-network:
+    external: true

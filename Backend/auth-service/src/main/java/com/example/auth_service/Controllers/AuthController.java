@@ -5,6 +5,7 @@ import com.example.auth_service.Services.AuthService;
 import com.example.auth_service.Services.PasswordService;
 import com.example.auth_service.Services.RegistrationService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,8 @@ import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/auth")
+@Tag(name = "Auth Service", description = "Endpoints de autenticación y registro (usar prefijo /api/auth/)")
+
 public class AuthController {
 
     private final AuthService authService;
@@ -27,27 +29,21 @@ public class AuthController {
         registrationService.register(registerUserRequestDTO);
     }
 
-    @GetMapping("/test")
-    @ResponseStatus(HttpStatus.OK)
-    public String test(){
-        return "test funciono!";
-    }
+//    @GetMapping("/test")
+//    @ResponseStatus(HttpStatus.OK)
+//    public String test(){
+//        return "test funciono!";
+//    }
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public LoginUserResponseDTO login(@RequestBody LoginUserRequestDTO loginUserRequestDTO) throws MessagingException {
+    public VerifyUserResponseDTO login(@RequestBody LoginUserRequestDTO loginUserRequestDTO) throws MessagingException {
         return authService.login(loginUserRequestDTO);
     }
 
-    @PostMapping("/login/verify-user")
+    @PostMapping("/verify-user")
     @ResponseStatus(HttpStatus.OK)
-    public VerifyUserResponseDTO verifyUserLogin (@RequestBody VerifyUserRequestDTO verifyUserRequestDTO){
-        return authService.verifyUser(verifyUserRequestDTO);
-    }
-
-    @PostMapping("/register/verify-user")
-    @ResponseStatus(HttpStatus.OK)
-    public void verifyUserRegister(@RequestBody VerifyUserRequestDTO verifyUserRequestDTO){
+    public void verifyUser(@RequestBody VerifyUserRequestDTO verifyUserRequestDTO){
         registrationService.verifyUser(verifyUserRequestDTO);
     }
 

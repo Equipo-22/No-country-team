@@ -19,7 +19,7 @@ import { useRouter } from "next/navigation";
 import { completeProphilePatientSchema } from "@/_schemas/complete-prohile-patient";
 
 
-export function CompleteProhilePatient() {
+export function CompleteProfilePatient() {
 const router =  useRouter()
 
 

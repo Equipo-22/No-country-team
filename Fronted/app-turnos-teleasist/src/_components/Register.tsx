@@ -21,7 +21,9 @@ import { formSchema } from "@/_schemas/register-schema"
 import { RegisterMutationsService } from "@/_service/use-mutation-services/register-mutation-services"
 import { useState } from "react"
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+import TitleSection from "@/components/ui/TitleSection";
+import Logo from "@/components/ui/Logo";
+import ContainerMax300 from "@/components/ui/Container-max300";
 
 
 export default function RegisterForm() {
@@ -48,86 +50,80 @@ export default function RegisterForm() {
   }
   return (
     <>
-      <Image
-        src='/logo.svg'
-        alt="Logo Medihub"
-        width={200}
-        height={50}
-        className="mb-4"
-      />
+      <Logo />
       <Form {...form} >
-        <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-[300px] flex flex-col gap-[1rem] p-[1rem]">
-          <p className="text-2xl font-semibold mb-2">Registro</p>
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem className="">
-                <FormLabel htmlFor="username">Nombre y Apellido</FormLabel>
-                <FormControl>
-                  <Input type="text" className="pl-5 bg-[#F2F4F7] placeholder:text-sm" placeholder="Ingresa tu nombre y apellido" id="username"  {...field} />
-                </FormControl>
-               <FormMessage className="text-xs"/>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className="">
-                <FormLabel htmlFor="email">Correo electronico</FormLabel>
-                <FormControl>
-                  <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type="email" placeholder="nombre@gmail.com" id="email"   {...field} />
-                </FormControl>
-                <FormMessage className="text-xs"/>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem className="relative">
-                <FormLabel htmlFor="password">Contraseña</FormLabel>
-                {
-                  inputsViewpassword ?
-                    <FaEye onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
-                    :
-                    <FaEyeSlash onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
-                }
-                <FormControl>
-                  <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type={`${inputsViewpassword ? "password" : "text"}`} placeholder="Ingresa tu contraseña" id="password"  {...field} />
-                </FormControl>
-                <FormMessage className="text-xs"/>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="confirmpassword"
-            render={({ field }) => (
-              <FormItem className="relative">
-                <FormLabel htmlFor="password">Confirmar contraseña</FormLabel>
-                {
-                  inputsViewconfpassword ?
-                    <FaEye onClick={() => setinputsViewconfpass(!inputsViewconfpassword)} className="absolute top-[31px] right-2" />
-                    :
-                    <FaEyeSlash onClick={() => setinputsViewconfpass(!inputsViewconfpassword)} className="absolute top-[31px] right-2" />
-                }
-                <FormControl>
-                  <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type={`${inputsViewconfpassword ? "password" : "text"}`}
-                    placeholder="Confirma tu contraseña" id="confirmpassword"  {...field} />
-                </FormControl>
-                <FormMessage className="text-xs"/>
-              </FormItem>
-            )}
-          />
-          <Button type="submit" className="cursor-pointer">Registrarse</Button>
-          <Button onClick={() => router.push("/login")} className=" cursor-pointer" variant={"outline"}>Iniciar sesión</Button>
-
-
-        </form>
+       <ContainerMax300>
+          <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-[1rem] px-[1rem] ">
+          <TitleSection text="Registro"/>
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem className="">
+                  <FormLabel htmlFor="username">Nombre y Apellido</FormLabel>
+                  <FormControl>
+                    <Input type="text" className="pl-5 bg-[#F2F4F7] placeholder:text-sm" placeholder="Ingresa tu nombre y apellido" id="username"  {...field} />
+                  </FormControl>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="">
+                  <FormLabel htmlFor="email">Correo electronico</FormLabel>
+                  <FormControl>
+                    <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type="email" placeholder="nombre@gmail.com" id="email"   {...field} />
+                  </FormControl>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="relative">
+                  <FormLabel htmlFor="password">Contraseña</FormLabel>
+                  {
+                    inputsViewpassword ?
+                      <FaEye onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
+                      :
+                      <FaEyeSlash onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
+                  }
+                  <FormControl>
+                    <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type={`${inputsViewpassword ? "password" : "text"}`} placeholder="Ingresa tu contraseña" id="password"  {...field} />
+                  </FormControl>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirmpassword"
+              render={({ field }) => (
+                <FormItem className="relative">
+                  <FormLabel htmlFor="password">Confirmar contraseña</FormLabel>
+                  {
+                    inputsViewconfpassword ?
+                      <FaEye onClick={() => setinputsViewconfpass(!inputsViewconfpassword)} className="absolute top-[31px] right-2" />
+                      :
+                      <FaEyeSlash onClick={() => setinputsViewconfpass(!inputsViewconfpassword)} className="absolute top-[31px] right-2" />
+                  }
+                  <FormControl>
+                    <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type={`${inputsViewconfpassword ? "password" : "text"}`}
+                      placeholder="Confirma tu contraseña" id="confirmpassword"  {...field} />
+                  </FormControl>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" className="cursor-pointer">Registrarse</Button>
+          </form>
+          <Button onClick={() => router.push("/login")} className=" cursor-pointer mx-[1rem] mt-[1rem]" variant={"outline"}>Iniciar sesión</Button>
+       </ContainerMax300>
       </Form>
     </>
   )

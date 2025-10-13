@@ -6,9 +6,6 @@ export const formSchema = z
       .string()
       .min(3, {
         message: "El nombre de usuario debe tener al menos 3 caracteres",
-      })
-      .regex(/^[A-Za-zÁÉÍÓÚáéíóúñÑ]+$/, {
-        message: "El nombre de usuario solo puede contener letras",
       }),
     email: z.string().email({
       message: "Tu correo electrónico no es válido",

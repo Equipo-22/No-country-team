@@ -8,16 +8,14 @@ import { Button } from "@/components/ui/button"
 import { verifyUserSchema } from "@/_schemas/verifyUser-schema"
 import Logo from "@/components/ui/Logo"
 import TitleSection from "@/components/ui/TitleSection"
+import { VerifyUserType } from "@/_types/verifyUser-type"
+import { VerifyUserMutationService } from "@/_service/use-mutation-services/verifyUser_mutation-services"
 
 
 type VerificationFormData = z.infer<typeof verifyUserSchema>
 
-interface VerificationCodeProps {
-  email: string
-  onVerify: (data: VerificationFormData) => void
-}
 
-export default function VerifyUser({ email, onVerify }: VerificationCodeProps) {
+export default function VerifyUserRegister({ email }: { email: string }) {
   const {
     control,
     handleSubmit,
@@ -28,6 +26,8 @@ export default function VerifyUser({ email, onVerify }: VerificationCodeProps) {
     resolver: zodResolver(verifyUserSchema),
     defaultValues: { email, verificationCode: "" },
   })
+
+  const { mutationPostVerifyUserRegister  } = VerifyUserMutationService()
 
   const inputsRef = useRef<HTMLInputElement[]>([])
   const code = watch("verificationCode").padEnd(6, " ")
@@ -50,16 +50,25 @@ export default function VerifyUser({ email, onVerify }: VerificationCodeProps) {
     }
   }
 
-  const onSubmit = (data: VerificationFormData) => {
-    onVerify(data)
+  const handleVerify = (data: VerifyUserType) => {
+    mutationPostVerifyUserRegister .mutate(data)
   }
+
+  const onSubmit = (data: VerificationFormData) => {
+    console.log("hizo click");
+    
+    handleVerify(data)
+  }
+
+  
 
   return (
     <>
       <Logo />
       <TitleSection text="Verificación de cuenta" />
-      <p className="text-sm mb-7">Ingresa el código enviado a tu email</p>
+      <p className="text-sm">Ingresa el código enviado a</p><span className="font-semibold mb-7">{email}</span>
       <form onSubmit={handleSubmit(onSubmit)} className="max-w-[300px] flex flex-col items-center gap-6">
+         <input type="hidden" {...control.register("email")} value={email} />
         <Controller
           name="verificationCode"
           control={control}
@@ -91,8 +100,13 @@ export default function VerifyUser({ email, onVerify }: VerificationCodeProps) {
         {errors.verificationCode && (
           <p className="text-destructive text-xs">{errors.verificationCode.message}</p>
         )}
+        {mutationPostVerifyUserRegister.isError && (
+          <p className="text-destructive text-sm mt-2">
+            Error al verificar el usuario
+          </p>
+        )}
         <Button type="submit" className="w-full max-w-xs">
-          Verificar
+          {mutationPostVerifyUserRegister.isPending ? "Verificando..." : "Verificar"}
         </Button>
       </form>
     </>

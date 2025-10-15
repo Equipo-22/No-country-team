@@ -1,17 +1,27 @@
-import { z } from "zod"
+import { z } from "zod";
 
-
-export const formSchema = z.object({
-    username: z.string().min(2, {
-        message: "Escribe tu nombre y apellido completo",
+export const formSchema = z
+  .object({
+    username: z
+      .string()
+      .min(3, {
+        message: "El nombre de usuario debe tener al menos 3 caracteres",
+      }),
+    email: z.string().email({
+      message: "Tu correo electrónico no es válido",
     }),
-    email: z.string().min(2, {
-        message: "Escribe tu email",
+    password: z
+      .string()
+      .min(6, { message: "La contraseña debe tener al menos 6 caracteres" })
+      .max(8, { message: "La contraseña no puede superar los 8 caracteres" })
+      .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,8}$/, {
+        message: "La contraseña debe incluir mayúsculas, minúsculas y números",
+      }),
+    confirmpassword: z.string({
+      message: "Debe confirmar la contraseña",
     }),
-    password: z.string().min(2, {
-        message: "Escribe tu contraseña",
-    }),
-    confirmpassword: z.string().min(2, {
-        message: "Confirma tu contraseña",
-    }),
-})
+  })
+  .refine((data) => data.password === data.confirmpassword, {
+    message: "Las contraseñas no coinciden",
+    path: ["confirmpassword"], // el error aparece en el campo de confirmación
+  });

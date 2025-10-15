@@ -1,10 +1,12 @@
+"use client"
 import { DashboardPatient } from '@/_components/layouts/DashboardPatient'
+
 import React from 'react'
 
 const page = () => {
   return (
     <DashboardPatient>
-        <h1>Componente Pacientes</h1>
+      <h2>Data</h2>
     </DashboardPatient>
   )
 }

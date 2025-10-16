@@ -4,7 +4,6 @@ import ContainerMax300 from '@/components/ui/Container-max300'
 import Logo from '@/components/ui/Logo'
 import Image from 'next/image'
 import React from 'react'
-import success_icon from '@/assets/success.svg'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 
@@ -16,7 +15,7 @@ const SuccessfulRegister = () => {
         <>
             <Logo />
             <Image
-                src={success_icon}
+                src="/success.svg"
                 alt="success_icon"
                 width={63}
                 height={63}

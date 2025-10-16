@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  /*  FormControl, */
   FormField,
   FormItem,
   FormLabel,
@@ -60,7 +59,7 @@ export default function RegisterForm() {
               control={form.control}
               name="username"
               render={({ field }) => (
-                <FormItem className="">
+                <FormItem>
                   <FormLabel htmlFor="username">Nombre y Apellido</FormLabel>
                   <FormControl>
                     <Input type="text" className="pl-5 bg-[#F2F4F7] placeholder:text-sm" placeholder="Ingresa tu nombre y apellido" id="username"  {...field} />
@@ -73,7 +72,7 @@ export default function RegisterForm() {
               control={form.control}
               name="email"
               render={({ field }) => (
-                <FormItem className="">
+                <FormItem>
                   <FormLabel htmlFor="email">Correo electronico</FormLabel>
                   <FormControl>
                     <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type="email" placeholder="nombre@gmail.com" id="email"   {...field} />

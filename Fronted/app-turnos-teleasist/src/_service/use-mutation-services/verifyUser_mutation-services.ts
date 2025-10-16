@@ -14,7 +14,7 @@ export const VerifyUserMutationService = () => {
       },
       onSuccess: (data) => {
         console.log("Usuario verificado:", data);
-        setTimeout(() => router.push("/login"), 1000)
+        setTimeout(() => router.push("/register/success"), 1000)
       },
       onError: (error) => {
         console.error("Error al verificar:", error);

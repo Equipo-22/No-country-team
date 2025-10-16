@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation";
 import TitleSection from "@/components/ui/TitleSection";
 import Logo from "@/components/ui/Logo";
 import ContainerMax300 from "@/components/ui/Container-max300";
+import { LogoMedihub } from "@/components/ui/LogoMedihub";
 
 
 export default function RegisterForm() {
@@ -50,11 +51,11 @@ export default function RegisterForm() {
   }
   return (
     <>
-      <Logo />
+      <LogoMedihub />
       <Form {...form} >
-       <ContainerMax300>
+        <ContainerMax300>
           <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-[1rem] px-[1rem] ">
-          <TitleSection text="Registro"/>
+            <TitleSection text="Registro" />
             <FormField
               control={form.control}
               name="username"
@@ -123,7 +124,7 @@ export default function RegisterForm() {
             <Button type="submit" className="cursor-pointer">Registrarse</Button>
           </form>
           <Button onClick={() => router.push("/login")} className=" cursor-pointer mx-[1rem] mt-[1rem]" variant={"outline"}>Iniciar sesión</Button>
-       </ContainerMax300>
+        </ContainerMax300>
       </Form>
     </>
   )

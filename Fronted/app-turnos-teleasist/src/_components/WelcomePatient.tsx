@@ -30,7 +30,7 @@ const WelcomePatient = () => {
             }
             <p className='p-[1rem]'>Nos enfocamos en brindarte una experiencia fluida, sin complicaciones y con toda la información médica al alcance de tu mano.</p>
             <p className='p-[1rem] font-bold'>Comenzá explorando tu panel para gestionar tu próxima cita</p>
-            <Button onClick={() => router.push("/dashboard-patient")} className="bg-[#6C757D] p-[2rem] cursor-pointer w-full">Comenzar</Button>
+            <Button onClick={() => router.push("/dashboard-patient/inicio")} className="bg-[#6C757D] p-[2rem] cursor-pointer w-full">Comenzar</Button>
         </div>
     )
 }

@@ -29,21 +29,21 @@ public class AuthController {
         registrationService.register(registerUserRequestDTO);
     }
 
-//    @GetMapping("/test")
-//    @ResponseStatus(HttpStatus.OK)
-//    public String test(){
-//        return "test funciono!";
-//    }
-
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public VerifyUserResponseDTO login(@RequestBody LoginUserRequestDTO loginUserRequestDTO) throws MessagingException {
+    public LoginUserResponseDTO login(@RequestBody LoginUserRequestDTO loginUserRequestDTO) throws MessagingException {
         return authService.login(loginUserRequestDTO);
     }
 
-    @PostMapping("/verify-user")
+    @PostMapping("/login/verify-user")
     @ResponseStatus(HttpStatus.OK)
-    public void verifyUser(@RequestBody VerifyUserRequestDTO verifyUserRequestDTO){
+    public VerifyUserResponseDTO verifyUserLogin (@RequestBody VerifyUserRequestDTO verifyUserRequestDTO){
+        return authService.verifyUser(verifyUserRequestDTO);
+    }
+
+    @PostMapping("/register/verify-user")
+    @ResponseStatus(HttpStatus.OK)
+    public void verifyUserRegister(@RequestBody VerifyUserRequestDTO verifyUserRequestDTO){
         registrationService.verifyUser(verifyUserRequestDTO);
     }
 

@@ -44,7 +44,8 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/swagger-ui/**",
                                 "/api/auth/**",
-                                "/swagger/auth/**"
+                                "/swagger/auth/**",
+                                "/ehr/v3/api-docs"
                         ).permitAll()
                         .anyExchange().authenticated()
                 )

@@ -23,7 +23,7 @@ public class JwtAuthenticationManager implements ReactiveAuthenticationManager {
             String username = jwtUtils.extractUsername(token);
 
             List<SimpleGrantedAuthority> authorities = jwtUtils.extractRoles(token).stream()
-                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                    .map(SimpleGrantedAuthority::new)
                     .toList();
 
             return Mono.just(new UsernamePasswordAuthenticationToken(username, null, authorities));

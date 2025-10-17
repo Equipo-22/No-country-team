@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const formSchema = z.object({
+export const loginFormSchema = z.object({
   email: z.string().email({
     message: "Tu correo electrónico no es válido",
   }),

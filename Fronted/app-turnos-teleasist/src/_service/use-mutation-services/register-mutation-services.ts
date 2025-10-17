@@ -1,5 +1,5 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { postRegister } from "../use-cases/medic-register-service";
+import { useMutation} from "@tanstack/react-query";
+import { postRegister } from "../use-cases/register-service";
 import { RegisterType } from "@/_types/register-type";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store/userStore";
@@ -24,8 +24,3 @@ export const RegisterMutationsService = () => {
         mutationPostRegister,
     };
 };
-
-/*   const QueryC = useQueryClient(); */
-/*  QueryC.invalidateQueries({
-    queryKey: ["data_register"],
-}); */

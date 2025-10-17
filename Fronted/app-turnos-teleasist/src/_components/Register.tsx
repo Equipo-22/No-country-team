@@ -16,7 +16,7 @@ import {
   /*   FormMessage, */
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { formSchema } from "@/_schemas/register-schema"
+import { registerformSchema } from "@/_schemas/register-schema"
 import { RegisterMutationsService } from "@/_service/use-mutation-services/register-mutation-services"
 import { useState } from "react"
 import { useRouter } from "next/navigation";
@@ -30,8 +30,8 @@ export default function RegisterForm() {
   const router = useRouter()
 
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof registerformSchema>>({
+    resolver: zodResolver(registerformSchema),
     defaultValues: {
       username: "",
       email: "",
@@ -44,7 +44,7 @@ export default function RegisterForm() {
   const [inputsViewpassword, setinputsViewpass] = useState(true)
   const [inputsViewconfpassword, setinputsViewconfpass] = useState(true)
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof registerformSchema>) {
     mutationPostRegister.mutate(values)
     console.log(values)
   }

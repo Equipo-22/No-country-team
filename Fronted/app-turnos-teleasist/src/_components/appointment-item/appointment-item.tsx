@@ -11,10 +11,12 @@ const AppointmentItem = ({ onOpenUpcoming, onOpenHistory }: AppointmentItemProps
   return (
     <div className="p-[2rem]">
       <div className="flex justify-between items-center">
-        <h3 className="text-[2rem] text-secondary">Próximas citas</h3>
-        <Button>
+        <h3 className="text-[2rem] text-secondary font-bold">Próximas citas</h3>
+        <a href="/dashboard-patient/appointment/create">
+        <Button >
           <CirclePlus /> Nueva cita
         </Button>
+        </a>
       </div>
 
       <div className="flex flex-col gap-2 px-[1rem] py-[0.5rem] rounded-sm shadow-sm bg-white my-[2rem] lg:px-[2rem] lg:py-[1rem] lg:gap-0 lg:items-center lg:flex-row lg:justify-between">
@@ -36,7 +38,7 @@ const AppointmentItem = ({ onOpenUpcoming, onOpenHistory }: AppointmentItemProps
         </button>
       </div>
 
-      <h3 className="text-[2rem] text-secondary">Historial de citas</h3>
+      <h3 className="text-[2rem] text-secondary font-bold">Historial de citas</h3>
 
       <div className="flex flex-col gap-2 px-[1rem] py-[0.5rem] rounded-sm shadow-sm bg-white my-[2rem] lg:px-[2rem] lg:py-[1rem] lg:gap-0 lg:items-center lg:flex-row lg:justify-between">
         <div className="flex items-center gap-2 lg:items-center">

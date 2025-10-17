@@ -5,6 +5,7 @@ import com.example.auth_service.Services.AuthService;
 import com.example.auth_service.Services.PasswordService;
 import com.example.auth_service.Services.RegistrationService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,8 @@ import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/auth")
+@Tag(name = "Auth Service", description = "Endpoints de autenticación y registro (usar prefijo /api/auth/)")
+
 public class AuthController {
 
     private final AuthService authService;

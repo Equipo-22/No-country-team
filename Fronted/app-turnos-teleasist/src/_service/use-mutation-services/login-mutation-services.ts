@@ -1,17 +1,20 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { postLogin } from "../use-cases/medic-login-service";
+import { postLogin } from "../use-cases/login-service";
 import { LoginType } from "@/_types/login-type";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/store/userStore";
 
 export const LoginMutationsService = () => {
   const router = useRouter();
+  const setUserData = useUserStore((state) => state.setUserData);
 
   const mutationPostLogin = useMutation({
     mutationFn: (data: LoginType) => {
       return postLogin(data);
     },
-    onSuccess: function Exito() {
+    onSuccess: function Exito(_res, variables) {
         console.log("Login ok");
+        setUserData(variables.email);
       setTimeout(() => router.push("/verify-user-login"), 1000);
     },
   });
@@ -21,14 +24,3 @@ export const LoginMutationsService = () => {
   };
 };
 
-/*const QueryC = useQueryClient()
-    
-    const GetCategoria = useQuery({
-        queryKey: ["data_register"],
-        queryFn: postRegister,
-        });
-    QueryC.invalidateQueries({
-            queryKey: ["data_login"]
-        })
-    }
-        */

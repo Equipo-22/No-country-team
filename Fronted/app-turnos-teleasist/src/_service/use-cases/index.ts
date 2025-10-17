@@ -1,2 +1,2 @@
-export * from './medic-login-service';
-export * from './medic-register-service';
+export * from './login-service';
+export * from './register-service';

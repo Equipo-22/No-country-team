@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { useForm, Controller } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -10,12 +10,12 @@ import Logo from "@/components/ui/Logo"
 import TitleSection from "@/components/ui/TitleSection"
 import { VerifyUserType } from "@/_types/verifyUser-type"
 import { VerifyUserMutationService } from "@/_service/use-mutation-services/verifyUser_mutation-services"
+import { useUserStore } from "@/store/userStore"
 
 
 type VerificationFormData = z.infer<typeof verifyUserSchema>
 
-
-export default function VerifyUserLogin({ email }: { email: string }) {
+export default function VerifyUserLogin() {
   const {
     control,
     handleSubmit,
@@ -24,50 +24,56 @@ export default function VerifyUserLogin({ email }: { email: string }) {
     formState: { errors },
   } = useForm<VerificationFormData>({
     resolver: zodResolver(verifyUserSchema),
-    defaultValues: { email, verificationCode: "" },
+    defaultValues: { email: "", verificationCode: "" },
   })
 
+  
   const { mutationPostVerifyUserLogin } = VerifyUserMutationService()
-
+  
   const inputsRef = useRef<HTMLInputElement[]>([])
   const code = watch("verificationCode").padEnd(6, " ")
-
+  
   const handleChange = (value: string, index: number) => {
     if (!/^[0-9]?$/.test(value)) return
-
+    
     const newCode =
-      code.substring(0, index) + value + code.substring(index + 1)
+    code.substring(0, index) + value + code.substring(index + 1)
     setValue("verificationCode", newCode.trim())
-
+    
     if (value && index < 5) {
       inputsRef.current[index + 1]?.focus()
     }
   }
-
+  
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
     if (e.key === "Backspace" && !code[index] && index > 0) {
       inputsRef.current[index - 1]?.focus()
     }
   }
-
+  
   const handleVerify = (data: VerifyUserType) => {
     mutationPostVerifyUserLogin.mutate(data)
   }
-
+  
   const onSubmit = (data: VerificationFormData) => {
-    console.log("hizo click");    
+    console.log("hizo click");
     handleVerify(data)
   }
-
   
+  const { email } = useUserStore();
 
+  useEffect(() => {
+    setValue("email", email)
+  }, [email])
+  
+  
   return (
     <>
       <Logo />
       <TitleSection text="Validación de usuario" />
       <p className="text-sm">Ingresa el código enviado a</p><span className="font-semibold mb-7">{email}</span>
       <form onSubmit={handleSubmit(onSubmit)} className="max-w-[300px] flex flex-col items-center gap-6">
-         <input type="hidden" {...control.register("email")} value={email} />
+        <input type="hidden" {...control.register("email")} value={email} />
         <Controller
           name="verificationCode"
           control={control}

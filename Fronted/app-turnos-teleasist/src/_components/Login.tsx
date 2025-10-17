@@ -9,22 +9,21 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  /*  FormControl, */
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  /*   FormMessage, */
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { formSchema } from "@/_schemas/login-schema"
+import { loginFormSchema } from "@/_schemas/login-schema"
 import { LoginMutationsService } from "@/_service/use-mutation-services/login-mutation-services"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Logo from "@/components/ui/Logo";
 import TitleSection from "@/components/ui/TitleSection"
 import ContainerMax300 from "@/components/ui/Container-max300";
+import { useUserStore } from "@/store/userStore";
 
 
 
@@ -32,8 +31,8 @@ export default function LoginForm() {
 
   const router = useRouter()
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof loginFormSchema>>({
+    resolver: zodResolver(loginFormSchema),
     defaultValues: {
       email: "",
       password: ""
@@ -43,10 +42,17 @@ export default function LoginForm() {
 
   const [inputsViewpassword, setinputsViewpass] = useState(true)
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof loginFormSchema>) {
     mutationPostLogin.mutate(values)
     console.log(values)
   }
+
+  const { clearUserData } = useUserStore();
+
+  useEffect(() => {
+    clearUserData();
+  }, []);
+
   return (
     <>
       <Logo />
@@ -87,7 +93,7 @@ export default function LoginForm() {
                   </FormItem>
                 )}
               />
-              <Link href={'/'}><p className="text-sm text-right">¿Olvidaste tu contraseña?</p></Link>
+              <Link href={'/login/req-pass-reset'}><p className="text-sm text-right">¿Olvidaste tu contraseña?</p></Link>
             </div>
             <Button type="submit" className="cursor-pointer">Iniciar sesión</Button>
           </form>

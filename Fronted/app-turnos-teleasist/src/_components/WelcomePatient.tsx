@@ -42,7 +42,7 @@ const WelcomePatient = () => {
                 }
                 <p className='py-4'>Nos enfocamos en brindarte una experiencia fluida, sin complicaciones y con toda la información médica al alcance de tu mano.</p>
                 <p className='pb-5 font-bold'>Comenzá explorando tu panel para gestionar tu próxima cita</p>
-                <Button onClick={() => router.push("/dashboard-patient")} className="">Comenzar</Button>
+                <Button onClick={() => router.push("/dashboard-patient/inicio")} className="">Comenzar</Button>
             </ContainerMax300>
         </>
     )

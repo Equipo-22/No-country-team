@@ -9,5 +9,6 @@ export const postLogin = async (data: LoginType) => {
         return res.data
     } catch (error) {
         console.log(error)
+        throw error
     }
 }

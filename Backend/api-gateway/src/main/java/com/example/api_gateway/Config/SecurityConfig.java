@@ -11,6 +11,7 @@ import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
+import org.springframework.security.web.server.util.matcher.NegatedServerWebExchangeMatcher;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsWebFilter;
@@ -29,33 +30,26 @@ public class SecurityConfig {
                 new AuthenticationWebFilter(new JwtAuthenticationManager(jwtUtils));
 
         authenticationWebFilter.setServerAuthenticationConverter(new JwtAuthenticationConverter());
-        authenticationWebFilter.setRequiresAuthenticationMatcher(ServerWebExchangeMatchers.anyExchange());
+        var protectedMatcher = new NegatedServerWebExchangeMatcher(
+                ServerWebExchangeMatchers.pathMatchers("/api/auth/**")
+        );
+
+        authenticationWebFilter.setRequiresAuthenticationMatcher(protectedMatcher);
 
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/api/auth/**").permitAll()
+                        .pathMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/api/auth/**",
+                                "/swagger/auth/**",
+                                "/ehr/v3/api-docs"
+                        ).permitAll()
                         .anyExchange().authenticated()
                 )
                 .addFilterAt(authenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();
-    }
-
-    // ✅ Filtro global de CORS para Spring WebFlux
-    @Bean
-    public CorsWebFilter corsWebFilter() {
-        CorsConfiguration config = new CorsConfiguration();
-
-        // 🟢 Aquí poné las URLs de tus frontends
-        config.addAllowedOrigin("http://localhost:3000");  // React local
-        config.addAllowedOrigin("https://tu-frontend.com"); // Producción
-        config.addAllowedMethod("*"); // Permitir GET, POST, PUT, DELETE, OPTIONS...
-        config.addAllowedHeader("*");
-        config.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-
-        return new CorsWebFilter(source);
     }
 }

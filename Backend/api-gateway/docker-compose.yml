@@ -10,3 +10,9 @@ services:
       - .env
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true

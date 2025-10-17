@@ -52,4 +52,22 @@ public class SecurityConfig {
                 .addFilterAt(authenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();
     }
+
+    // ✅ Filtro global de CORS para Spring WebFlux
+    @Bean
+    public CorsWebFilter corsWebFilter() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        // 🟢 Aquí poné las URLs de tus frontends
+        config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedOrigin("https://tu-frontend.com"); // Producción
+        config.addAllowedMethod("*"); // Permitir GET, POST, PUT, DELETE, OPTIONS...
+        config.addAllowedHeader("*");
+        config.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+
+        return new CorsWebFilter(source);
+    }
 }

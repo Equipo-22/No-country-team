@@ -9,12 +9,10 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  /*  FormControl, */
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  /*   FormMessage, */
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { formSchema } from "@/_schemas/login-schema"
@@ -87,7 +85,7 @@ export default function LoginForm() {
                   </FormItem>
                 )}
               />
-              <Link href={'/'}><p className="text-sm text-right">¿Olvidaste tu contraseña?</p></Link>
+              <Link href={'/login/req-pass-reset'}><p className="text-sm text-right">¿Olvidaste tu contraseña?</p></Link>
             </div>
             <Button type="submit" className="cursor-pointer">Iniciar sesión</Button>
           </form>

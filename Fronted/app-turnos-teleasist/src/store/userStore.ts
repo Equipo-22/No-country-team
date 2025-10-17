@@ -3,8 +3,8 @@ import { persist } from "zustand/middleware";
 
 interface UserStore {
   email: string;
-  username: string;
-  setUserData: (email: string, username: string) => void;
+  username?: string;
+  setUserData: (email: string, username?: string) => void;
   clearUserData: () => void;
 }
 
@@ -21,3 +21,4 @@ export const useUserStore = create<UserStore>()(
     }
   )
 );
+

@@ -81,7 +81,7 @@ export function CompleteProfilePatient() {
       <Logo />
       <Form {...form} >
         <ContainerMax300>
-          <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-[1rem] px-[1rem]">
+          <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4 px-4">
             <TitleSection text="Completá tus datos" />
             <FormField
               control={form.control}

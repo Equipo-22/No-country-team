@@ -50,7 +50,7 @@ export default function RegisterForm() {
       <Logo />
       <Form {...form} >
         <ContainerMax300>
-          <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-[1rem] px-[1rem] ">
+          <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4 px-4 ">
             <TitleSection text="Registro" />
             <FormField
               control={form.control}
@@ -119,7 +119,7 @@ export default function RegisterForm() {
             />
             <Button type="submit" className="cursor-pointer">Registrarse</Button>
           </form>
-          <Button onClick={() => router.push("/login")} className=" cursor-pointer mx-[1rem] mt-[1rem]" variant={"outline"}>Iniciar sesión</Button>
+          <Button onClick={() => router.push("/login")} className=" cursor-pointer mx-4 mt-4" variant={"outline"}>Iniciar sesión</Button>
         </ContainerMax300>
       </Form>
     </>

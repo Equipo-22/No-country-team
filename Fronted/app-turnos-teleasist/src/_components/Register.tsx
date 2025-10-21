@@ -12,8 +12,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
-  /*   FormMessage, */
+  FormMessage
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { registerformSchema } from "@/_schemas/register-schema"
@@ -23,12 +22,10 @@ import { useRouter } from "next/navigation";
 import TitleSection from "@/components/ui/TitleSection";
 import Logo from "@/components/ui/Logo";
 import ContainerMax300 from "@/components/ui/Container-max300";
-import { LogoMedihub } from "@/components/ui/LogoMedihub";
 
 
 export default function RegisterForm() {
   const router = useRouter()
-
 
   const form = useForm<z.infer<typeof registerformSchema>>({
     resolver: zodResolver(registerformSchema),
@@ -50,7 +47,7 @@ export default function RegisterForm() {
   }
   return (
     <>
-      <LogoMedihub />
+      <Logo />
       <Form {...form} >
         <ContainerMax300>
           <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-[1rem] px-[1rem] ">

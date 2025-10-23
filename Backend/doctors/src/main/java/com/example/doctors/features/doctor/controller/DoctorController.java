@@ -23,6 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @Tag(name = "Doctor", description = "Operaciones relacionadas con la gestión de doctores")
@@ -67,7 +68,7 @@ public class DoctorController {
     )
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         doctorService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
@@ -96,7 +97,7 @@ public class DoctorController {
             }
     )
     @GetMapping("/{id}")
-    public DoctorResponseDTO findById(@PathVariable Long id) {
+    public DoctorResponseDTO findById(@PathVariable UUID id) {
         return doctorService.findById(id);
     }
 
@@ -110,7 +111,7 @@ public class DoctorController {
     )
     @PutMapping("/{id}")
     @Transactional
-    public DoctorResponseDTO update(@PathVariable Long id,
+    public DoctorResponseDTO update(@PathVariable UUID id,
                                     @RequestBody @Valid DoctorUpdateDTO doctorUpdateDTO) {
         return doctorService.update(id, doctorUpdateDTO);
     }

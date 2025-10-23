@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface IDoctorRepository extends JpaRepository<Doctor, Long> {
@@ -18,7 +19,7 @@ public interface IDoctorRepository extends JpaRepository<Doctor, Long> {
             WHERE d.id = :id
             AND d.enabled = true
             """)
-    Optional<Doctor> findById(Long id);
+    Optional<Doctor> findById(UUID id);
 
     @Query("""
             SELECT d

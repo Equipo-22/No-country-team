@@ -6,14 +6,16 @@ import com.example.doctors.features.doctor.dto.DoctorUpdateDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.UUID;
+
 public interface IDoctorService {
     DoctorResponseDTO create(DoctorRegisterDTO doctorRegisterDTO);
 
-    void deleteById(Long id);
+    void deleteById(UUID id);
 
     Page<DoctorResponseDTO> findAll(Pageable pagination);
 
-    DoctorResponseDTO findById(Long id);
+    DoctorResponseDTO findById(UUID id);
 
-    DoctorResponseDTO update(Long id, DoctorUpdateDTO doctorUpdateDTO);
+    DoctorResponseDTO update(UUID id, DoctorUpdateDTO doctorUpdateDTO);
 }

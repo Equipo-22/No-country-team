@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class DoctorService implements IDoctorService {
@@ -27,7 +29,7 @@ public class DoctorService implements IDoctorService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(UUID id) {
         Doctor doctor = doctorRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Doctor no encontrado"));
         doctor.deactive();
@@ -39,14 +41,14 @@ public class DoctorService implements IDoctorService {
     }
 
     @Override
-    public DoctorResponseDTO findById(Long id) {
+    public DoctorResponseDTO findById(UUID id) {
         Doctor doctor = doctorRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(("Doctor no encontrado")));
         return new DoctorResponseDTO(doctor);
     }
 
     @Override
-    public DoctorResponseDTO update(Long id, DoctorUpdateDTO doctorUpdateDTO) {
+    public DoctorResponseDTO update(UUID id, DoctorUpdateDTO doctorUpdateDTO) {
         Doctor doctor = doctorRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Doctor no encontrado"));
         doctor.update(doctorUpdateDTO);

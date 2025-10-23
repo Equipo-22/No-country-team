@@ -9,7 +9,7 @@ import React, { useState } from 'react'
 import { useUserStore } from '@/store/userStore';
 import { ReqPassResetMutationsService } from '@/_service/use-mutation-services/reqPassReset-mutation-services';
 import ResetPassForm from '../ResetPass';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 const user = {
   username: "Sofía Garciarena",
@@ -27,6 +27,7 @@ const user = {
 
 const Profile = () => {
 
+  const router = useRouter()
   const [openResetPassModal, setOpenResetPassModal] = useState(false);
   const { email, username, hasHydrated } = useUserStore()
 
@@ -120,7 +121,7 @@ const Profile = () => {
               </div>
             </article>
           </section>
-          <Button className='md:order-2 mt-4 md:mt-0'>
+          <Button className='md:order-2 mt-4 md:mt-0' onClick={() => router.push("/dashboard-patient/medical-record")}>
             <FileText /> Ver historia clínica
           </Button>
         </div>

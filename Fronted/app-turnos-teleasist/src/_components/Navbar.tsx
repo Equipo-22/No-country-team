@@ -3,9 +3,9 @@ import { IoIosNotificationsOutline } from 'react-icons/io'
 
 export const Navbar = () => {
     return (
-        <nav className='flex w-full h-[10vh]  items-center bg-[#fff] p-[1rem] '>
+        <nav className='flex w-full h-[10vh]  items-center bg-white p-4 '>
             <div className='flex gap-2 items-center w-full justify-end'>
-                <IoIosNotificationsOutline className='h-auto w-[2rem]' />
+                <IoIosNotificationsOutline className='h-auto w-8' />
                 <div className='flex justify-around'>
                     <img className='rounded-full h-auto w-[30px]'
                         src={"/person.png"}

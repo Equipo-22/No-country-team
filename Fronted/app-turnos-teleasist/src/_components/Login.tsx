@@ -95,7 +95,7 @@ export default function LoginForm() {
           </div>
           <Button type="submit" className="cursor-pointer">Iniciar sesión</Button>
         </form>
-        <Button onClick={() => router.push("/register")} className="cursor-pointer mx-[1rem] mt-[1rem]" variant={"outline"}>Registrarse</Button>
+        <Button onClick={() => router.push("/register")} className="cursor-pointer mx-4 mt-4" variant={"outline"}>Registrarse</Button>
       </ContainerMax300>
     </Form>
   )

@@ -112,7 +112,9 @@ const Profile = () => {
                     Cambiar contraseña
                   </Button>
                   <Modal isOpen={openResetPassModal} onClose={() => setOpenResetPassModal(!openResetPassModal)} >
+                    <div className='flex justify-center'>
                     <ResetPassForm setOpenResetPassModal={setOpenResetPassModal}/>
+                    </div>
                   </Modal>
                 </div>
               </div>

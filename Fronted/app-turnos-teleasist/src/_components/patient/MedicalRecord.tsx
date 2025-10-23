@@ -38,6 +38,8 @@ const MedicalRecord = () => {
                         <article className="grid grid-cols-4 gap-2 py-3">
                             <p className="text-secondary font-bold py-2 col-span-4">Actualizaciones</p>
                             <MedicalRecordItem />
+                            <MedicalRecordItem />
+                            <MedicalRecordItem />
                         </article>
                     </section>
                 </div>

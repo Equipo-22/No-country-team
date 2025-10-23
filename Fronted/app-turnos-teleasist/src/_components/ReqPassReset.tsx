@@ -31,18 +31,15 @@ export default function ReqPassResetForm() {
   })
   const { mutationPostReqPassReset } = ReqPassResetMutationsService()
 
-  function onSubmit(values: z.infer<typeof reqPassResetSchema>) {
-    console.log("Pasa data a mutation");
-    
+  function onSubmit(values: z.infer<typeof reqPassResetSchema>) {  
     mutationPostReqPassReset.mutate(values)
-    console.log(values)
   }
   return (
     <>
       <Logo />
       <Form {...form} >
         <ContainerMax300 >
-          <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-[1rem] px-[1rem] ">
+          <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4 px-4 ">
             <TitleSection text="Restablecer contraseña" />
             <p className="text-sm ">Ingresa tu correo electrónico y te enviaremos un token para restablecerla</p>
             <FormField

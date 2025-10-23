@@ -1,5 +1,6 @@
 "use client";
 
+import Logo from "@/components/ui/Logo";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
@@ -28,17 +29,18 @@ export default function LayoutGeneral({
           bg-white
         "
             >
+                <Logo />
                 {children}
             </div>
             <div className="hidden md:block relative w-full h-full">
-            <Image
-                src="/teleasistencia.jpg" 
-                alt="imagen teleconsulta médica"
-                fill 
-                className="object-cover [object-position:50%_5%]" 
-                priority
-                sizes="(max-width: 768px) 100vw, 50vw"
-            />
+                <Image
+                    src="/teleasistencia.jpg"
+                    alt="imagen teleconsulta médica"
+                    fill
+                    className="object-cover object-[50%_5%]"
+                    priority
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                />
             </div>
         </div>
     );

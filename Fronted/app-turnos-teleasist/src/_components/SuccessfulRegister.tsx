@@ -13,7 +13,6 @@ const SuccessfulRegister = () => {
     const router = useRouter()
     return (
         <>
-            <Logo />
             <Image
                 src="/success.svg"
                 alt="success_icon"

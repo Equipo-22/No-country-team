@@ -47,11 +47,11 @@ export default function ResetPassForm({ setOpenResetPassModal }: ResetPassFormPr
   const shouldRedirect = pathname !== "/dashboard-patient/profile"
 
   function onSubmit(values: z.infer<typeof resetPassSquema>) {
-     mutationPostResetPass.mutate({
-    ...values,
-    redirect: shouldRedirect,
-    onClose: setOpenResetPassModal ? () => setOpenResetPassModal(false) : undefined, 
-  });
+    mutationPostResetPass.mutate({
+      ...values,
+      redirect: shouldRedirect,
+      onClose: setOpenResetPassModal ? () => setOpenResetPassModal(false) : undefined,
+    });
     console.log(values)
   }
 
@@ -64,49 +64,46 @@ export default function ResetPassForm({ setOpenResetPassModal }: ResetPassFormPr
   }, [shouldRedirect]);
 
   return (
-    <>
-      <Logo />
-      <Form {...form} >
-        <ContainerMax300 >
-          <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4 px-4 ">
-            <TitleSection text="Cambio de contraseña" />
+    <Form {...form} >
+      <ContainerMax300 >
+        <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4 px-4 ">
+          <TitleSection text="Cambio de contraseña" />
 
-            <FormField
-              control={form.control}
-              name="token"
-              render={({ field }) => (
-                <FormItem className="relative">
-                  <FormLabel htmlFor="token">Token</FormLabel>
-                  <FormControl>
-                    <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type="text" placeholder="Ingresa el token recibido por email" id="token"  {...field} />
-                  </FormControl>
-                  <FormMessage className="text-xs mb-1" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="nuevaPassword"
-              render={({ field }) => (
-                <FormItem className="relative">
-                  <FormLabel htmlFor="password">Nueva contraseña</FormLabel>
-                  {
-                    inputsViewpassword ?
-                      <FaEye onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
-                      :
-                      <FaEyeSlash onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
-                  }
-                  <FormControl>
-                    <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type={`${inputsViewpassword ? "password" : "text"}`} placeholder="Ingresa tu contraseña" id="password"  {...field} />
-                  </FormControl>
-                  <FormMessage className="text-xs mb-1" />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" className="cursor-pointer">Confirmar</Button>
-          </form>
-        </ContainerMax300>
-      </Form>
-    </>
+          <FormField
+            control={form.control}
+            name="token"
+            render={({ field }) => (
+              <FormItem className="relative">
+                <FormLabel htmlFor="token">Token</FormLabel>
+                <FormControl>
+                  <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type="text" placeholder="Ingresa el token recibido por email" id="token"  {...field} />
+                </FormControl>
+                <FormMessage className="text-xs mb-1" />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="nuevaPassword"
+            render={({ field }) => (
+              <FormItem className="relative">
+                <FormLabel htmlFor="password">Nueva contraseña</FormLabel>
+                {
+                  inputsViewpassword ?
+                    <FaEye onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
+                    :
+                    <FaEyeSlash onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
+                }
+                <FormControl>
+                  <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type={`${inputsViewpassword ? "password" : "text"}`} placeholder="Ingresa tu contraseña" id="password"  {...field} />
+                </FormControl>
+                <FormMessage className="text-xs mb-1" />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" className="cursor-pointer">Confirmar</Button>
+        </form>
+      </ContainerMax300>
+    </Form>
   )
 }

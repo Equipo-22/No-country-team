@@ -19,32 +19,30 @@ const WelcomePatient = () => {
     ]
 
     return (
-        <>
-            <Logo />
-            <ContainerMax300 >
-                <TitleSection text="¡Te damos la bienvenida!" />
-                <p className='py-3'>Somos un espacio digital para cuidar tu salud de forma simple, segura y conectada.</p>
-                <b className='text-secondary py-2'>Con Medihub podes: </b>
-                {
-                    data.map(e => (
-                        <section className='py-1' key={e.id}>
-                            <div className='flex justify-around  gap-2  w-full' >
-                                <Image
-                                    src={e.icon}
-                                    alt=""
-                                    width={60}
-                                    height={60}
-                                />
-                                <p className='text-sm'>{e.info}</p>
-                            </div>
-                        </section>
-                    ))
-                }
-                <p className='py-4'>Nos enfocamos en brindarte una experiencia fluida, sin complicaciones y con toda la información médica al alcance de tu mano.</p>
-                <p className='pb-5 font-bold'>Comenzá explorando tu panel para gestionar tu próxima cita</p>
-                <Button onClick={() => router.push("/dashboard-patient/inicio")} className="">Comenzar</Button>
-            </ContainerMax300>
-        </>
+        <ContainerMax300 >
+            <TitleSection text="¡Te damos la bienvenida!" />
+            <p className='py-3'>Somos un espacio digital para cuidar tu salud de forma simple, segura y conectada.</p>
+            <b className='text-secondary py-2'>Con Medihub podes: </b>
+            {
+                data.map(e => (
+                    <section className='py-1' key={e.id}>
+                        <div className='flex justify-around  gap-2  w-full' >
+                            <Image
+                                src={e.icon}
+                                alt=""
+                                width={60}
+                                height={60}
+                            />
+                            <p className='text-sm'>{e.info}</p>
+                        </div>
+                    </section>
+                ))
+            }
+            <p className='py-4'>Nos enfocamos en brindarte una experiencia fluida, sin complicaciones y con toda la información médica al alcance de tu mano.</p>
+            <p className='pb-5 font-bold'>Comenzá explorando tu panel para gestionar tu próxima cita</p>
+            <Button onClick={() => router.push("/dashboard-patient/inicio")} className="">Comenzar</Button>
+        </ContainerMax300>
+
     )
 }
 

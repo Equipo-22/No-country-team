@@ -27,7 +27,7 @@ export default function VerifyUserRegister({ email }: { email: string }) {
     defaultValues: { email, verificationCode: "" },
   })
 
-  const { mutationPostVerifyUserRegister  } = VerifyUserMutationService()
+  const { mutationPostVerifyUserRegister } = VerifyUserMutationService()
 
   const inputsRef = useRef<HTMLInputElement[]>([])
   const code = watch("verificationCode").padEnd(6, " ")
@@ -51,24 +51,23 @@ export default function VerifyUserRegister({ email }: { email: string }) {
   }
 
   const handleVerify = (data: VerifyUserType) => {
-    mutationPostVerifyUserRegister .mutate(data)
+    mutationPostVerifyUserRegister.mutate(data)
   }
 
   const onSubmit = (data: VerificationFormData) => {
     console.log("hizo click");
-    
+
     handleVerify(data)
   }
 
-  
+
 
   return (
     <>
-      <Logo />
       <TitleSection text="Verificación de cuenta" />
       <p className="text-sm">Ingresa el código enviado a</p><span className="font-semibold mb-7">{email}</span>
       <form onSubmit={handleSubmit(onSubmit)} className="max-w-[300px] flex flex-col items-center gap-6">
-         <input type="hidden" {...control.register("email")} value={email} />
+        <input type="hidden" {...control.register("email")} value={email} />
         <Controller
           name="verificationCode"
           control={control}

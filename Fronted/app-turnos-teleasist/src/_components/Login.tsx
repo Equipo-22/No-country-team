@@ -95,7 +95,7 @@ export default function LoginForm() {
               />
               <Link href={'/login/req-pass-reset'}><p className="text-sm text-right">¿Olvidaste tu contraseña?</p></Link>
             </div>
-            <Button type="submit" className="cursor-pointer">Iniciar sesión</Button>
+            <Button onClick={() => router.push("/dashboard-patient/inicio")} type="submit" className="cursor-pointer">Iniciar sesión</Button>
           </form>
           <Button onClick={() => router.push("/register")} className="cursor-pointer mx-[1rem] mt-[1rem]" variant={"outline"}>Registrarse</Button>
         </ContainerMax300>

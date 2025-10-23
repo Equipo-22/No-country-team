@@ -22,7 +22,7 @@ const SuccessfulRegister = () => {
             />
             <ContainerMax300>
                 <p className='text-center text-lg pb-4'>Tu cuenta se creó con éxito</p>
-                <Button onClick={() => router.push("/login")} className=" cursor-pointer mx-[1rem] mt-[1rem]" variant={"outline"}>Iniciar sesión</Button>
+                <Button onClick={() => router.push("/login")} className=" cursor-pointer mx-4 mt-4" variant={"outline"}>Iniciar sesión</Button>
             </ContainerMax300>
         </>
     )

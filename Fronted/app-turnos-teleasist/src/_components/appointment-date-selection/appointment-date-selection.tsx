@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import TitleSection from "@/components/ui/TitleSection";
 
 type AppointmentDateSelectionProps = {
   onNext: () => void;
@@ -10,7 +11,7 @@ const AppointmentDateSelection = ({
 }: AppointmentDateSelectionProps) => {
   return (
     <div className="flex flex-col">
-      <h3 className="text-[2rem] text-secondary font-bold">Seleccioná tu cita médica</h3>
+      <TitleSection text="Seleccioná tu cita médica" />
 
       <div className="flex flex-col items-center justify-center w-full">
         <div className="flex gap-2 px-4 py-2 rounded-sm shadow-sm bg-white my-8 lg:px-8 lg:py-4 lg:gap-0 lg:justify-between w-[80%]">

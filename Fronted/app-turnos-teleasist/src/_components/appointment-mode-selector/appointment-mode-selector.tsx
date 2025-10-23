@@ -1,4 +1,5 @@
 import { MonitorCheck, Hospital } from "lucide-react";
+import TitleSection from "@/components/ui/TitleSection";
 
 type AppointmentModeSelectorProps = {
   onOpenPresencial: () => void;
@@ -12,9 +13,8 @@ const AppointmentModeSelector = ({
   return (
     <>
       <div className="flex flex-col gap-2">
-        <h3 className="text-[2rem] text-secondary font-bold">
-          ¿Cómo deseas recibir tu cita?
-        </h3>
+        <TitleSection text="¿Cómo deseas recibir tu cita?" />
+
         <p className="text-xl">
           <strong>Seleccioná una opción</strong>
         </p>
@@ -23,24 +23,20 @@ const AppointmentModeSelector = ({
       <div className="flex gap-5">
         <button
           type="button"
-          className=" flex flex-col items-center gap-2 p-[2rem] rounded-sm shadow-sm bg-white my-[2rem] cursor-pointer w-40"
+          className=" flex flex-col items-center gap-2 p-8 rounded-sm shadow-sm bg-white my-8 cursor-pointer w-40"
           onClick={onOpenPresencial}
         >
           <Hospital className="size-10 text-secondary" />
-          <p className="text-xl">
-            <strong>Presencial</strong>
-          </p>
+          <p className="text-xl font-bold">Presencial</p>
         </button>
 
         <button
           type="button"
-          className=" flex flex-col items-center gap-2 p-[2rem] rounded-sm shadow-sm bg-white my-[2rem] cursor-pointer w-40"
+          className=" flex flex-col items-center gap-2 p-8 rounded-sm shadow-sm bg-white my-8 cursor-pointer w-40"
           onClick={onOpenVirtual}
         >
           <MonitorCheck className="size-10 text-secondary" />
-          <p className="text-xl">
-            <strong>Virtual</strong>
-          </p>
+          <p className="text-xl font-bold">Virtual</p>
         </button>
       </div>
     </>

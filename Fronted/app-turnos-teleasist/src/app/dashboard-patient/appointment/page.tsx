@@ -11,11 +11,8 @@ const AppointmentPatient = () => {
   const [openHistoryModal, setOpenHistoryModal] = useState(false);
 
   return (
-
-    <div>
-
+    <>
       <div className="flex flex-col w-full">
-
         <AppointmentItem
           onOpenUpcoming={() => setOpenUpcomingModal(true)}
           onOpenHistory={() => setOpenHistoryModal(true)}
@@ -36,7 +33,7 @@ const AppointmentPatient = () => {
       >
         <AppointmentDetail />
       </Modal>
-    </div>
+    </>
   );
 };
 

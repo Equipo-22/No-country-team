@@ -1,21 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { CirclePlus, ChevronRight, CircleUser } from "lucide-react";
+import TitleSection from "@/components/ui/TitleSection";
 
 type AppointmentItemProps = {
   onOpenUpcoming: () => void;
   onOpenHistory: () => void;
 };
 
-const AppointmentItem = ({ onOpenUpcoming, onOpenHistory }: AppointmentItemProps) => {
-
+const AppointmentItem = ({
+  onOpenUpcoming,
+  onOpenHistory,
+}: AppointmentItemProps) => {
   return (
     <>
       <div className="flex justify-between items-center">
-        <h3 className="text-[2rem] text-secondary font-bold">Próximas citas</h3>
+        <TitleSection text="Próximas citas" />
         <a href="/dashboard-patient/appointment/create">
-        <Button >
-          <CirclePlus /> Nueva cita
-        </Button>
+          <Button>
+            <CirclePlus /> Nueva cita
+          </Button>
         </a>
       </div>
 
@@ -33,12 +36,16 @@ const AppointmentItem = ({ onOpenUpcoming, onOpenHistory }: AppointmentItemProps
         <p>09:30hs</p>
         <Button variant="outline">Cita confirmada</Button>
         <Button variant="outline">Presencial</Button>
-        <button type="button" className="cursor-pointer" onClick={onOpenUpcoming}>
+        <button
+          type="button"
+          className="cursor-pointer"
+          onClick={onOpenUpcoming}
+        >
           <ChevronRight />
         </button>
       </div>
 
-      <h3 className="text-[2rem] text-secondary font-bold">Historial de citas</h3>
+      <TitleSection text="Historial de citas" />
 
       <div className="flex flex-col gap-2 px-4 py-2 rounded-sm shadow-sm bg-white my-8 lg:px-8 lg:py-4 lg:gap-0 lg:items-center lg:flex-row lg:justify-between">
         <div className="flex items-center gap-2 lg:items-center">
@@ -54,7 +61,11 @@ const AppointmentItem = ({ onOpenUpcoming, onOpenHistory }: AppointmentItemProps
         <p>09:30hs</p>
         <Button variant="outline">Cita confirmada</Button>
         <Button variant="outline">Presencial</Button>
-        <button type="button" className="cursor-pointer" onClick={onOpenHistory}>
+        <button
+          type="button"
+          className="cursor-pointer"
+          onClick={onOpenHistory}
+        >
           <ChevronRight />
         </button>
       </div>

@@ -34,7 +34,7 @@ const AppointmentCreate = () => {
   const goToSuccess = () => setStep("success");
 
   return (
-      <div>
+      <>
         <div className="flex flex-col w-full">
           {step === "mode" && (
             <AppointmentModeSelector
@@ -67,7 +67,7 @@ const AppointmentCreate = () => {
           isVirtual={true}
           onNext={goToDateSelection}
         />
-      </div>
+      </>
   );
 };
 

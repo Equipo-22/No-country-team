@@ -32,36 +32,30 @@ export default function ReqPassResetForm() {
   const { mutationPostReqPassReset } = ReqPassResetMutationsService()
 
   function onSubmit(values: z.infer<typeof reqPassResetSchema>) {
-    console.log("Pasa data a mutation");
-    
     mutationPostReqPassReset.mutate(values)
-    console.log(values)
   }
   return (
-    <>
-      <Logo />
-      <Form {...form} >
-        <ContainerMax300 >
-          <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-[1rem] px-[1rem] ">
-            <TitleSection text="Restablecer contraseña" />
-            <p className="text-sm ">Ingresa tu correo electrónico y te enviaremos un token para restablecerla</p>
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className="">
-                  <FormLabel htmlFor="email">Correo electrónico</FormLabel>
-                  <FormControl >
-                    <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type="email" placeholder="nombre@gmail.com" id="email"   {...field} />
-                  </FormControl>
-                  <FormMessage className="text-xs" />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" className="cursor-pointer">Restablecer</Button>
-          </form>
-        </ContainerMax300>
-      </Form>
-    </>
+    <Form {...form} >
+      <ContainerMax300 >
+        <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4 px-4 ">
+          <TitleSection text="Restablecer contraseña" />
+          <p className="text-sm ">Ingresa tu correo electrónico y te enviaremos un token para restablecerla</p>
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="">
+                <FormLabel htmlFor="email">Correo electrónico</FormLabel>
+                <FormControl >
+                  <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type="email" placeholder="nombre@gmail.com" id="email"   {...field} />
+                </FormControl>
+                <FormMessage className="text-xs" />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" className="cursor-pointer">Restablecer</Button>
+        </form>
+      </ContainerMax300>
+    </Form>
   )
 }

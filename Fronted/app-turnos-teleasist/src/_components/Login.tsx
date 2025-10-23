@@ -54,52 +54,49 @@ export default function LoginForm() {
   }, []);
 
   return (
-    <>
-      <Logo />
-      <Form {...form} >
-        <ContainerMax300 >
-          <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-[1rem] px-[1rem] ">
-            <TitleSection text="Inicio de sesión" />
+    <Form {...form} >
+      <ContainerMax300 >
+        <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4 px-4 ">
+          <TitleSection text="Inicio de sesión" />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="">
+                <FormLabel htmlFor="email">Correo electronico</FormLabel>
+                <FormControl >
+                  <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type="email" placeholder="nombre@gmail.com" id="email"   {...field} />
+                </FormControl>
+                <FormMessage className="text-xs" />
+              </FormItem>
+            )}
+          />
+          <div>
             <FormField
               control={form.control}
-              name="email"
+              name="password"
               render={({ field }) => (
-                <FormItem className="">
-                  <FormLabel htmlFor="email">Correo electronico</FormLabel>
-                  <FormControl >
-                    <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type="email" placeholder="nombre@gmail.com" id="email"   {...field} />
+                <FormItem className="relative">
+                  <FormLabel htmlFor="password">Contraseña</FormLabel>
+                  {
+                    inputsViewpassword ?
+                      <FaEye onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
+                      :
+                      <FaEyeSlash onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
+                  }
+                  <FormControl>
+                    <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type={`${inputsViewpassword ? "password" : "text"}`} placeholder="Ingresa tu contraseña" id="password"  {...field} />
                   </FormControl>
-                  <FormMessage className="text-xs" />
+                  <FormMessage className="text-xs mb-1" />
                 </FormItem>
               )}
             />
-            <div>
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem className="relative">
-                    <FormLabel htmlFor="password">Contraseña</FormLabel>
-                    {
-                      inputsViewpassword ?
-                        <FaEye onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
-                        :
-                        <FaEyeSlash onClick={() => setinputsViewpass(!inputsViewpassword)} className="absolute top-[31px] right-2" />
-                    }
-                    <FormControl>
-                      <Input className="pl-5 bg-[#F2F4F7] placeholder:text-sm" type={`${inputsViewpassword ? "password" : "text"}`} placeholder="Ingresa tu contraseña" id="password"  {...field} />
-                    </FormControl>
-                    <FormMessage className="text-xs mb-1" />
-                  </FormItem>
-                )}
-              />
-              <Link href={'/login/req-pass-reset'}><p className="text-sm text-right">¿Olvidaste tu contraseña?</p></Link>
-            </div>
-            <Button onClick={() => router.push("/dashboard-patient/inicio")} type="submit" className="cursor-pointer">Iniciar sesión</Button>
-          </form>
-          <Button onClick={() => router.push("/register")} className="cursor-pointer mx-[1rem] mt-[1rem]" variant={"outline"}>Registrarse</Button>
-        </ContainerMax300>
-      </Form>
-    </>
+            <Link href={'/login/req-pass-reset'}><p className="text-sm text-right">¿Olvidaste tu contraseña?</p></Link>
+          </div>
+          <Button type="submit" className="cursor-pointer">Iniciar sesión</Button>
+        </form>
+        <Button onClick={() => router.push("/register")} className="cursor-pointer mx-4 mt-4" variant={"outline"}>Registrarse</Button>
+      </ContainerMax300>
+    </Form>
   )
 }

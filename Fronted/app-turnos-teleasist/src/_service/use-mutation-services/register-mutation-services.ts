@@ -14,8 +14,7 @@ export const RegisterMutationsService = () => {
           return postRegister(data);
         },
         onSuccess: function Exito(_res, variables) {
-            setUserData(variables.email, variables.username);
-            console.log(variables.email, variables.username);            
+            setUserData(variables.email, variables.username);        
             setTimeout(() => router.push("/verify-user-register"), 1000);
         },
     });

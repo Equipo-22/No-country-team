@@ -1,24 +1,31 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from "zustand"
+import { persist } from "zustand/middleware"
 
-interface UserStore {
-  email: string;
-  username?: string;
-  setUserData: (email: string, username?: string) => void;
-  clearUserData: () => void;
+interface UserState {
+  email: string
+  username: string
+  hasHydrated: boolean
+  setUserData: (email: string, username: string) => void
+  clearUserData: () => void
+  setHasHydrated: (state: boolean) => void
 }
 
-export const useUserStore = create<UserStore>()(
+export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
       email: "",
       username: "",
+      hasHydrated: false,
+
       setUserData: (email, username) => set({ email, username }),
       clearUserData: () => set({ email: "", username: "" }),
+      setHasHydrated: (state) => set({ hasHydrated: state }),
     }),
     {
-      name: "user-data",
+      name: "user-storage",
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true)
+      },
     }
   )
-);
-
+)

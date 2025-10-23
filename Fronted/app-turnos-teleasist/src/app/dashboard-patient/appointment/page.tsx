@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DashboardPatient } from "@/_components/layouts/DashboardPatient";
+
 import { Navbar } from "@/_components/Navbar";
 import { Button } from "@/components/ui/button";
 import { CircleUser, MessagesSquare, Video } from "lucide-react";
@@ -13,30 +13,32 @@ const AppointmentPatient = () => {
   const [openHistoryModal, setOpenHistoryModal] = useState(false);
 
   return (
-    <DashboardPatient>
-      <div className="flex flex-col w-full">
-        <Navbar />
-        <AppointmentItem
-          onOpenUpcoming={() => setOpenUpcomingModal(true)}
-          onOpenHistory={() => setOpenHistoryModal(true)}
-        />
-      </div>
-      <Modal
-        isOpen={openUpcomingModal}
-        onClose={() => setOpenUpcomingModal(false)}
-        title="Detalle de la cita"
-      >
-        <AppointmentDetail showActions />
-      </Modal>
+    
+      <div>
 
-      <Modal
-        isOpen={openHistoryModal}
-        onClose={() => setOpenHistoryModal(false)}
-        title="Detalle de la cita"
-      >
-        <AppointmentDetail />
-      </Modal>
-    </DashboardPatient>
+        <div className="flex flex-col w-full">
+          
+          <AppointmentItem
+            onOpenUpcoming={() => setOpenUpcomingModal(true)}
+            onOpenHistory={() => setOpenHistoryModal(true)}
+          />
+        </div>
+        <Modal
+          isOpen={openUpcomingModal}
+          onClose={() => setOpenUpcomingModal(false)}
+          title="Detalle de la cita"
+        >
+          <AppointmentDetail showActions />
+        </Modal>
+
+        <Modal
+          isOpen={openHistoryModal}
+          onClose={() => setOpenHistoryModal(false)}
+          title="Detalle de la cita"
+        >
+          <AppointmentDetail />
+        </Modal>
+      </div>
   );
 };
 

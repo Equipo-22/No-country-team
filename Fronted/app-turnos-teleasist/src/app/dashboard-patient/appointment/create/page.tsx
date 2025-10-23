@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { DashboardPatient } from "@/_components/layouts/DashboardPatient";
 import { Navbar } from "@/_components/Navbar";
 import { Button } from "@/components/ui/button";
 import { CircleUser, CalendarDays } from "lucide-react";
@@ -36,42 +35,42 @@ const AppointmentCreate = () => {
   const goToSuccess = () => setStep("success");
 
   return (
-    <DashboardPatient>
-      <div className="flex flex-col w-full">
-        <Navbar />
+      <div>
 
-        {step === "mode" && (
-          <AppointmentModeSelector
-            onOpenPresencial={() => setOpenPresencialModal(true)}
-            onOpenVirtual={() => setOpenVirtualModal(true)}
-          />
-        )}
-        {step === "date" && (
-          <AppointmentDateSelection onNext={goToConfirmation} />
-        )}
-        {step === "confirmation" && (
-          <AppointmentConfirmation
-            onBack={goToDateSelection}
-            onConfirm={goToSuccess}
-          />
-        )}
-        {step === "success" && <AppointmentConfirmationSuccess />}
+        <div className="flex flex-col w-full">
+
+          {step === "mode" && (
+            <AppointmentModeSelector
+              onOpenPresencial={() => setOpenPresencialModal(true)}
+              onOpenVirtual={() => setOpenVirtualModal(true)}
+            />
+          )}
+          {step === "date" && (
+            <AppointmentDateSelection onNext={goToConfirmation} />
+          )}
+          {step === "confirmation" && (
+            <AppointmentConfirmation
+              onBack={goToDateSelection}
+              onConfirm={goToSuccess}
+            />
+          )}
+          {step === "success" && <AppointmentConfirmationSuccess />}
+        </div>
+
+        <AppointmentModal
+          isOpen={openPresencialModal}
+          onClose={() => setOpenPresencialModal(false)}
+          isVirtual={false}
+          onNext={goToDateSelection}
+        />
+
+        <AppointmentModal
+          isOpen={openVirtualModal}
+          onClose={() => setOpenVirtualModal(false)}
+          isVirtual={true}
+          onNext={goToDateSelection}
+        />
       </div>
-
-      <AppointmentModal
-        isOpen={openPresencialModal}
-        onClose={() => setOpenPresencialModal(false)}
-        isVirtual={false}
-        onNext={goToDateSelection}
-      />
-
-      <AppointmentModal
-        isOpen={openVirtualModal}
-        onClose={() => setOpenVirtualModal(false)}
-        isVirtual={true}
-        onNext={goToDateSelection}
-      />
-    </DashboardPatient>
   );
 };
 

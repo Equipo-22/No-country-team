@@ -20,9 +20,7 @@ export default function RootLayout({
     <html lang="es">
       <body className={`antialiased`}>
         <ContextProvider>
-         <LayoutGeneral>
           {children}
-         </LayoutGeneral>
         </ContextProvider>
       </body>
     </html>

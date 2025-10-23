@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-
-import { Navbar } from "@/_components/Navbar";
 import { Button } from "@/components/ui/button";
 import { CircleUser, MessagesSquare, Video } from "lucide-react";
 import Modal from "@/components/ui/modal";
@@ -13,37 +11,37 @@ const AppointmentPatient = () => {
   const [openHistoryModal, setOpenHistoryModal] = useState(false);
 
   return (
-    
-      <div>
 
-        <div className="flex flex-col w-full">
-          
-          <AppointmentItem
-            onOpenUpcoming={() => setOpenUpcomingModal(true)}
-            onOpenHistory={() => setOpenHistoryModal(true)}
-          />
-        </div>
-        <Modal
-          isOpen={openUpcomingModal}
-          onClose={() => setOpenUpcomingModal(false)}
-          title="Detalle de la cita"
-        >
-          <AppointmentDetail showActions />
-        </Modal>
+    <div>
 
-        <Modal
-          isOpen={openHistoryModal}
-          onClose={() => setOpenHistoryModal(false)}
-          title="Detalle de la cita"
-        >
-          <AppointmentDetail />
-        </Modal>
+      <div className="flex flex-col w-full">
+
+        <AppointmentItem
+          onOpenUpcoming={() => setOpenUpcomingModal(true)}
+          onOpenHistory={() => setOpenHistoryModal(true)}
+        />
       </div>
+      <Modal
+        isOpen={openUpcomingModal}
+        onClose={() => setOpenUpcomingModal(false)}
+        title="Detalle de la cita"
+      >
+        <AppointmentDetail showActions />
+      </Modal>
+
+      <Modal
+        isOpen={openHistoryModal}
+        onClose={() => setOpenHistoryModal(false)}
+        title="Detalle de la cita"
+      >
+        <AppointmentDetail />
+      </Modal>
+    </div>
   );
 };
 
 const AppointmentDetail = ({ showActions }: { showActions?: boolean }) => (
-  <div className="space-y-4">
+  <>
     <div className="flex justify-between items-center">
       <div className="flex items-center gap-3">
         <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
@@ -105,7 +103,7 @@ const AppointmentDetail = ({ showActions }: { showActions?: boolean }) => (
         <Button variant="outline">Cancelar cita</Button>
       </div>
     )}
-  </div>
+  </>
 );
 
 export default AppointmentPatient;

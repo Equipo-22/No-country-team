@@ -9,7 +9,7 @@ type AppointmentItemProps = {
 const AppointmentItem = ({ onOpenUpcoming, onOpenHistory }: AppointmentItemProps) => {
 
   return (
-    <div className="p-[2rem]">
+    <>
       <div className="flex justify-between items-center">
         <h3 className="text-[2rem] text-secondary font-bold">Próximas citas</h3>
         <a href="/dashboard-patient/appointment/create">
@@ -19,7 +19,7 @@ const AppointmentItem = ({ onOpenUpcoming, onOpenHistory }: AppointmentItemProps
         </a>
       </div>
 
-      <div className="flex flex-col gap-2 px-[1rem] py-[0.5rem] rounded-sm shadow-sm bg-white my-[2rem] lg:px-[2rem] lg:py-[1rem] lg:gap-0 lg:items-center lg:flex-row lg:justify-between">
+      <div className="flex flex-col gap-2 px-4 py-2 rounded-sm shadow-sm bg-white my-8 lg:px-8 lg:py-4 lg:gap-0 lg:items-center lg:flex-row lg:justify-between">
         <div className="flex items-center gap-2 lg:items-center">
           <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
             <CircleUser className="text-gray-500" />
@@ -40,7 +40,7 @@ const AppointmentItem = ({ onOpenUpcoming, onOpenHistory }: AppointmentItemProps
 
       <h3 className="text-[2rem] text-secondary font-bold">Historial de citas</h3>
 
-      <div className="flex flex-col gap-2 px-[1rem] py-[0.5rem] rounded-sm shadow-sm bg-white my-[2rem] lg:px-[2rem] lg:py-[1rem] lg:gap-0 lg:items-center lg:flex-row lg:justify-between">
+      <div className="flex flex-col gap-2 px-4 py-2 rounded-sm shadow-sm bg-white my-8 lg:px-8 lg:py-4 lg:gap-0 lg:items-center lg:flex-row lg:justify-between">
         <div className="flex items-center gap-2 lg:items-center">
           <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
             <CircleUser className="text-gray-500" />
@@ -58,7 +58,7 @@ const AppointmentItem = ({ onOpenUpcoming, onOpenHistory }: AppointmentItemProps
           <ChevronRight />
         </button>
       </div>
-    </div>
+    </>
   );
 };
 

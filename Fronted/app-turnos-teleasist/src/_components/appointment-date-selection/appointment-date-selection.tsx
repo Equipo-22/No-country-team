@@ -9,11 +9,11 @@ const AppointmentDateSelection = ({
   onNext,
 }: AppointmentDateSelectionProps) => {
   return (
-    <div className="p-[2rem] flex flex-col">
+    <div className="flex flex-col">
       <h3 className="text-[2rem] text-secondary font-bold">Seleccioná tu cita médica</h3>
 
       <div className="flex flex-col items-center justify-center w-full">
-        <div className="flex gap-2 px-[1rem] py-[0.5rem] rounded-sm shadow-sm bg-white my-[2rem] lg:px-[2rem] lg:py-[1rem] lg:gap-0 lg:justify-between w-[80%]">
+        <div className="flex gap-2 px-4 py-2 rounded-sm shadow-sm bg-white my-8 lg:px-8 lg:py-4 lg:gap-0 lg:justify-between w-[80%]">
           <button type="button" className="cursor-pointer">
             <ChevronLeft />
           </button>
@@ -36,7 +36,7 @@ const AppointmentDateSelection = ({
           </button>
         </div>
 
-        <div className="flex flex-col gap-2 px-[1rem] py-[0.5rem] rounded-sm shadow-sm bg-white my-[2rem] lg:px-[2rem] lg:py-[1rem] lg:gap-0 lg:items-center lg:flex-row lg:justify-between w-full">
+        <div className="flex flex-col gap-2 px-4 py-2 rounded-sm shadow-sm bg-white my-8 lg:px-8 lg:py-4 lg:gap-0 lg:items-center lg:flex-row lg:justify-between w-full">
           <div className="flex gap-10">
             <p className="text-2xl text-secondary font-bold">7:50 pm</p>
             <div className="flex flex-col gap-2">
@@ -45,7 +45,6 @@ const AppointmentDateSelection = ({
               <p>Traumatología</p>
             </div>
           </div>
-
           <Button onClick={onNext}>Agendar cita</Button>
         </div>
       </div>

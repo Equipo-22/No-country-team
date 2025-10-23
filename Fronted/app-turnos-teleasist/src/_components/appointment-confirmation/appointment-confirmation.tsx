@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import TitleSection from "@/components/ui/TitleSection";
 import { MapPin, Hospital } from "lucide-react";
 
 type AppointmentConfirmationProps = {
@@ -11,12 +12,10 @@ const AppointmentConfirmation = ({
   onConfirm,
 }: AppointmentConfirmationProps) => {
   return (
-    <div className="p-[2rem]">
-      <h3 className="text-[2rem] text-secondary font-bold">
-        Confirma la cita que deseas agendar
-      </h3>
+    <>
+    <TitleSection text="Confirma la cita que deseas agendar" />
       <div className="flex flex-col items-center justify-center gap-5 ">
-        <div className="flex flex-col gap-2 px-[1rem] py-[0.5rem] rounded-sm shadow-sm bg-white my-[2rem] lg:px-[2rem] lg:py-[1rem] lg:flex-row lg:gap-72  w-full">
+        <div className="flex flex-col gap-2 px-4 py-2 rounded-sm shadow-sm bg-white my-8 lg:px-8 lg:py-4 lg:flex-row lg:gap-72 w-full">
           <div className="flex flex-col gap-2">
             <p className="text-xl font-bold">Viernes, 2 de noviembre</p>
             <p className="text-xl font-bold">7:50 pm</p>
@@ -42,7 +41,7 @@ const AppointmentConfirmation = ({
           <Button onClick={onConfirm}>Confirmar cita</Button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

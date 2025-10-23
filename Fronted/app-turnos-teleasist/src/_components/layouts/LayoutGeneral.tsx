@@ -15,20 +15,8 @@ export default function LayoutGeneral({
     return isOnDashboard ? (
         children
     ) : (
-        <div
-            className="
-        grid min-h-screen 
-        grid-cols-1 md:grid-cols-2 
-        w-full
-      "
-        >
-            <div
-                className="
-          flex flex-col justify-center items-center 
-          px-6 py-10 md:px-16 lg:px-24
-          bg-white
-        "
-            >
+        <div className="grid min-h-screen grid-cols-1 md:grid-cols-2 w-full" >
+            <div className="flex flex-col justify-center items-center px-6 py-10 md:px-16 lg:px-24 bg-white">
                 <Logo />
                 {children}
             </div>

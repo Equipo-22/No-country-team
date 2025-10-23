@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Navbar } from "@/_components/Navbar";
 import { Button } from "@/components/ui/button";
 import { CircleUser, CalendarDays } from "lucide-react";
 import Modal from "@/components/ui/modal";
@@ -36,9 +35,7 @@ const AppointmentCreate = () => {
 
   return (
       <div>
-
         <div className="flex flex-col w-full">
-
           {step === "mode" && (
             <AppointmentModeSelector
               onOpenPresencial={() => setOpenPresencialModal(true)}

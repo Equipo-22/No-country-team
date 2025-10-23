@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { MapPin, CheckCircle, Calendar1, Clock, CalendarDays} from "lucide-react";
+import { MapPin, CheckCircle, Calendar1, Clock, CalendarDays } from "lucide-react";
+import TitleSection from "@/components/ui/TitleSection";
 
 const AppointmentConfirmationSuccess = () => {
   const router = useRouter();
@@ -9,14 +10,13 @@ const AppointmentConfirmationSuccess = () => {
     router.push("/dashboard-patient/inicio");
   };
   return (
-    <div className="p-[2rem]">
-      <h3 className="flex items-center justify-center gap-2 text-[2rem] text-secondary font-bold">
+    <>
+      <div className="flex items-center justify-center gap-2">
         <CheckCircle className="size-10 text-green-500" />
-        ¡Tu cita ha sido agendada con éxito!
-      </h3>
-
+        <TitleSection text="¡Tu cita ha sido agendada con éxito!" />
+      </div>
       <div className="flex flex-col items-center justify-center gap-5 ">
-        <div className="flex flex-col items-center justify-center gap-10 px-[1rem] py-[0.5rem] rounded-sm shadow-sm bg-white my-[2rem]  lg:py-[2rem] w-full">
+        <div className="flex flex-col items-center justify-center gap-10 px-4 py-2 rounded-sm shadow-sm bg-white my-8  lg:py-8 w-full">
           <p className="text-xl ">
             Se agendo tu <strong>cita presencial</strong> del{" "}
             <strong>Consuta de Medicida Gerneral</strong> con el profesional{" "}
@@ -45,7 +45,7 @@ const AppointmentConfirmationSuccess = () => {
 
         <Button onClick={handleAccept}>Aceptar</Button>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -10,7 +10,7 @@ const AppointmentModeSelector = ({
   onOpenVirtual,
 }: AppointmentModeSelectorProps) => {
   return (
-    <div className="p-[2rem]">
+    <>
       <div className="flex flex-col gap-2">
         <h3 className="text-[2rem] text-secondary font-bold">
           ¿Cómo deseas recibir tu cita?
@@ -43,7 +43,7 @@ const AppointmentModeSelector = ({
           </p>
         </button>
       </div>
-    </div>
+    </>
   );
 };
 

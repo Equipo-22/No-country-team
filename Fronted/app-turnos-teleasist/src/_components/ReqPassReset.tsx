@@ -53,6 +53,11 @@ export default function ReqPassResetForm() {
               </FormItem>
             )}
           />
+           {mutationPostReqPassReset.isError && (
+            <p className="text-destructive text-sm">
+              {(mutationPostReqPassReset.error as Error).message}
+            </p>
+          )}
           <Button type="submit" className="cursor-pointer">Restablecer</Button>
         </form>
       </ContainerMax300>

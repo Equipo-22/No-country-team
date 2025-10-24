@@ -100,8 +100,8 @@ export default function VerifyUserRegister({ email }: { email: string }) {
           <p className="text-destructive text-xs">{errors.verificationCode.message}</p>
         )}
         {mutationPostVerifyUserRegister.isError && (
-          <p className="text-destructive text-sm mt-2">
-            Error al verificar el usuario
+          <p className="text-destructive text-sm">
+            {(mutationPostVerifyUserRegister.error as Error).message}
           </p>
         )}
         <Button type="submit" className="w-full max-w-xs">

@@ -104,11 +104,11 @@ export default function VerifyUserLogin() {
         {errors.verificationCode && (
           <p className="text-destructive text-xs">{errors.verificationCode.message}</p>
         )}
-        {mutationPostVerifyUserLogin.isError && (
-          <p className="text-destructive text-sm mt-2">
-            Error al verificar el usuario
-          </p>
-        )}
+         {mutationPostVerifyUserLogin.isError && (
+            <p className="text-destructive text-sm">
+              {(mutationPostVerifyUserLogin.error as Error).message}
+            </p>
+          )}
         <Button type="submit" className="w-full max-w-xs">
           {mutationPostVerifyUserLogin.isPending ? "Verificando..." : "Verificar"}
         </Button>

@@ -20,7 +20,6 @@ import { RegisterMutationsService } from "@/_service/use-mutation-services/regis
 import { useState } from "react"
 import { useRouter } from "next/navigation";
 import TitleSection from "@/components/ui/TitleSection";
-import Logo from "@/components/ui/Logo";
 import ContainerMax300 from "@/components/ui/Container-max300";
 
 
@@ -115,6 +114,11 @@ export default function RegisterForm() {
               </FormItem>
             )}
           />
+          {mutationPostRegister.isError && (
+            <p className="text-destructive text-sm">
+              {(mutationPostRegister.error as Error).message}
+            </p>
+          )}
           <Button type="submit" className="cursor-pointer">Registrarse</Button>
         </form>
         <Button onClick={() => router.push("/login")} className=" cursor-pointer mx-4 mt-4" variant={"outline"}>Iniciar sesión</Button>

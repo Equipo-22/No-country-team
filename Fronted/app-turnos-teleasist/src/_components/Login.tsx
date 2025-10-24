@@ -93,6 +93,11 @@ export default function LoginForm() {
             />
             <Link href={'/login/req-pass-reset'}><p className="text-sm text-right">¿Olvidaste tu contraseña?</p></Link>
           </div>
+           {mutationPostLogin.isError && (
+            <p className="text-destructive text-sm">
+              {(mutationPostLogin.error as Error).message}
+            </p>
+          )}
           <Button type="submit" className="cursor-pointer">Iniciar sesión</Button>
         </form>
         <Button onClick={() => router.push("/register")} className="cursor-pointer mx-4 mt-4" variant={"outline"}>Registrarse</Button>

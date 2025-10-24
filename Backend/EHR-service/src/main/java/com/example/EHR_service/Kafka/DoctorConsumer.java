@@ -18,13 +18,13 @@ public class DoctorConsumer {
 
     private final FhirService fhirService;
 
-    @KafkaListener(topics = "doctor_register-topic",groupId = "doctor-group")
-    public void handleInscripcionSaved(String message){
+    @KafkaListener(topics = "doctor_register-topic",groupId = "ehr-group")
+    public void handleDoctorSaved(String message){
         DoctorResponseDTO doctorRegisterEvent= Jsonutils.fromJson(message, DoctorResponseDTO.class);
         Practitioner practitioner=new Practitioner();
 
         practitioner.setId(doctorRegisterEvent.id().toString());
-        System.out.println(doctorRegisterEvent.id().toString());
+        System.out.println(doctorRegisterEvent.id());
 
         practitioner.addName(new HumanName().addGiven(doctorRegisterEvent.firstName())
                 .setFamily(doctorRegisterEvent.lastName()));
@@ -49,6 +49,6 @@ public class DoctorConsumer {
                 .setValue(doctorRegisterEvent.phone()));
 
         fhirService.createPractitioner(practitioner);
-        System.out.println("llego hasta aca y se guardo el medico");
+        System.out.println("Se guardo el medico");
     }
 }

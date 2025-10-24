@@ -103,6 +103,56 @@ services:
     networks:
       - app-network
 
+  ##Telehealth service
+  db_telehealth:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${SPRING_DATASOURCE_USERNAME}
+      POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      POSTGRES_DB: ${SPRING_DATASOURCE_DB_TELEHEALTH}
+    ports:
+      - "5437:5432"
+    volumes:
+      - telehealth_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  telehealth-app:
+    build: ./telehealth-service
+    depends_on:
+      - db_telehealth
+    env_file:
+      - .env
+    ports:
+      - "8084:8084"
+    networks:
+      - app-network
+
+  ##Patient Service
+  db_patient:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${SPRING_DATASOURCE_USERNAME}
+      POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      POSTGRES_DB: ${SPRING_DATASOURCE_DB_PATIENT}
+    ports:
+      - "5438:5432"
+    volumes:
+      - patient_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  patient-app:
+    build: ./patient-service
+    depends_on:
+      - db_patient
+    env_file:
+      - .env
+    ports:
+      - "8086:8086"
+    networks:
+      - app-network
+
   ##Zookeeper
   zookeeper:
     container_name: zookeeper
@@ -140,3 +190,5 @@ volumes:
   auth_data:
   fhir_data:
   doctor_data:
+  telehealth_data:
+  patient_data:

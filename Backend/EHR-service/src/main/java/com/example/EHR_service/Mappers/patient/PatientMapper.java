@@ -1,7 +1,7 @@
 package com.example.EHR_service.Mappers.patient;
 
 import com.example.EHR_service.Models.Dtos.patient.PatientRequest;
-import com.example.EHR_service.Models.Dtos.patient.PatientResponse;
+import com.example.EHR_service.Models.Dtos.patient.PatientResponseFhir;
 import org.hl7.fhir.r4.model.*;
 
 import java.util.Date;
@@ -99,7 +99,7 @@ public class PatientMapper {
     }
 
 
-    public static PatientResponse toDto(Patient patient) {
+    public static PatientResponseFhir toDto(Patient patient) {
 
         String patientId=patient.getIdElement().getIdPart();
         // --- NOMBRE ---
@@ -163,7 +163,7 @@ public class PatientMapper {
                     contact.getRelationshipFirstRep().getText() : null;
         }
 
-        return new PatientResponse(
+        return new PatientResponseFhir(
                 patientId,
                 firstName,
                 lastName,

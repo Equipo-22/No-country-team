@@ -1,7 +1,7 @@
 package com.example.EHR_service.Models.Dtos.patientHistory;
 
 import com.example.EHR_service.Models.Dtos.fullEncounter.FullEncounterResponse;
-import com.example.EHR_service.Models.Dtos.patient.PatientResponse;
+import com.example.EHR_service.Models.Dtos.patient.PatientResponseFhir;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +12,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PatientHistoryResponse {
-    private PatientResponse patient;
+    private PatientResponseFhir patient;
     private PaginatedResponse<FullEncounterResponse>fullEncounters;
 }

@@ -46,6 +46,19 @@ public class FhirService {
                 .execute(),"No se encontro el paciente con ID :"+id);
     }
 
+    public Patient createPatient(Patient patient) {
+        if (patient.getIdElement() == null || patient.getIdElement().isEmpty()) {
+            throw new IllegalArgumentException("El patient debe tener un ID asignado antes de crearse.");
+        }
+        // Usamos update() para crear o actualizar con el ID proporcionado (upsert)
+        return (Patient) client
+                .update()
+                .resource(patient)
+                .withId(patient.getIdElement()) // asegura que se use el mismo UUID
+                .execute()
+                .getResource();
+    }
+
     public Practitioner createPractitioner(Practitioner practitioner) {
         if (practitioner.getIdElement() == null || practitioner.getIdElement().isEmpty()) {
             throw new IllegalArgumentException("El Practitioner debe tener un ID asignado antes de crearse.");

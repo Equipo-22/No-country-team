@@ -1,8 +1,8 @@
-import SuccessfulRegister from "@/_components/SuccessfulRegister"
+import Success from '@/_components/Success'
 
 const page = () => {
     return (
-        <SuccessfulRegister />
+        <Success text="Tu cuenta se creó con éxito" buttonText="Iniciar sesión" redirect="/login" />
     )
 }
 

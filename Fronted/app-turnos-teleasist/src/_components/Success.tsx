@@ -1,14 +1,18 @@
 "use client"
 
 import ContainerMax300 from '@/components/ui/Container-max300'
-import Logo from '@/components/ui/Logo'
 import Image from 'next/image'
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 
+type SuccessProps = {
+    text: string,
+    buttonText: string,
+    redirect: string
+}
 
-const SuccessfulRegister = () => {
+const Success = ({text, buttonText, redirect}: SuccessProps) => {
 
     const router = useRouter()
     return (
@@ -20,11 +24,11 @@ const SuccessfulRegister = () => {
                 height={63}
             />
             <ContainerMax300>
-                <p className='text-center text-lg pb-4'>Tu cuenta se creó con éxito</p>
-                <Button onClick={() => router.push("/login")} className=" cursor-pointer mx-4 mt-4" variant={"outline"}>Iniciar sesión</Button>
+                <p className='text-center text-lg pb-4'>{text}</p>
+                <Button onClick={() => router.push(redirect)} className=" cursor-pointer mx-4 mt-4" variant={"outline"}>{buttonText}</Button>
             </ContainerMax300>
         </>
     )
 }
 
-export default SuccessfulRegister
+export default Success

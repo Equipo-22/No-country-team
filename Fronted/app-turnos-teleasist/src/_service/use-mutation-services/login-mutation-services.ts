@@ -14,7 +14,7 @@ export const LoginMutationsService = () => {
     },
     onSuccess: function Exito(_res, variables) {
         console.log("Login ok");
-        setUserData(variables.email);
+        setUserData({ email: variables.email });
       setTimeout(() => router.push("/verify-user-login"), 1000);
     },
   });

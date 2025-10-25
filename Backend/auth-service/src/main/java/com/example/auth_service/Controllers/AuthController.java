@@ -15,7 +15,7 @@ import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "Auth Service", description = "Endpoints de autenticación y registro (usar prefijo /api/auth/)")
+@Tag(name = "Auth Service", description = "Endpoints de autenticación y registro (usar prefijo /api/auth/). Acordarse de crear roles: ROLE_USER, ROLE_PACIENTE y ROLE_PERSONAL_MEDICO")
 
 public class AuthController {
 

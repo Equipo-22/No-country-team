@@ -50,7 +50,7 @@ public class AuthService {
 
         String jwtToken=jwtUtils.generateToken(user);
 
-        return new VerifyUserResponseDTO(jwtToken,user.getUserNameReal(),user.getEmail(),
+        return new VerifyUserResponseDTO(user.getId(),jwtToken,user.getUserNameReal(),user.getEmail(),
                 user.getRoles()
                         .stream().map(role->role.getName().name())
                         .toList());

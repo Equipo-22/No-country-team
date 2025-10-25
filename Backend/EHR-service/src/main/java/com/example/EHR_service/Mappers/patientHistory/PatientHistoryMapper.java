@@ -4,7 +4,7 @@ import com.example.EHR_service.Mappers.fullEncounter.FullEncounterMapper;
 import com.example.EHR_service.Mappers.patient.PatientMapper;
 import com.example.EHR_service.Models.Dtos.patientHistory.PaginatedResponse;
 import com.example.EHR_service.Models.Dtos.fullEncounter.FullEncounterResponse;
-import com.example.EHR_service.Models.Dtos.patient.PatientResponse;
+import com.example.EHR_service.Models.Dtos.patient.PatientResponseFhir;
 import com.example.EHR_service.Models.Dtos.patientHistory.PatientHistoryResponse;
 import org.hl7.fhir.r4.model.*;
 
@@ -45,9 +45,9 @@ public class PatientHistoryMapper {
         }
 
         // Paciente
-        PatientResponse patientResponse = null;
+        PatientResponseFhir patientResponseFhir = null;
         if (patient != null) {
-            patientResponse = PatientMapper.toDto(patient);
+            patientResponseFhir = PatientMapper.toDto(patient);
         }
 
         // Mapear cada Encounter a FullEncounterResponse
@@ -68,7 +68,7 @@ public class PatientHistoryMapper {
         paginated.setHasNext(page < totalPages - 1);
         paginated.setHasPrevious(page > 0);
 
-        return new PatientHistoryResponse(patientResponse, paginated);
+        return new PatientHistoryResponse(patientResponseFhir, paginated);
     }
 
 }

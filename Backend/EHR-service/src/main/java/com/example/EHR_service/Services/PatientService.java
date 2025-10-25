@@ -2,8 +2,7 @@ package com.example.EHR_service.Services;
 
 import com.example.EHR_service.Mappers.patient.PatientMapper;
 import com.example.EHR_service.Mappers.patientHistory.PatientHistoryMapper;
-import com.example.EHR_service.Models.Dtos.patient.PatientRequest;
-import com.example.EHR_service.Models.Dtos.patient.PatientResponse;
+import com.example.EHR_service.Models.Dtos.patient.PatientResponseFhir;
 import com.example.EHR_service.Models.Dtos.patientHistory.PatientHistoryResponse;
 import lombok.RequiredArgsConstructor;
 import org.hl7.fhir.r4.model.*;
@@ -17,7 +16,7 @@ public class PatientService {
 
     //agregar metodo que escuche evento y guarde a nuevo paciente.
 
-    public PatientResponse getPatient(String id) {
+    public PatientResponseFhir getPatient(String id) {
         Patient patient=fhirService.getPatient(id);
         return PatientMapper.toDto(patient);
     }

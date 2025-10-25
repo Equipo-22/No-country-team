@@ -8,8 +8,8 @@ import Image from 'next/image';
 import React, { useState } from 'react'
 import { useUserStore } from '@/store/userStore';
 import { ReqPassResetMutationsService } from '@/_service/use-mutation-services/reqPassReset-mutation-services';
-import ResetPassForm from '../ResetPass';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import ResetPasswordModal from '../ResetPassModal';
 
 const user = {
   username: "Sofía Garciarena",
@@ -111,11 +111,7 @@ const Profile = () => {
                 >
                   Cambiar contraseña
                 </Button>
-                <Modal isOpen={openResetPassModal} onClose={() => setOpenResetPassModal(!openResetPassModal)} >
-                  <div className='flex justify-center'>
-                    <ResetPassForm setOpenResetPassModal={setOpenResetPassModal} />
-                  </div>
-                </Modal>
+                <ResetPasswordModal isOpen={openResetPassModal} onClose={() => setOpenResetPassModal(!openResetPassModal)} />
               </div>
             </div>
           </article>

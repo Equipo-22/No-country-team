@@ -16,21 +16,18 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { resetPassSquema } from "@/_schemas/resetPass-schema"
-import { useEffect, useState } from "react"
-import Logo from "@/components/ui/Logo";
+import { useState } from "react"
 import TitleSection from "@/components/ui/TitleSection"
 import ContainerMax300 from "@/components/ui/Container-max300";
 import { ResetPassMutationsService } from "@/_service/use-mutation-services/resetPass-mutation-services";
-import { useUserStore } from "@/store/userStore";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 
-interface ResetPassFormProps {
-  setOpenResetPassModal?: (open: boolean) => void;
+type onSuccessProps = {
+  onSuccess?: () => void
 }
 
-
-export default function ResetPassForm({ setOpenResetPassModal }: ResetPassFormProps) {
+export default function ResetPassForm({ onSuccess }: onSuccessProps) {
 
   const form = useForm<z.infer<typeof resetPassSquema>>({
     resolver: zodResolver(resetPassSquema),
@@ -43,25 +40,19 @@ export default function ResetPassForm({ setOpenResetPassModal }: ResetPassFormPr
 
   const [inputsViewpassword, setinputsViewpass] = useState(true)
 
-  const pathname = usePathname()
-  const shouldRedirect = pathname !== "/dashboard-patient/profile"
+  const router = useRouter()
 
   function onSubmit(values: z.infer<typeof resetPassSquema>) {
-    mutationPostResetPass.mutate({
-      ...values,
-      redirect: shouldRedirect,
-      onClose: setOpenResetPassModal ? () => setOpenResetPassModal(false) : undefined,
-    });
+    mutationPostResetPass.mutate(values, {
+      onSuccess: () => {
+        if (onSuccess) {
+          onSuccess()
+        } else {
+          router.push("/login/reset-pass/success")
+        }
+      }, })
     console.log(values)
   }
-
-  const { clearUserData } = useUserStore();
-
-  useEffect(() => {
-    if (shouldRedirect) {
-      clearUserData();
-    }
-  }, [shouldRedirect]);
 
   return (
     <Form {...form} >
@@ -101,7 +92,12 @@ export default function ResetPassForm({ setOpenResetPassModal }: ResetPassFormPr
               </FormItem>
             )}
           />
-          <Button type="submit" className="cursor-pointer">Confirmar</Button>
+          <Button
+            type="submit"
+            className="cursor-pointer"
+            disabled={mutationPostResetPass.isPending}
+          >
+            {mutationPostResetPass.isPending ? "Guardando..." : "Confirmar"}</Button>
         </form>
       </ContainerMax300>
     </Form>

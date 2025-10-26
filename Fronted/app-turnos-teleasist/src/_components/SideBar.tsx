@@ -50,7 +50,7 @@ const SideBar = () => {
 
         <div className="flex flex-col gap-2 mt-3">
           {data_dashbouard_config.map(({ Icon, href, id, info }) => (
-            <Link key={id} href={href} className={baseLink}>
+            <Link key={id} href={href} className={getLinkClasses(href)}>
               <Icon className="w-6 h-auto" />
               <span>{info}</span>
             </Link>
@@ -59,7 +59,7 @@ const SideBar = () => {
       </div>
       <button
         onClick={handleLogout}
-        className="flex items-center gap-2 mt-auto cursor-pointer hover:text-[#698be7] transition-colors"
+        className="flex items-center gap-2 mt-auto cursor-pointer hover:text-secondary transition-colors"
       >
         <RiLogoutBoxLine className="w-5 h-auto" />
         <p>Cerrar sesión</p>

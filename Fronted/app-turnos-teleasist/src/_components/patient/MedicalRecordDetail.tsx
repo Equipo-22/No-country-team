@@ -78,19 +78,19 @@ const MedicalRecordDetail = () => {
                         <p><strong>Motivo:</strong> {recordSelected.subject}</p>
                         <p><strong>Diagnóstico:</strong> {recordSelected.diagnosis}</p>
                         <p><strong>Tratamiento indicado:</strong>
-                            <ul className="list-disc list-inside ml-4">{recordSelected.treatments.map(treatment => {
-                                return <li>{treatment}</li>
+                            <ul className="list-disc list-inside ml-4">{recordSelected.treatments.map((treatment, index) => {
+                                return <li key={index}>{treatment}</li>
                             })}
 
                             </ul></p>
                         <p><strong>Estudios médicos:</strong>
-                            <ul className="list-disc list-inside ml-4">{recordSelected.medicalStudies.map(studie => {
-                                return <li>{studie}</li>
+                            <ul className="list-disc list-inside ml-4">{recordSelected.medicalStudies.map((studie, index) => {
+                                return <li key={index}>{studie}</li>
                             })}
                             </ul></p>
                         <p><strong>Observaciones:</strong>
-                            <ul className="list-disc list-inside ml-4">{recordSelected.observations.map(observation => {
-                                return <li>{observation}</li>
+                            <ul className="list-disc list-inside ml-4">{recordSelected.observations.map((observation, index) => {
+                                return <li key={index}>{observation}</li>
                             })}
                             </ul></p>
                     </div>

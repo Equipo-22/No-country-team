@@ -1,21 +1,7 @@
-import { Button } from '@/components/ui/button'
 import TitleSection from '@/components/ui/TitleSection'
 import React from 'react'
 import MedicalRecordItem from './MedicalRecordItem'
 
-const appointment = {
-    username: "Sofía Garciarena",
-    genero: "Femenino",
-    fecha_nacimiento: "15/10/1988",
-    edad: "30",
-    email: "sofia@gmail.com",
-    telefono: "+5492613331111",
-    direccion: "Av. Corrientes 1234",
-    cobertura: "obra_social",
-    obra_social: "Swiss Medical",
-    nro_afiliado: "123456789",
-    password: "*********"
-}
 
 const MedicalRecord = () => {
     return (

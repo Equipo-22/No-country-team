@@ -17,9 +17,9 @@ public class EncounterRequest {
     private String patientId; // referencia al paciente (Patient/123)
 
     @NotBlank
-    private String status; // Ej: "in-progress", "finished"
+    private String status;
 
-    private String encounterClass; // Ej: "ambulatory", "inpatient"
+    private String encounterClass; //vr o presencial
 
     private String practitionerId; // que medico atendio
 

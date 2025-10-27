@@ -15,7 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FullEncounterResponse {
-    private EncounterResponse encounter;
     private List<ConditionResponse> conditions;
     private List<ObservationResponse> observations;
     private List<MedicationRequestResponse> medications;

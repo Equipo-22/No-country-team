@@ -24,7 +24,6 @@ public class DoctorConsumer {
         Practitioner practitioner=new Practitioner();
 
         practitioner.setId(doctorRegisterEvent.id().toString());
-        System.out.println(doctorRegisterEvent.id());
 
         practitioner.addName(new HumanName().addGiven(doctorRegisterEvent.firstName())
                 .setFamily(doctorRegisterEvent.lastName()));

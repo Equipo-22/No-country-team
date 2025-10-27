@@ -30,7 +30,6 @@ public class FullEncounterService {
     private final FhirService fhirService;
 
     public FullEncounterResponse createFullEncounter(FullEncounterRequest fullEncounterRequest){
-        EncounterResponse encounterResponse = createEncounter(fullEncounterRequest.getEncounter());
 
         List<ObservationResponse>observations=Optional.ofNullable(fullEncounterRequest.getObservations())
                 .orElse(Collections.emptyList())
@@ -50,7 +49,6 @@ public class FullEncounterService {
                 .toList();
 
         return new FullEncounterResponse(
-                encounterResponse,
                 conditions,
                 observations,
                 medicationRequests);

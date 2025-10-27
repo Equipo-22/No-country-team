@@ -15,7 +15,7 @@ const NotificationsPatient = () => {
 
       {notifications.map((e) => (
         <div
-          className="flex gap-5 px-4 py-2 rounded-sm shadow-sm bg-white my-8"
+          className="flex gap-5 px-4 py-2 rounded-sm shadow-sm bg-white my-1.5"
           key={e.time}
         >
           <div className="w-10 h-10 rounded-md bg-blue-100 flex items-center justify-center">

@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -73,17 +74,10 @@ public class DoctorController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(
-            summary = "Listar doctores",
-            description = "Muestra registros paginados",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Lista de reservas")
-            }
-    )
-    @GetMapping
-    public Map<String, Object> findAll(
-            @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
-    ) {
+    @Operation(summary = "Listar doctores", description = "Muestra registros paginados")
+    @ApiResponse(responseCode = "200", description = "Lista de doctores")
+    @GetMapping("/doctor")
+    public Map<String, Object> findAll(@ParameterObject Pageable pageable) {
         Page<DoctorResponseDTO> doctorPage = doctorService.findAll(pageable);
         return PaginationResponseBuilder.build(doctorPage);
     }

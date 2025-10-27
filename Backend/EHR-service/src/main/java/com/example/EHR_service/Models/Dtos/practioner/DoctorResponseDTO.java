@@ -7,6 +7,7 @@ import java.util.UUID;
 
 public record DoctorResponseDTO(
         UUID id,
+        UUID userId,
         String firstName,
         String lastName,
         String licenseNumber,

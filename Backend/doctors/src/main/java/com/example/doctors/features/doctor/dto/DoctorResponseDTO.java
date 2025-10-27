@@ -8,6 +8,7 @@ import java.util.UUID;
 
 public record DoctorResponseDTO(
         UUID id,
+        UUID userId,
         String firstName,
         String lastName,
         String licenseNumber,
@@ -22,6 +23,7 @@ public record DoctorResponseDTO(
     public DoctorResponseDTO(Doctor doctor) {
         this(
                 doctor.getId(),
+                doctor.getUserId(),
                 doctor.getFirstName(),
                 doctor.getLastName(),
                 doctor.getLicenseNumber(),

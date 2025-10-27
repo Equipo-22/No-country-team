@@ -104,9 +104,14 @@ public class FhirService {
                 .execute(),"No se encontro cita con ID: "+id);
     }
     public Encounter createEncounter(Encounter encounter) {
+        if (encounter.getIdElement() == null || encounter.getIdElement().isEmpty()) {
+            throw new IllegalArgumentException("El encounter debe tener un ID asignado antes de crearse.");
+        }
+
         return (Encounter) client
-                .create()
+                .update()
                 .resource(encounter)
+                .withId(encounter.getIdElement()) // asegura que se use el mismo UUID
                 .execute()
                 .getResource();
     }

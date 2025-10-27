@@ -24,10 +24,7 @@ public class EHRController {
     private final PatientService patientService;
     private final FullEncounterService fullEncounterService;
 
-    @Operation(
-            summary = "Obtener historial clinico de un paciente.",
-            description = "Devuelve los datos del Paciente y Encounters, junto con las condiciones, observaciones y prescripciones asociadas al encounter."
-    )
+    @Operation(summary = "Obtener historial clinico de un paciente.", description = "Devuelve los datos del Paciente y Encounters, junto con las condiciones, observaciones y prescripciones asociadas al encounter.")
     @GetMapping("/patient/{id}/history")
     @ResponseStatus(HttpStatus.OK)
     public PatientHistoryResponse getPatientHistory(@PathVariable String id,
@@ -36,20 +33,14 @@ public class EHRController {
         return patientService.getPatientHistory(id,page,size);
     }
 
-    @Operation(
-            summary = "Crear registro clinico.",
-            description = "Guarda un nuevo encounter(cita), junto con las condiciones, observaciones y prescripciones asociadas al mismo.(las observaciones, condiciones y prescripciones no son obligatorias)"
-    )
+    @Operation(summary = "Crear registro clinico.", description = "Guarda las condiciones, observaciones o prescripciones asociadas a una cita.(no son obligatorias todas, el encounterID es el ID de la cita)")
     @PostMapping("/patient/history")
     @ResponseStatus(HttpStatus.OK)
     public FullEncounterResponse createHistory(@RequestBody @Valid FullEncounterRequest fullEncounterRequest){
         return fullEncounterService.createFullEncounter(fullEncounterRequest);
     }
 
-    @Operation(
-            summary = "Obtener datos completos de una consulta.",
-            description = "Devuelve los datos del Encounter, junto con las condiciones, observaciones y prescripciones asociadas al encounter especificado."
-    )
+    @Operation(summary = "Obtener datos completos de una consulta.", description = "Devuelve los datos del Encounter, junto con las condiciones, observaciones y prescripciones asociadas al encounter especificado.")
     @GetMapping("/history/{encounterId}")
     @ResponseStatus(HttpStatus.OK)
     public FullEncounterResponse getEncounter(@PathVariable("encounterId") String encounter_id){

@@ -23,7 +23,6 @@ public class PatientConsumer {
 
         // Nombre y apellido
         HumanName name = patient.addName();
-        name.setFamily(response.apellido());
         name.addGiven(response.nombre());
 
         // Email
@@ -36,19 +35,19 @@ public class PatientConsumer {
         phone.setSystem(ContactPoint.ContactPointSystem.PHONE);
         phone.setValue(response.telefono());
 
-        // DNI como identificador
         Identifier dni = patient.addIdentifier();
         dni.setSystem("http://example.org/dni");
         dni.setValue(response.dni());
+        dni.setUse(Identifier.IdentifierUse.OFFICIAL);
 
-        // Obra social / cobertura como identificador
         Identifier insurance = patient.addIdentifier();
         insurance.setSystem("http://example.org/obra-social");
         insurance.setValue(response.numeroAfiliado());
+        insurance.setUse(Identifier.IdentifierUse.SECONDARY);
 
         // Dirección
         Address address = patient.addAddress();
-        address.setText(response.direccion());
+        address.addLine(response.direccion());
 
         // Género
         patient.setGender(switch (response.genero().toLowerCase()) {

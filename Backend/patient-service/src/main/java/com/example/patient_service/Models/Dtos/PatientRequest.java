@@ -6,7 +6,6 @@ import java.util.UUID;
 public record PatientRequest(
         UUID userId,
         String nombre,
-        String apellido,
         String email,
         String dni,
         String genero,

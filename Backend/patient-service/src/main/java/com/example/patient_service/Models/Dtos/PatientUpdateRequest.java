@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 public record PatientUpdateRequest(
         String nombre,
-        String apellido,
         String genero,
         LocalDate fechaNacimiento,
         String cobertura,

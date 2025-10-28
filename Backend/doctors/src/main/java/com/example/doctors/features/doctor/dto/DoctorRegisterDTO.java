@@ -3,18 +3,20 @@ package com.example.doctors.features.doctor.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Schema(description = "Datos necesarios para crear un doctor")
 public record DoctorRegisterDTO(
-        @Schema(description = "Nombre del doctor", example = "Tom")
-        @NotBlank(message = "El nombre no puede ser nulo")
-        String firstName,
+        @Schema(description = "Id del user de auth-service", example = "3fa85f64-5717-4562-b3fc-2c963f66afa6")
+        @NotNull(message = "El id no puede ser nulo")
+        UUID userId,
 
-        @Schema(description = "Apellidos del doctor", example = "Torres")
-        @NotBlank(message = "El apellido no puede ser nulo")
-        String lastName,
+        @Schema(description = "Nombre del doctor", example = "Tom Torres")
+        @NotBlank(message = "El nombre no puede ser nulo")
+        String name,
 
         @Schema(description = "Número de colegiatura/licencia médica", example = "1234567890")
         @NotBlank(message = "El número de colegiatura/licencia no puede ser nula")

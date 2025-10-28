@@ -103,24 +103,24 @@ services:
     networks:
       - app-network
 
-  ##Telehealth service
-  db_telehealth:
+  ##Appointment service
+  db_appointment:
     image: postgres:latest
     environment:
       POSTGRES_USER: ${SPRING_DATASOURCE_USERNAME}
       POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-      POSTGRES_DB: ${SPRING_DATASOURCE_DB_TELEHEALTH}
+      POSTGRES_DB: ${SPRING_DATASOURCE_DB_APPOINTMENT}
     ports:
       - "5437:5432"
     volumes:
-      - telehealth_data:/var/lib/postgresql/data
+      - appointment_data:/var/lib/postgresql/data
     networks:
       - app-network
 
-  telehealth-app:
-    build: ./telehealth-service
+  appointment-app:
+    build: ./appointment-service
     depends_on:
-      - db_telehealth
+      - db_appointment
     env_file:
       - .env
     ports:
@@ -136,7 +136,7 @@ services:
       POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       POSTGRES_DB: ${SPRING_DATASOURCE_DB_PATIENT}
     ports:
-      - "5438:5432"
+      - "5439:5432"
     volumes:
       - patient_data:/var/lib/postgresql/data
     networks:
@@ -190,5 +190,5 @@ volumes:
   auth_data:
   fhir_data:
   doctor_data:
-  telehealth_data:
+  appointment_data:
   patient_data:

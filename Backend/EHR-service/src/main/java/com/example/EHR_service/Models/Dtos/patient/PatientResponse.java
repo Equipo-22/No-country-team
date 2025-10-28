@@ -7,7 +7,6 @@ public record PatientResponse(
         UUID id,
         UUID userId,
         String nombre,
-        String apellido,
         String email,
         String dni,
         String genero,

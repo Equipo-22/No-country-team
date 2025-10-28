@@ -75,7 +75,6 @@ public class FullEncounterMapper {
         EncounterResponse encounterResponse = EncounterMapper.toDto(encounter);
 
         FullEncounterResponse fullEncounter = new FullEncounterResponse();
-        fullEncounter.setEncounter(encounterResponse);
         fullEncounter.setConditions(conditions);
         fullEncounter.setObservations(observations);
         fullEncounter.setMedications(medications);

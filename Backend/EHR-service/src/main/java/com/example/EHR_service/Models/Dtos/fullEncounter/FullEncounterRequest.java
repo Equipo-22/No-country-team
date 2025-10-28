@@ -9,12 +9,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
+
 @Getter
 @Setter
 public class FullEncounterRequest {
-    @NotNull
-    private EncounterRequest encounter;
-
+    private UUID appointmentId;
     private List<ConditionRequest> conditions;
     private List<ObservationRequest> observations;
     private List<MedicationRequestRequest> medications;

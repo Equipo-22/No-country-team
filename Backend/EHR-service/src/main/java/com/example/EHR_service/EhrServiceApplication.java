@@ -11,6 +11,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
         }
 )
 @SpringBootApplication
+@EnableFeignClients
 public class EhrServiceApplication {
 
 	public static void main(String[] args) {

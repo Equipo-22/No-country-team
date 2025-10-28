@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -24,10 +23,8 @@ public class DoctorConsumer {
         Practitioner practitioner=new Practitioner();
 
         practitioner.setId(doctorRegisterEvent.id().toString());
-        System.out.println(doctorRegisterEvent.id());
 
-        practitioner.addName(new HumanName().addGiven(doctorRegisterEvent.firstName())
-                .setFamily(doctorRegisterEvent.lastName()));
+        practitioner.addName(new HumanName().addGiven(doctorRegisterEvent.name()));
 
         practitioner.addIdentifier(new Identifier().setSystem("LicenseNumber")
                         .setValue(doctorRegisterEvent.licenseNumber()));

@@ -9,15 +9,14 @@ import com.example.auth_service.Models.Entities.User;
 import com.example.auth_service.Repositories.RoleRepository;
 import com.example.auth_service.Repositories.UserRepository;
 import jakarta.mail.MessagingException;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -29,10 +28,7 @@ public class RegistrationService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     public void register(RegisterUserRequestDTO registerUserRequestDTO) throws MessagingException {
-
-        if(userRepository.existsByUsername(registerUserRequestDTO.getUsername())){
-            throw new UserAlreadyExistsException(registerUserRequestDTO.getUsername());
-        }
+        
         if(userRepository.existsByEmail(registerUserRequestDTO.getEmail())){
             throw new UserAlreadyExistsException(registerUserRequestDTO.getEmail());
         }
@@ -125,6 +121,20 @@ public class RegistrationService {
         Random random = new Random();
         int code = random.nextInt(900000) + 100000;
         return String.valueOf(code);
+    }
+
+    @Transactional
+    public void addRoleToUser(UUID userId, ERole roleName) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User no encontrado con ID: " + userId));
+
+        Role role = roleRepository.findByName(roleName)
+                .orElseThrow(() -> new RoleNotFoundException(roleName.toString()));
+
+        // Solo agregar si no existe
+        if (user.getRoles().stream().noneMatch(r -> r.getName() == roleName)) {
+            user.getRoles().add(role);
+        }
     }
 
 }

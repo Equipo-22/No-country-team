@@ -11,6 +11,8 @@ public record AppointmentResponse(
         LocalDateTime startTime,
         LocalDateTime endTime,
         AppointmentType type,
+        String motivo,
+        String lugar,
         AppointmentStatus status,
         LocalDateTime createdAt
 ) {

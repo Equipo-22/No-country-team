@@ -9,8 +9,7 @@ import java.util.UUID;
 public record DoctorResponseDTO(
         UUID id,
         UUID userId,
-        String firstName,
-        String lastName,
+        String name,
         String licenseNumber,
         String specialty,
         String gender,
@@ -24,8 +23,7 @@ public record DoctorResponseDTO(
         this(
                 doctor.getId(),
                 doctor.getUserId(),
-                doctor.getFirstName(),
-                doctor.getLastName(),
+                doctor.getName(),
                 doctor.getLicenseNumber(),
                 doctor.getSpecialty(),
                 doctor.getGender(),

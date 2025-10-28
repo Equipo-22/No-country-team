@@ -7,11 +7,8 @@ import java.time.LocalDate;
 @Schema(description = "Datos necesarios para editar un doctor")
 public record DoctorUpdateDTO(
 
-        @Schema(description = "Nombre del doctor", example = "Tom")
-        String firstName,
-
-        @Schema(description = "Apellidos del doctor", example = "Torres")
-        String lastName,
+        @Schema(description = "Nombre del doctor", example = "Tom Torres")
+        String name,
 
         @Schema(description = "Número de colegiatura/licencia médica", example = "1234567890")
         String licenseNumber,

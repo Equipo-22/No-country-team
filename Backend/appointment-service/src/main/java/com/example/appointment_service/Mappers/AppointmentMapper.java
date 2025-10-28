@@ -1,11 +1,7 @@
 package com.example.appointment_service.Mappers;
 
-import com.example.appointment_service.Models.Dtos.AppointmentRequest;
 import com.example.appointment_service.Models.Dtos.AppointmentResponse;
 import com.example.appointment_service.Models.Entities.Appointment;
-import com.example.appointment_service.Models.Enums.AppointmentStatus;
-
-import java.time.LocalDateTime;
 
 public class AppointmentMapper {
 
@@ -18,6 +14,8 @@ public class AppointmentMapper {
                 appointment.getStartTime(),
                 appointment.getEndTime(),
                 appointment.getType(),
+                appointment.getMotivo(),
+                appointment.getLugar(),
                 appointment.getStatus(),
                 appointment.getCreatedAt()
         );

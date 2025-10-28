@@ -26,10 +26,7 @@ public class Doctor {
     private UUID userId;
 
     @Column(nullable = false)
-    private String firstName;
-
-    @Column(nullable = false)
-    private String lastName;
+    private String name;
 
     @Column(nullable = false, unique = true)
     private String licenseNumber; // Número de colegiatura/licencia médica
@@ -58,8 +55,7 @@ public class Doctor {
 
     public Doctor(DoctorRegisterDTO doctorRegisterDTO) {
         this.userId = doctorRegisterDTO.userId();
-        this.firstName = doctorRegisterDTO.firstName();
-        this.lastName = doctorRegisterDTO.lastName();
+        this.name = doctorRegisterDTO.name();
         this.licenseNumber = doctorRegisterDTO.licenseNumber();
         this.specialty = doctorRegisterDTO.specialty();
         this.gender = doctorRegisterDTO.gender();
@@ -72,13 +68,10 @@ public class Doctor {
         this.enabled = false;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public void setLicenseNumber(String licenseNumber) {
         this.licenseNumber = licenseNumber;
@@ -109,8 +102,7 @@ public class Doctor {
     }
 
     public void update(DoctorUpdateDTO dto) {
-        Optional.ofNullable(dto.firstName()).ifPresent(v -> this.firstName = v);
-        Optional.ofNullable(dto.lastName()).ifPresent(v -> this.lastName = v);
+        Optional.ofNullable(dto.name()).ifPresent(v -> this.name = v);
         Optional.ofNullable(dto.licenseNumber()).ifPresent(v -> this.licenseNumber = v);
         Optional.ofNullable(dto.specialty()).ifPresent(v -> this.specialty = v);
         Optional.ofNullable(dto.gender()).ifPresent(v -> this.gender = v);

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -18,34 +19,32 @@ public class AppointmentController {
 
     private final AppointmentService appointmentService;
 
-    @Operation(
-            summary = "Obtener cita.",
-            description = "Busca y obtiene una cita por su ID."
-    )
+    @Operation(summary = "Obtener cita.", description = "Busca y obtiene una cita por su ID.")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public AppointmentResponse getAppointmentById(@PathVariable UUID id) {
         return appointmentService.findById(id);
     }
 
-    @Operation(
-            summary = "Crear cita.",
-            description = "Crea una nueva cita.(puedo ser: PRESENCIAL o VIRTUAL)"
-    )
+    @Operation(summary = "Crear cita.", description = "Crea una nueva cita.(puedo ser: PRESENCIAL o VIRTUAL)")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public AppointmentResponse createAppointment(@RequestBody AppointmentRequest appointmentRequest) throws IOException {
         return appointmentService.createAppointment(appointmentRequest);
     }
 
-    @Operation(
-            summary = "Cancelar cita.",
-            description = "Cancela un cita por su ID."
-    )
+    @Operation(summary = "Cancelar cita.", description = "Cancela un cita por su ID.")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void canceledAppointment(@PathVariable UUID id) throws IOException {
         appointmentService.cancelAppointment(id);
+    }
+
+    @Operation(summary = "Obtener citas de pacientes.", description = "Busca todas las citas de un paciente por su id")
+    @GetMapping("/patient/{patientId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<AppointmentResponse>getAllAppointmentsByPacienteId(@PathVariable("patientId") UUID patientId) {
+        return appointmentService.findAllAppointmentsByPatientId(patientId);
     }
 
 

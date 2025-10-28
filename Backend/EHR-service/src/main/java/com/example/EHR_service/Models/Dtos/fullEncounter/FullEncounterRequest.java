@@ -14,6 +14,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class FullEncounterRequest {
+    private UUID appointmentId;
     private List<ConditionRequest> conditions;
     private List<ObservationRequest> observations;
     private List<MedicationRequestRequest> medications;

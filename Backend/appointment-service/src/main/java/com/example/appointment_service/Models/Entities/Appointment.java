@@ -28,6 +28,10 @@ public class Appointment {
 
     private AppointmentType type;
 
+    private String lugar;
+
+    private String motivo;
+
     private String meetingUrl = null;
 
     private String eventId;      // ID del evento de Calendar

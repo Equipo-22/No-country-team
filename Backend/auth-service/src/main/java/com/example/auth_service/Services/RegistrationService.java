@@ -28,10 +28,7 @@ public class RegistrationService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     public void register(RegisterUserRequestDTO registerUserRequestDTO) throws MessagingException {
-
-        if(userRepository.existsByUsername(registerUserRequestDTO.getUsername())){
-            throw new UserAlreadyExistsException(registerUserRequestDTO.getUsername());
-        }
+        
         if(userRepository.existsByEmail(registerUserRequestDTO.getEmail())){
             throw new UserAlreadyExistsException(registerUserRequestDTO.getEmail());
         }

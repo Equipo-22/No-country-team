@@ -23,7 +23,6 @@ public class PatientConsumer {
 
         // Nombre y apellido
         HumanName name = patient.addName();
-        name.setFamily(response.apellido());
         name.addGiven(response.nombre());
 
         // Email

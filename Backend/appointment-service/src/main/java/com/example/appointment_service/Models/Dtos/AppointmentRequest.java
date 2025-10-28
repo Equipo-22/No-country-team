@@ -9,6 +9,8 @@ public record AppointmentRequest(
         UUID patientId,
         UUID professionalId,
         AppointmentType type,
+        String lugar,
+        String motivo,
         LocalDateTime startTime,
         LocalDateTime endTime
 ) {

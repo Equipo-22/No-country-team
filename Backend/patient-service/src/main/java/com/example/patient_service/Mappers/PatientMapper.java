@@ -17,7 +17,6 @@ public class PatientMapper {
                 patient.getId(),
                 patient.getUserId(),
                 patient.getNombre(),
-                patient.getApellido(),
                 patient.getEmail(),
                 patient.getDni(),
                 patient.getGenero(),
@@ -38,7 +37,6 @@ public class PatientMapper {
         Patient patient = new Patient();
         patient.setUserId(request.userId());
         patient.setNombre(request.nombre());
-        patient.setApellido(request.apellido());
         patient.setEmail(request.email());
         patient.setDni(request.dni());
         patient.setGenero(request.genero());
@@ -57,7 +55,6 @@ public class PatientMapper {
         }
 
         patient.setNombre(request.nombre());
-        patient.setApellido(request.apellido());
         patient.setGenero(request.genero());
         patient.setFechaNacimiento(request.fechaNacimiento());
         patient.setCobertura(request.cobertura());

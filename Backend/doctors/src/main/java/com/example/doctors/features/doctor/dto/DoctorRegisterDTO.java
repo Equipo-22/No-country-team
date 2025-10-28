@@ -14,13 +14,9 @@ public record DoctorRegisterDTO(
         @NotNull(message = "El id no puede ser nulo")
         UUID userId,
 
-        @Schema(description = "Nombre del doctor", example = "Tom")
+        @Schema(description = "Nombre del doctor", example = "Tom Torres")
         @NotBlank(message = "El nombre no puede ser nulo")
-        String firstName,
-
-        @Schema(description = "Apellidos del doctor", example = "Torres")
-        @NotBlank(message = "El apellido no puede ser nulo")
-        String lastName,
+        String name,
 
         @Schema(description = "Número de colegiatura/licencia médica", example = "1234567890")
         @NotBlank(message = "El número de colegiatura/licencia no puede ser nula")

@@ -1,5 +1,6 @@
 package com.example.EHR_service.Controllers;
 
+import com.example.EHR_service.Models.Dtos.fullEncounter.FullEncounterDetailsResponse;
 import com.example.EHR_service.Models.Dtos.fullEncounter.FullEncounterRequest;
 import com.example.EHR_service.Models.Dtos.fullEncounter.FullEncounterResponse;
 import com.example.EHR_service.Models.Dtos.patientHistory.PatientHistoryResponse;
@@ -36,14 +37,14 @@ public class EHRController {
     @Operation(summary = "Crear registro clinico.", description = "Guarda las condiciones, observaciones o prescripciones asociadas a una cita.(no son obligatorias todas, el encounterID es el ID de la cita)")
     @PostMapping("/patient/history")
     @ResponseStatus(HttpStatus.OK)
-    public FullEncounterResponse createHistory(@RequestBody @Valid FullEncounterRequest fullEncounterRequest){
+    public FullEncounterDetailsResponse createHistory(@RequestBody @Valid FullEncounterRequest fullEncounterRequest){
         return fullEncounterService.createFullEncounter(fullEncounterRequest);
     }
 
     @Operation(summary = "Obtener datos completos de una consulta.", description = "Devuelve los datos del Encounter, junto con las condiciones, observaciones y prescripciones asociadas al encounter especificado.")
     @GetMapping("/history/{encounterId}")
     @ResponseStatus(HttpStatus.OK)
-    public FullEncounterResponse getEncounter(@PathVariable("encounterId") String encounter_id){
+    public FullEncounterDetailsResponse getEncounter(@PathVariable("encounterId") String encounter_id){
         return fullEncounterService.getFullEncounter(encounter_id);
     }
 }

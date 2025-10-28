@@ -39,6 +39,8 @@ public class AppointmentService {
         appointment.setType(appointmentRequest.type());
         appointment.setStartTime(appointmentRequest.startTime());
         appointment.setEndTime(appointmentRequest.endTime());
+        appointment.setLugar(appointmentRequest.lugar());
+        appointment.setMotivo(appointmentRequest.motivo());
 
         if(appointmentRequest.type().equals(AppointmentType.VIRTUAL)){
             googleService.createMeetLink(appointment);
@@ -83,4 +85,11 @@ public class AppointmentService {
         appointmentRepository.saveAll(finishedAppointments);
     }
 
+    public List<AppointmentResponse> findAllAppointmentsByPatientId(UUID patientId){
+        List<Appointment>appointments=appointmentRepository.findAllByPatientId(patientId)
+                .orElseThrow(()->new RuntimeException("No se encontro el patient id"));
+
+        return appointments.stream().map(AppointmentMapper::toResponse)
+                .toList();
+    }
 }

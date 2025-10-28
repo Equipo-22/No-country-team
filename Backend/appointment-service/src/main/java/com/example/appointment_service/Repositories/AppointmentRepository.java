@@ -11,5 +11,5 @@ import java.util.UUID;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, UUID> {
     List<Appointment> findAllByStatusAndEndTimeBefore(AppointmentStatus status, LocalDateTime now);
-
+    Optional<List<Appointment>> findAllByPatientId(UUID patientId);
 }

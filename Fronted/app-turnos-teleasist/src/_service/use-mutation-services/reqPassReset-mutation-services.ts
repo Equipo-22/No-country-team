@@ -12,7 +12,7 @@ export const ReqPassResetMutationsService = () => {
     },
      onSuccess: function Exito(_res, variables) {
     if (variables.redirect !== false) { 
-      setTimeout(() => router.push("/login/reset-pass"), 1000)
+      router.push("/login/reset-pass")
     }
   },
     onError: (error) => {

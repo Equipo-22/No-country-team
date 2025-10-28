@@ -17,7 +17,7 @@ export const VerifyUserMutationService = () => {
     },
     onSuccess: (data) => {
       console.log("Usuario verificado:", data);
-      setTimeout(() => router.push("/register/success"), 1000);
+      router.push("/register/success");
     },
     onError: (error) => {
       console.error("Error al verificar:", error);
@@ -30,8 +30,8 @@ export const VerifyUserMutationService = () => {
     },
     onSuccess: (data) => {
       console.log("Usuario verificado:", data);
-      setUserData({ email: data.email, username: data.username });
-      setTimeout(() => router.push("/profile-patient"), 1000);
+      setUserData({ id: data.id, email: data.email, username: data.username });
+      router.push("/profile-patient");
     },
     onError: (error) => {
       console.error("Error al verificar:", error);

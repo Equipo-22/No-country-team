@@ -14,7 +14,7 @@ export const ProfileMutationsService = () => {
       return postProfile(data);
     },
     onSuccess: function Exito() {
-      setTimeout(() => router.push("/welcome-patient"), 1000);
+      router.push("/welcome-patient");
     },
   });
 

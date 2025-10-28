@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { ResetPassType } from "@/_types/resetPass-type";
 
-import { useRouter } from "next/navigation";
 import { postResetPass } from "../use-cases/resetPass-service";
 
 export const ResetPassMutationsService = () => {

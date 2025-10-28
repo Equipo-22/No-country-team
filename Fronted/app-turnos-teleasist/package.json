@@ -25,6 +25,7 @@
     "next": "15.5.4",
     "next-auth": "^4.24.11",
     "react": "19.1.0",
+    "react-datepicker": "^8.8.0",
     "react-day-picker": "^9.11.1",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.64.0",
@@ -43,7 +44,6 @@
     "typescript": "^5.9.3"
   },
   "overrides": {
-  "zod": "^4.1.12"
-}
-
+    "zod": "^4.1.12"
+  }
 }

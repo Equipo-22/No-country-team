@@ -1,12 +1,14 @@
 export interface ProfileType {
+  userId: string,
+  nombre: string,
+  email: string,
   dni: string;
-  fecha_nacimiento: Date;
   genero: "femenino" | "masculino" | "otro";
+  fechaNacimiento: Date
   cobertura: "obra_social" | "particular";
-  obra_social?: string | undefined;
-  nro_afiliado?: string | undefined;
   telefono: string;
   direccion: string;
+  obraSocial?: string | null;
+  numeroAfiliado?: string | null;
 }
-
 

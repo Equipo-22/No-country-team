@@ -24,26 +24,30 @@ import {
 import { Input } from "@/components/ui/input"
 import { completeProfilePatientSchema } from "@/_schemas/complete-profile-patient";
 import ContainerMax300 from "@/components/ui/Container-max300"
-import Logo from "@/components/ui/Logo"
 import TitleSection from "@/components/ui/TitleSection"
 import { useEffect, useState } from "react"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Calendar } from "@/components/ui/calendar"
-import { ChevronDownIcon } from "lucide-react"
 import { ProfileMutationsService } from "@/_service/use-mutation-services/profile-mutation-services"
+import { useUserStore } from "@/store/userStore"
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { es } from "date-fns/locale";
+
+
 
 
 export function CompleteProfilePatient() {
+
+  const { id, email, username } = useUserStore()
 
   const form = useForm<z.infer<typeof completeProfilePatientSchema>>({
     resolver: zodResolver(completeProfilePatientSchema)
     , defaultValues: {
       dni: "",
-      fecha_nacimiento: undefined as unknown as Date,
+      fechaNacimiento: undefined as unknown as Date,
       genero: undefined,
       cobertura: "obra_social",
-      obra_social: "",
-      nro_afiliado: "",
+      obraSocial: "",
+      numeroAfiliado: "",
       telefono: "",
       direccion: ""
     },
@@ -53,27 +57,30 @@ export function CompleteProfilePatient() {
   const coberturaValue = form.watch("cobertura");
   const isDisabled = coberturaValue === "particular";
 
-  const [open, setOpen] = useState(false)
-  const [date, setDate] = useState<Date | undefined>(undefined)
-
   const { mutationPostProfile } = ProfileMutationsService()
 
 
   function onSubmit(values: z.infer<typeof completeProfilePatientSchema>) {
-    mutationPostProfile.mutate(values)
-
-    console.log(values)
+   const formattedValues = {
+  ...values,
+  userId: id,
+  nombre: username,
+  email,
+  fechaNacimiento: values.fechaNacimiento ?? undefined,
+  obraSocial: values.obraSocial || "",
+  numeroAfiliado: values.numeroAfiliado || "",
+};
+    mutationPostProfile.mutate(formattedValues);
+    console.log(formattedValues);
   }
 
   useEffect(() => {
     if (coberturaValue === "particular") {
-      form.setValue("obra_social", "");
-      form.setValue("nro_afiliado", "");
+      form.setValue("obraSocial", "");
+      form.setValue("numeroAfiliado", "");
       console.log(isDisabled);
-
     }
   }, [coberturaValue, form]);
-
 
 
   return (
@@ -96,34 +103,26 @@ export function CompleteProfilePatient() {
           />
           <FormField
             control={form.control}
-            name="fecha_nacimiento"
+            name="fechaNacimiento"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Fecha de nacimiento</FormLabel>
-                <Popover open={open} onOpenChange={setOpen}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      id="date"
-                      className="w-full justify-between text-muted-foreground bg-[#F2F4F7] border-none font-normal hover:bg-[#F2F4F7] hover:text-muted-foreground"
-                    >
-                      {field.value
-                        ? field.value.toLocaleDateString()
-                        : "Selecciona DD/MM/AAAA"}
-                      <ChevronDownIcon />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto overflow-hidden p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={(date) => {
-                        field.onChange(date);
-                        setOpen(false);
-                      }}
-                    />
-                  </PopoverContent>
-                </Popover>
+                <FormControl>
+                  <DatePicker
+                    locale={es}
+                    selected={field.value}
+                    onChange={(date: Date | null) => field.onChange(date)}
+                    dateFormat="dd/MM/yyyy"
+                    placeholderText="Selecciona DD/MM/AAAA"
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    maxDate={new Date()}
+                    calendarClassName="rounded-xl border border-red-500 shadow-lg bg-red"
+                    popperClassName="z-50"
+                    className="w-full pl-5 bg-[#F2F4F7] h-10 border-none rounded placeholder:text-muted-foreground "
+                  />
+                </FormControl>
                 <FormMessage className="text-xs" />
               </FormItem>
             )}
@@ -181,7 +180,7 @@ export function CompleteProfilePatient() {
             <div className="space-y-4 animate-fade-in">
               <FormField
                 control={form.control}
-                name="obra_social"
+                name="obraSocial"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Obra social</FormLabel>
@@ -199,7 +198,7 @@ export function CompleteProfilePatient() {
 
               <FormField
                 control={form.control}
-                name="nro_afiliado"
+                name="numeroAfiliado"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Número de afiliado</FormLabel>

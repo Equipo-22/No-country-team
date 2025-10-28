@@ -5,15 +5,15 @@ export const completeProfilePatientSchema = z
     dni: z
       .string()
       .regex(/^[0-9]{8}$/, { message: "El DNI debe tener 8 números, sin puntos" }),
-    fecha_nacimiento: z.date({ message: "La fecha es obligatoria" }),
+    fechaNacimiento: z.date({ message: "La fecha es obligatoria" }),
     genero: z
       .enum(["femenino", "masculino", "otro"])
       .refine((val) => val !== undefined, {
         message: "Seleccioná un género válido",
       }),
     cobertura: z.enum(["obra_social", "particular"]),
-    obra_social: z.string().optional(),
-    nro_afiliado: z.string().optional(),
+    obraSocial: z.string().optional(),
+    numeroAfiliado: z.string().optional(),
     telefono: z
       .string()
       .regex(/^\+?\d{10,15}$/, { message: "Teléfono inválido" }),
@@ -22,7 +22,7 @@ export const completeProfilePatientSchema = z
   .refine(
     (data) =>
       data.cobertura === "particular" ||
-      (data.obra_social?.trim() && data.nro_afiliado?.trim()),
+      (data.obraSocial?.trim() && data.numeroAfiliado?.trim()),
     {
       message: "Si seleccionás obra social, debés completar los campos",
       path: ["obra_social"],

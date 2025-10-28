@@ -2,6 +2,7 @@ package com.example.appointment_service.Models.Entities;
 
 import com.example.appointment_service.Models.Enums.AppointmentStatus;
 import com.example.appointment_service.Models.Enums.AppointmentType;
+import com.example.appointment_service.Models.Enums.CancelledBy;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class Appointment {
     @Column(nullable = false)
     private UUID professionalId;
 
+    @Enumerated(EnumType.STRING)
     private AppointmentType type;
 
     private String lugar;
@@ -46,6 +48,9 @@ public class Appointment {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AppointmentStatus status = AppointmentStatus.PENDING;
+
+    @Enumerated(EnumType.STRING)
+    private CancelledBy appointmentCancelledBy;//por quien fue cancelada la cita
 
     // Fecha de creación
     @Column(nullable = false)

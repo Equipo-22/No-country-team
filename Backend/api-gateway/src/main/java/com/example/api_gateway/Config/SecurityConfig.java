@@ -30,11 +30,6 @@ public class SecurityConfig {
                 new AuthenticationWebFilter(new JwtAuthenticationManager(jwtUtils));
 
         authenticationWebFilter.setServerAuthenticationConverter(new JwtAuthenticationConverter());
-        var protectedMatcher = new NegatedServerWebExchangeMatcher(
-                ServerWebExchangeMatchers.pathMatchers("/api/auth/**")
-        );
-
-        authenticationWebFilter.setRequiresAuthenticationMatcher(protectedMatcher);
 
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
@@ -43,10 +38,11 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html",
                                 "/swagger-ui/**",
-                                "/api/auth/**",
                                 "/swagger/auth/**",
+                                "/api/auth/v3/api-docs",
                                 "/ehr/v3/api-docs",
                                 "/doctor/v3/api-docs",
+                                "/api/auth/**",
                                 "/**"
                         ).permitAll()
                         .anyExchange().authenticated()

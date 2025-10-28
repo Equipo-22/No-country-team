@@ -153,6 +153,31 @@ services:
     networks:
       - app-network
 
+  ##Notification Service
+  db_notificacion:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${SPRING_DATASOURCE_USERNAME}
+      POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      POSTGRES_DB: ${SPRING_DATASOURCE_DB_NOTIFICATION}
+    ports:
+      - "5433:5432"
+    volumes:
+      - notification_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  notification-app:
+    build: ./notification-service
+    depends_on:
+      - db_notificacion
+    env_file:
+      - .env
+    ports:
+      - "8087:8087"
+    networks:
+      - app-network
+
   ##Zookeeper
   zookeeper:
     container_name: zookeeper
@@ -192,3 +217,4 @@ volumes:
   doctor_data:
   appointment_data:
   patient_data:
+  notification_data:

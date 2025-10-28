@@ -4,11 +4,15 @@ import com.example.appointment_service.Models.Dtos.AppointmentRequest;
 import com.example.appointment_service.Models.Dtos.AppointmentResponse;
 import com.example.appointment_service.Services.AppointmentService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,8 +40,10 @@ public class AppointmentController {
     @Operation(summary = "Cancelar cita.", description = "Cancela un cita por su ID.")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void canceledAppointment(@PathVariable UUID id) throws IOException {
-        appointmentService.cancelAppointment(id);
+    @SecurityRequirement(name = "bearer-key")
+    public void canceledAppointment(@PathVariable UUID id, Authentication authentication) throws IOException {
+        Collection<? extends GrantedAuthority> roles = authentication.getAuthorities();
+        appointmentService.cancelAppointment(id,roles);
     }
 
     @Operation(summary = "Obtener citas de pacientes.", description = "Busca todas las citas de un paciente por su id")

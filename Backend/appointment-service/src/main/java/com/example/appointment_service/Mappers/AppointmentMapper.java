@@ -2,6 +2,7 @@ package com.example.appointment_service.Mappers;
 
 import com.example.appointment_service.Models.Dtos.AppointmentResponse;
 import com.example.appointment_service.Models.Entities.Appointment;
+import com.example.appointment_service.Models.Enums.CancelledBy;
 
 public class AppointmentMapper {
 
@@ -14,6 +15,7 @@ public class AppointmentMapper {
                 appointment.getStartTime(),
                 appointment.getEndTime(),
                 appointment.getType(),
+                appointment.getAppointmentCancelledBy(),
                 appointment.getMotivo(),
                 appointment.getLugar(),
                 appointment.getStatus(),

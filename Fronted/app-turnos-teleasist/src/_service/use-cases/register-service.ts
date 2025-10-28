@@ -1,10 +1,10 @@
 import { RegisterType } from "@/_types/register-type";
-import { apiGeneral } from "../general-api";
+import { apiAuthService } from "../general-api";
 
 
 export const postRegister = async (data: RegisterType) => {
   try {
-    const res = await apiGeneral.post("/register", data);
+    const res = await apiAuthService.post("/register", data);
     return res.data;
   } catch (error: any) {
     const status = error.response?.status;

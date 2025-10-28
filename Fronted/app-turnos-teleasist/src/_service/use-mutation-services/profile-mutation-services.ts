@@ -1,8 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { postRegister } from "../use-cases/register-service";
-import { RegisterType } from "@/_types/register-type";
 import { useRouter } from "next/navigation";
-import { useUserStore } from "@/store/userStore";
 import { postProfile } from "../use-cases/profile-service";
 import { ProfileType } from "@/_types/profile-type";
 

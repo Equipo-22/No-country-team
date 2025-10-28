@@ -1,10 +1,10 @@
 import { ProfileType } from "@/_types/profile-type";
-import { apiGeneral } from "../general-api";
+import { apiPatientService } from "../general-api";
 
 
 export const postProfile = async (data: ProfileType) => {
     try {
-        const res = await apiGeneral.post("/profile", data)
+        const res = await apiPatientService.post("/", data)
         console.log("Perfil de usuario completo")
         return res.data
     } catch (error) {

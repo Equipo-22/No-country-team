@@ -25,12 +25,13 @@ import { Input } from "@/components/ui/input"
 import { completeProfilePatientSchema } from "@/_schemas/complete-profile-patient";
 import ContainerMax300 from "@/components/ui/Container-max300"
 import TitleSection from "@/components/ui/TitleSection"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { ProfileMutationsService } from "@/_service/use-mutation-services/profile-mutation-services"
 import { useUserStore } from "@/store/userStore"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { es } from "date-fns/locale";
+import { ProfilePayload } from "@/_types/profile-type"
 
 
 
@@ -60,19 +61,26 @@ export function CompleteProfilePatient() {
   const { mutationPostProfile } = ProfileMutationsService()
 
 
-  function onSubmit(values: z.infer<typeof completeProfilePatientSchema>) {
-   const formattedValues = {
-  ...values,
-  userId: id,
-  nombre: username,
-  email,
-  fechaNacimiento: values.fechaNacimiento ?? undefined,
-  obraSocial: values.obraSocial || "",
-  numeroAfiliado: values.numeroAfiliado || "",
-};
-    mutationPostProfile.mutate(formattedValues);
-    console.log(formattedValues);
-  }
+ function onSubmit(values: z.infer<typeof completeProfilePatientSchema>) {
+  const payload: ProfilePayload = {
+    userId: id,
+    nombre: username,
+    email,
+    dni: values.dni,
+    genero: values.genero,
+    fechaNacimiento: values.fechaNacimiento
+      ? values.fechaNacimiento.toISOString().split("T")[0]
+      : "",
+    cobertura: values.cobertura,
+    telefono: values.telefono,
+    direccion: values.direccion,
+    obraSocial: values.obraSocial || "",
+    numeroAfiliado: values.numeroAfiliado || "",
+  };
+
+  mutationPostProfile.mutate(payload);
+  console.log(payload);
+}
 
   useEffect(() => {
     if (coberturaValue === "particular") {

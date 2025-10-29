@@ -44,5 +44,10 @@ public class PatientService {
         return PatientMapper.toResponse(updated);
 
     }
+    public PatientResponse findByUserId(UUID user_id) {
+        Patient patient=patientRepository.findByUserId(user_id)
+                .orElseThrow(()->new RuntimeException("Patient not found"));
+        return PatientMapper.toResponse(patient);
+    }
 
 }

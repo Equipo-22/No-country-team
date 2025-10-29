@@ -46,4 +46,14 @@ public class PatientController {
     public PatientResponse updatePatient(@PathVariable("id")UUID id, @RequestBody PatientUpdateRequest request){
         return patientService.updatePatient(id,request);
     }
+
+    @Operation(
+            summary = "Obtener paciente por userId.",
+            description = "Obtiene un paciente por su userId."
+    )
+    @GetMapping("/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    public PatientResponse getPatientByUserId(@PathVariable("userId") UUID user_id){
+        return patientService.findByUserId(user_id);
+    }
 }

@@ -51,7 +51,7 @@ public class PatientController {
             summary = "Obtener paciente por userId.",
             description = "Obtiene un paciente por su userId."
     )
-    @GetMapping("/{userId}")
+    @GetMapping("/byUserId/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public PatientResponse getPatientByUserId(@PathVariable("userId") UUID user_id){
         return patientService.findByUserId(user_id);

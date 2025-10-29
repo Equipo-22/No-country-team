@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { getProfileById, postProfile } from "../use-cases/profile-service";
+import { getProfileByIdUser, getProfileByIdPatient, postProfile } from "../use-cases/profile-service";
 import { ProfilePayload } from "@/_types/profile-type";
 import { useUserStore } from "@/store/userStore";
 
@@ -22,9 +22,18 @@ export const ProfileMutationsService = () => {
     },
   });
 
-  const mutationGetProfileById = useMutation({
+  const mutationGetProfileByIdPatient = useMutation({
     mutationFn: (id: string) => {
-      return getProfileById(id);
+      return getProfileByIdPatient(id);
+    },
+    onSuccess: function Exito() {
+      console.log("Se obtuvo los datos del perfil");
+    },
+  });
+
+   const mutationGetProfileByIdUser = useMutation({
+    mutationFn: (id: string) => {
+      return getProfileByIdUser(id);
     },
     onSuccess: function Exito() {
       console.log("Se obtuvo los datos del perfil");
@@ -33,6 +42,7 @@ export const ProfileMutationsService = () => {
 
   return {
     mutationPostProfile,
-    mutationGetProfileById,
+    mutationGetProfileByIdPatient,
+    mutationGetProfileByIdUser,
   };
 };

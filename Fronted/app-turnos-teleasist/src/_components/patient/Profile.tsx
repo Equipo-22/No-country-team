@@ -21,7 +21,7 @@ const Profile = () => {
   const [age, setAge] = useState<any>(null)
 
   const { mutationPostReqPassReset } = ReqPassResetMutationsService()
-  const { mutationGetProfileById } = ProfileMutationsService()
+  const { mutationGetProfileByIdPatient } = ProfileMutationsService()
 
   const handleReqPassReset = () => {
     mutationPostReqPassReset.mutate(
@@ -33,7 +33,7 @@ const Profile = () => {
   useEffect(() => {
     if (!idPatient) return;
 
-    mutationGetProfileById.mutate(idPatient, {
+    mutationGetProfileByIdPatient.mutate(idPatient, {
       onSuccess: (data) => {
         setPatient(data);
 

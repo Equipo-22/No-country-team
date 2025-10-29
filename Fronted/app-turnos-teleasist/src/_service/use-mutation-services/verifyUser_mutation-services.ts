@@ -11,7 +11,7 @@ import { ProfileMutationsService } from "./profile-mutation-services";
 export const VerifyUserMutationService = () => {
   const router = useRouter();
   const setUserData = useUserStore((state) => state.setUserData);
-  const { mutationGetProfileById } = ProfileMutationsService();
+  const { mutationGetProfileByIdUser } = ProfileMutationsService();
 
   const mutationPostVerifyUserRegister = useMutation({
     mutationFn: (data: VerifyUserType) => {
@@ -38,7 +38,7 @@ export const VerifyUserMutationService = () => {
         username: data.username,
       });
 
-      mutationGetProfileById.mutate(data.id, {
+      mutationGetProfileByIdUser.mutate(data.id, {
         onSuccess: (profile) => {
           if (profile && profile.id) {
             console.log("Perfil encontrado:", profile);

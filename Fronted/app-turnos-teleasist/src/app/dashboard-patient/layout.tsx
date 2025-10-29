@@ -1,45 +1,71 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { IoIosNotificationsOutline } from "react-icons/io";
-import { usePathname } from 'next/navigation';
+import { GiHamburgerMenu } from "react-icons/gi";
 import SideBar from '@/_components/SideBar';
-
+import SideBarMobile from '@/_components/SideBarMobile';
+import { useUserStore } from '@/store/userStore';
 
 const DashboardPatient = ({ children }: { children: React.ReactNode }) => {
-  const path = usePathname()
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  
+  const { email, username} = useUserStore()
 
   return (
-    <div className=' grid grid-cols-[300px_1fr] '>
-      <SideBar />
+    <div className="min-h-screen flex flex-col lg:grid lg:grid-cols-[280px_1fr] bg-gray-50">
 
-      <main className='min-h-dvh w-full'>
+      {/* Sidebar Mobile */}
+      <SideBarMobile open={isMenuOpen} setOpen={setIsMenuOpen} />
 
-        <header className='flex w-full h-[10vh]   items-center bg-white p-4 '>
-          <div className='flex gap-2 items-center w-full justify-end'>
-            <IoIosNotificationsOutline className='h-auto w-8' />
-            <div className='flex justify-around'>
-              <img className='rounded-full h-auto w-[30px]'
-                src={"/person.png"}
-                alt={"imagen"} />
+      {/* Sidebar Desktop */}
+      <aside className="hidden lg:block bg-white shadow-md">
+        <SideBar />
+      </aside>
+
+      <main className="flex flex-col w-full">
+
+        <header className="w-full h-[10vh] flex items-center p-4 dashboardHeader-bg-gradient lg:border-b">
+          <div className="flex justify-between items-center w-full">
+
+            <div className="lg:hidden">
+              <img src="/logo-blanco.svg" alt="logo app" className="h-10 ml-2" />
             </div>
-            <div className='flex flex-col'>
-              <p>nombre</p>
-              <p>mail</p>
+
+            <div className="flex gap-2 items-center justify-end w-full">
+              <IoIosNotificationsOutline className="h-auto w-7 text-white lg:text-gray-900" />
+
+              <div className="flex justify-around">
+                <img
+                  className="rounded-full h-auto w-8"
+                  src="/profile_1.jpg"
+                  alt="imagen perfil"
+                />
+              </div>
+
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="lg:hidden text-gray-800"
+              >
+                <GiHamburgerMenu className="w-6 h-6 text-white" />
+              </button>
+
+              <div className="hidden lg:flex flex-col ml-2 text-sm mr-4">
+                <p className="font-medium text-gray-900">{username}</p>
+                <p className="text-gray-500">{email}</p>
+              </div>
             </div>
           </div>
         </header>
-        <div className=''>
-          <section className='w-full min-h-[calc(100vh-100px)]  p-5'>
-            <div className='w-full h-fit  rounded-lg  p-5'>
-              {children}
-            </div>
-          </section>
-        </div>
+
+        <section className="grow w-full p-3 md:p-6">
+          <div className="bg-white rounded-lg shadow p-4 md:p-6 h-full">
+            {children}
+          </div>
+        </section>
       </main>
     </div>
-  )
-}
-export default DashboardPatient
+  );
+};
+
+export default DashboardPatient;

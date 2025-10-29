@@ -1,4 +1,4 @@
-import { data_dashboard, data_dashbouard_config } from "@/_mock/mock";
+import { data_dashboard, data_dashboard_config } from "@/_mock/mock";
 import { LogoMedihubWhite } from "@/components/ui/LogoMedihubWhite";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -49,7 +49,7 @@ const SideBar = () => {
         </div>
 
         <div className="flex flex-col gap-2 mt-3">
-          {data_dashbouard_config.map(({ Icon, href, id, info }) => (
+          {data_dashboard_config.map(({ Icon, href, id, info }) => (
             <Link key={id} href={href} className={getLinkClasses(href)}>
               <Icon className="w-6 h-auto" />
               <span>{info}</span>

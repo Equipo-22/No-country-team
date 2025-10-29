@@ -7,6 +7,6 @@ export const data_dashboard = [
   { id: 2, Icon: MdOutlinePerson2, info: "Perfil", href: "/dashboard-patient/profile" },
   { id: 3, Icon: IoDocumentTextOutline, info: "Mis Citas", href: "/dashboard-patient/appointment" },
 ]
-export const data_dashbouard_config = [
+export const data_dashboard_config = [
   { id: 2, Icon: SlNotebook, info: "Historia clínica", href: "/dashboard-patient/medical-record" },
 ]

@@ -2,11 +2,12 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface UserState {
-  id: string,
+  idUser: string,
+  idPatient: string,
   email: string;
   username: string;
   hasHydrated: boolean;
-  setUserData: (data: Partial<Pick<UserState, "id" | "email" | "username">>) => void;
+  setUserData: (data: Partial<Pick<UserState, "idUser" | "idPatient" | "email" | "username">>) => void;
   clearUserData: () => void;
   setHasHydrated: (state: boolean) => void;
 }
@@ -14,7 +15,8 @@ interface UserState {
 export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
-      id: "",
+      idUser: "",
+      idPatient: "",
       email: "",
       username: "",
       hasHydrated: false,
@@ -25,7 +27,7 @@ export const useUserStore = create<UserState>()(
           ...data,
         })),
 
-      clearUserData: () => set({ id: "", email: "", username: "" }),
+      clearUserData: () => set({ idUser: "", idPatient: "", email: "", username: "" }),
 
       setHasHydrated: (state) => set({ hasHydrated: state }),
     }),

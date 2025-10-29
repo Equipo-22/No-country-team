@@ -12,3 +12,14 @@ export const postProfile = async (data: ProfilePayload) => {
         throw error
     }
 }
+
+export const getProfileById = async (id: string) => {
+    try {
+        const res = await apiPatientService.get(`/${id}`)
+        console.log("Perfil de usuario", res)
+        return res.data
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}

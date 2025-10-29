@@ -1,37 +1,27 @@
 "use client";
 
 import { Button } from '@/components/ui/button';
-import Modal from '@/components/ui/modal';
 import TitleSection from '@/components/ui/TitleSection';
 import { FileText, SquarePen } from 'lucide-react';
 import Image from 'next/image';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useUserStore } from '@/store/userStore';
 import { ReqPassResetMutationsService } from '@/_service/use-mutation-services/reqPassReset-mutation-services';
 import { useRouter } from 'next/navigation';
 import ResetPasswordModal from '../ResetPassModal';
+import { ProfileMutationsService } from '@/_service/use-mutation-services/profile-mutation-services';
 
-const user = {
-  username: "Sofía Garciarena",
-  genero: "Femenino",
-  fecha_nacimiento: "15/10/1988",
-  edad: "30",
-  email: "sofia@gmail.com",
-  telefono: "+5492613331111",
-  direccion: "Av. Corrientes 1234",
-  cobertura: "obra_social",
-  obra_social: "Swiss Medical",
-  nro_afiliado: "123456789",
-  password: "*********"
-}
 
 const Profile = () => {
 
   const router = useRouter()
   const [openResetPassModal, setOpenResetPassModal] = useState(false);
-  const { email, username, hasHydrated } = useUserStore()
+  const { idPatient, email, username, hasHydrated } = useUserStore()
+  const [patient, setPatient] = useState<any>(null)
+  const [age, setAge] = useState<any>(null)
 
   const { mutationPostReqPassReset } = ReqPassResetMutationsService()
+  const { mutationGetProfileById } = ProfileMutationsService()
 
   const handleReqPassReset = () => {
     mutationPostReqPassReset.mutate(
@@ -40,7 +30,32 @@ const Profile = () => {
     setOpenResetPassModal(true)
   }
 
-  if (!hasHydrated) {
+useEffect(() => {
+  if (!idPatient) return;
+
+  mutationGetProfileById.mutate(idPatient, {
+    onSuccess: (data) => {
+      setPatient(data);
+
+      const birthDate = new Date(data.fechaNacimiento);
+      const today = new Date();
+
+      let edad = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      const dayDiff = today.getDate() - birthDate.getDate();
+
+      // Ajusta si todavía no cumplió años este año
+      if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+        edad--;
+      }
+
+      setAge(edad);
+    },
+  });
+}, [idPatient]);
+
+
+ if (!hasHydrated || !patient) {
     return <p className='m-auto'>Cargando perfil...</p>
   }
 
@@ -64,11 +79,11 @@ const Profile = () => {
                 <p >Nombre y apellido</p>
                 <p >{username}</p>
                 <p >Género</p>
-                <p >{user.genero}</p>
+                <p >{patient.genero}</p>
                 <p >Fecha de nacimiento</p>
-                <p >{user.fecha_nacimiento}</p>
+                <p >{patient.fechaNacimiento}</p>
                 <p >Edad</p>
-                <p >{user.edad}</p>
+                <p >{age} años</p>
               </div>
             </div>
           </article>
@@ -79,9 +94,9 @@ const Profile = () => {
                 <p >Email</p>
                 <p >{email}</p>
                 <p >Teléfono</p>
-                <p >{user.telefono}</p>
+                <p >{patient.telefono}</p>
                 <p >Dirección</p>
-                <p >{user.direccion}</p>
+                <p >{patient.direccion}</p>
               </div>
             </div>
           </article>
@@ -90,9 +105,9 @@ const Profile = () => {
             <div className='col-span-4 md:col-span-2 text-sm'>
               <div className='grid grid-cols-2 gap-3 my-4'>
                 <p >Obra social</p>
-                <p >{user.obra_social}</p>
+                <p >{patient.obraSocial}</p>
                 <p >Número de afiliado</p>
-                <p >{user.nro_afiliado}</p>
+                <p >{patient.numeroAfiliado}</p>
               </div>
             </div>
           </article>
@@ -102,7 +117,7 @@ const Profile = () => {
             <div className="col-span-4 text-sm">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 items-center my-4">
                 <p className="col-span-1">Contraseña actual</p>
-                <p className="col-span-1">{user.password}</p>
+                <p className="col-span-1">*************</p>
 
                 <Button
                   className="cursor-pointer col-span-2 md:col-span-1 md:col-start-4 w-full md:max-w-[200px] justify-self-end"

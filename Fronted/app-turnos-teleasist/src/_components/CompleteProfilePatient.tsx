@@ -38,7 +38,7 @@ import { ProfilePayload } from "@/_types/profile-type"
 
 export function CompleteProfilePatient() {
 
-  const { id, email, username } = useUserStore()
+  const { idUser, email, username } = useUserStore()
 
   const form = useForm<z.infer<typeof completeProfilePatientSchema>>({
     resolver: zodResolver(completeProfilePatientSchema)
@@ -63,7 +63,7 @@ export function CompleteProfilePatient() {
 
  function onSubmit(values: z.infer<typeof completeProfilePatientSchema>) {
   const payload: ProfilePayload = {
-    userId: id,
+    userId: idUser,
     nombre: username,
     email,
     dni: values.dni,

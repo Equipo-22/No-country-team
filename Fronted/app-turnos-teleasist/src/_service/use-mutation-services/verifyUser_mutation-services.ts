@@ -30,7 +30,7 @@ export const VerifyUserMutationService = () => {
     },
     onSuccess: (data) => {
       console.log("Usuario verificado:", data);
-      setUserData({ id: data.id, email: data.email, username: data.username });
+      setUserData({ idUser: data.id, email: data.email, username: data.username });
       router.push("/profile-patient");
     },
     onError: (error) => {

@@ -11,6 +11,7 @@ public record AppointmentResponse(
         LocalDateTime startTime,
         LocalDateTime endTime,
         AppointmentType type,
+        CancelledBy cancelledBy,
         String motivo,
         String lugar,
         AppointmentStatus status,

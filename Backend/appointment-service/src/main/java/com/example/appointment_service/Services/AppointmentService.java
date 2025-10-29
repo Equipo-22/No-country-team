@@ -7,13 +7,17 @@ import com.example.appointment_service.Models.Dtos.AppointmentResponse;
 import com.example.appointment_service.Models.Entities.Appointment;
 import com.example.appointment_service.Models.Enums.AppointmentStatus;
 import com.example.appointment_service.Models.Enums.AppointmentType;
+import com.example.appointment_service.Models.Enums.CancelledBy;
 import com.example.appointment_service.Repositories.AppointmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -58,17 +62,24 @@ public class AppointmentService {
         return dto;
     }
 
-    public void cancelAppointment(UUID appointment_id) throws IOException {
+    public void cancelAppointment(UUID appointment_id, Collection<? extends GrantedAuthority> roles) throws IOException {
         Appointment appointment=appointmentRepository.findById(appointment_id)
                 .orElseThrow(()->new RuntimeException("No se encontro el appointment id"));
 
         googleService.cancelMeet(appointment.getEventId());
 
+        if(roles.contains(new SimpleGrantedAuthority("ROLE_PERSONAL_MEDICO"))){
+            appointment.setAppointmentCancelledBy(CancelledBy.DOCTOR);
+        }else{
+            appointment.setAppointmentCancelledBy(CancelledBy.PATIENT);
+        }
         appointment.setMeetingUrl(null);
         appointment.setEventId(null);
         appointment.setStatus(AppointmentStatus.CANCELLED);
 
-        appointmentRepository.save(appointment);
+        Appointment ap=appointmentRepository.save(appointment);
+
+        appointmentProducer.sendAppointmentCancelledEvent(AppointmentMapper.toResponse(ap));
     }
 
     //cambia el estado a completed si paso la hora final

@@ -16,7 +16,6 @@ import java.security.Principal;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "Auth Service", description = "Endpoints de autenticación y registro (usar prefijo /api/auth/). Acordarse de crear roles: ROLE_USER, ROLE_PACIENTE y ROLE_PERSONAL_MEDICO")
-
 public class AuthController {
 
     private final AuthService authService;
@@ -60,7 +59,7 @@ public class AuthController {
     }
 
     @PostMapping("/change-password")
-    @SecurityRequirement(name = "bearerAuth")
+    @SecurityRequirement(name = "bearer-key")
     @ResponseStatus(HttpStatus.OK)
     public void changePassword(@RequestBody ChangePasswordRequestDTO dto, Principal principal){
         passwordService.cambiarPassword(principal.getName(),dto);

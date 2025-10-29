@@ -25,6 +25,4 @@ public class PatientService {
         Bundle bundle = fhirService.getPatientEncountersWithRelatedResources(patientId,page,size);
         return PatientHistoryMapper.toDto(bundle,page,size);
     }
-
-
 }

@@ -30,32 +30,32 @@ const Profile = () => {
     setOpenResetPassModal(true)
   }
 
-useEffect(() => {
-  if (!idPatient) return;
+  useEffect(() => {
+    if (!idPatient) return;
 
-  mutationGetProfileById.mutate(idPatient, {
-    onSuccess: (data) => {
-      setPatient(data);
+    mutationGetProfileById.mutate(idPatient, {
+      onSuccess: (data) => {
+        setPatient(data);
 
-      const birthDate = new Date(data.fechaNacimiento);
-      const today = new Date();
+        const birthDate = new Date(data.fechaNacimiento);
+        const today = new Date();
 
-      let edad = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
-      const dayDiff = today.getDate() - birthDate.getDate();
+        let edad = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        const dayDiff = today.getDate() - birthDate.getDate();
 
-      // Ajusta si todavía no cumplió años este año
-      if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-        edad--;
-      }
+        // Ajusta si todavía no cumplió años este año
+        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+          edad--;
+        }
 
-      setAge(edad);
-    },
-  });
-}, [idPatient]);
+        setAge(edad);
+      },
+    });
+  }, [idPatient]);
 
 
- if (!hasHydrated || !patient) {
+  if (!hasHydrated || !patient) {
     return <p className='m-auto'>Cargando perfil...</p>
   }
 
@@ -66,7 +66,7 @@ useEffect(() => {
         <section className='bg-background w-full h-min rounded-md md:order-3 md:col-span-2 p-3.5 md:py-6 md:px-16  mt-2 shadow-md shadow-muted'>
           <article className="grid grid-cols-4 grid-row-4 gap-2 py-3 border-b">
             <Image
-              src="/profile_1.jpg"
+              src={patient.genero === "femenino" ? "/profile_1.jpg" : "/profile_2.jpg"}
               alt="Foto perfil"
               width={82}
               height={82}

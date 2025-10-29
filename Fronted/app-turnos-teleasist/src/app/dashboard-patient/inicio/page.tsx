@@ -1,5 +1,3 @@
-"use client"
-
 import { Patient } from '@/_components/patient/Patient'
 import React from 'react'
 

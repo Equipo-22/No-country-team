@@ -46,17 +46,17 @@ public class AppointmentService {
         appointment.setLugar(appointmentRequest.lugar());
         appointment.setMotivo(appointmentRequest.motivo());
 
-        if(appointmentRequest.type().equals(AppointmentType.VIRTUAL)){
-            googleService.createMeetLink(appointment);
-        }else{
-            googleService.createEventCalendar(appointment);
-        }
-
         Appointment saved=appointmentRepository.save(appointment);
 
+        if(appointmentRequest.type().equals(AppointmentType.VIRTUAL)){
+            googleService.createMeetLink(saved);
+        }else{
+            googleService.createEventCalendar(saved);
+        }
+
+        appointmentRepository.save(saved);
 
         AppointmentResponse dto=AppointmentMapper.toResponse(saved);
-
         appointmentProducer.sendAppointmentRegisterEvent(dto);
 
         return dto;

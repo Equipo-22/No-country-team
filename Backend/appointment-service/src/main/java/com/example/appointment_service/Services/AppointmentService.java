@@ -62,17 +62,14 @@ public class AppointmentService {
         return dto;
     }
 
-    public void cancelAppointment(UUID appointment_id, Collection<? extends GrantedAuthority> roles) throws IOException {
+    public void cancelAppointment(UUID appointment_id) throws IOException {
         Appointment appointment=appointmentRepository.findById(appointment_id)
                 .orElseThrow(()->new RuntimeException("No se encontro el appointment id"));
 
         googleService.cancelMeet(appointment.getEventId());
 
-        if(roles.contains(new SimpleGrantedAuthority("ROLE_PERSONAL_MEDICO"))){
-            appointment.setAppointmentCancelledBy(CancelledBy.DOCTOR);
-        }else{
-            appointment.setAppointmentCancelledBy(CancelledBy.PATIENT);
-        }
+        appointment.setAppointmentCancelledBy(CancelledBy.PATIENT);
+
         appointment.setMeetingUrl(null);
         appointment.setEventId(null);
         appointment.setStatus(AppointmentStatus.CANCELLED);

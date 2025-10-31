@@ -31,7 +31,7 @@ public class AppointmentProducer {
         System.out.println("Evento enviado a Kafka: " + eventJson);
     }
 
-    @Scheduled(fixedRate = 150000) // cada 2,5 minuto
+    @Scheduled(fixedRate = 150000)
     public void sendAppointmentReminderEvent(){
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime oneHourLater = now.plusHours(1);

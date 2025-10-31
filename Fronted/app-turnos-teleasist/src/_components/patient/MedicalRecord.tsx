@@ -58,12 +58,18 @@ const MedicalRecord = () => {
                 <article className="grid grid-cols-4 grid-row-4 gap-2 py-3 border-b">
                     <p className='text-secondary font-bold py-2 col-span-4'>Información general</p>
                     <div className='col-span-4 md:col-span-2 text-sm'>
-                        <div className='grid grid-cols-2 gap-3 my-4'>
-                            <p >Última cita médica:</p>
-                            <p >22/10/25</p>
-                            <p >Última actualización de historia clínica:</p>
-                            <p >24/10/2025</p>
-                        </div>
+                        {recordsId.length > 0 ? (
+                            <div className='grid grid-cols-2 gap-3 my-4'>
+                                <p>Última cita médica:</p>
+                                <p>22/10/25</p>
+                                <p>Última actualización de historia clínica:</p>
+                                <p>24/10/25</p>
+                            </div>
+                        ) : (
+                            <p className="text-sm text-muted-foreground">
+                                No hay información disponible.
+                            </p>
+                        )}
                     </div>
                 </article>
                 <article className="grid grid-cols-4 gap-2 py-3">

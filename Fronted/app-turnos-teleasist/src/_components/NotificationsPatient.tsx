@@ -66,7 +66,8 @@ const handleMarkAsRead = (id: string) => {
     <>
       <TitleSection text="Mis notificaciones" />
 
-      {notifications.map((notification) => (
+      {notifications && notifications.length > 0 ? (
+        notifications.map((notification) => (
         <div
           className="flex gap-5 px-4 py-2 rounded-sm shadow-sm bg-white my-1.5"
           key={notification.id}
@@ -93,7 +94,10 @@ const handleMarkAsRead = (id: string) => {
             </div>
           </div>
         </div>
-      ))}
+      ))
+      ):(
+        <p className="mt-3">No existen notificaciones por el momento.</p>
+      )}
     </>
   );
 };

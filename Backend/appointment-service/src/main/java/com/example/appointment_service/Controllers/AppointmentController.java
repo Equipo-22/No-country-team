@@ -40,10 +40,9 @@ public class AppointmentController {
     @Operation(summary = "Cancelar cita.", description = "Cancela un cita por su ID.")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @SecurityRequirement(name = "bearer-key")
-    public void canceledAppointment(@PathVariable UUID id, Authentication authentication) throws IOException {
-        Collection<? extends GrantedAuthority> roles = authentication.getAuthorities();
-        appointmentService.cancelAppointment(id,roles);
+//    @SecurityRequirement(name = "bearer-key")
+    public void canceledAppointment(@PathVariable UUID id) throws IOException {
+        appointmentService.cancelAppointment(id);
     }
 
     @Operation(summary = "Obtener citas de pacientes.", description = "Busca todas las citas de un paciente por su id")

@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-/* @SecurityRequirement(name = "bearer-key")
-@PreAuthorize("hasRole('PERSONAL_MEDICO')") */
+//@SecurityRequirement(name = "bearer-key")
+//@PreAuthorize("hasRole('PERSONAL_MEDICO')")
 @Tag(name = "EHR Service", description = "Endpoints de historial clinico (usar prefijo /ehr/ para otros entornos y ingresar jwt con ROLE_PERSONAL_MEDICO)")
 public class EHRController {
 

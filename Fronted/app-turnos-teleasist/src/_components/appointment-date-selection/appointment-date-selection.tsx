@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import TitleSection from "@/components/ui/TitleSection";
 
 type AppointmentDateSelectionProps = {
@@ -9,58 +8,24 @@ type AppointmentDateSelectionProps = {
   setSelectedEndTime: (endTime: string) => void;
 };
 
-const availability = [
-  {
-    id: 1,
-    startTime: "2025-10-31T04:00:00.000Z",
-    endTime: "2025-10-31T04:20:00.000Z",
-  },
-  {
-    id: 2,
-    startTime: "2025-10-31T04:20:00.000Z",
-    endTime: "2025-10-31T04:40:00.000Z",
-  },
-  {
-    id: 3,
-    startTime: "2025-10-31T04:40:00.000Z",
-    endTime: "2025-10-31T05:00:00.000Z",
-  },
-  {
-    id: 4,
-    startTime: "2025-10-31T05:00:00.000Z",
-    endTime: "2025-10-31T05:20:00.000Z",
-  },
-  {
-    id: 5,
-    startTime: "2025-10-31T05:20:00.000Z",
-    endTime: "2025-10-31T05:40:00.000Z",
-  },
-  {
-    id: 6,
-    startTime: "2025-10-31T05:40:00.000Z",
-    endTime: "2025-10-31T06:00:00.000Z",
-  },
-  {
-    id: 7,
-    startTime: "2025-10-31T06:00:00.000Z",
-    endTime: "2025-10-31T06:20:00.000Z",
-  },
-  {
-    id: 8,
-    startTime: "2025-10-31T06:20:00.000Z",
-    endTime: "2025-10-31T06:40:00.000Z",
-  },
-  {
-    id: 9,
-    startTime: "2025-10-31T06:40:00.000Z",
-    endTime: "2025-10-31T07:00:00.000Z",
-  },
-  {
-    id: 10,
-    startTime: "2025-10-31T07:00:00.000Z",
-    endTime: "2025-10-31T07:20:00.000Z",
-  },
-];
+const tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+
+const baseDate = tomorrow.toISOString().split("T")[0]; // ejemplo: "2025-11-01"
+
+const availability = Array.from({ length: 10 }, (_, i) => {
+  const start = new Date(`${baseDate}T11:00:00.000Z`);
+  start.setMinutes(start.getMinutes() + i * 20);
+
+  const end = new Date(start);
+  end.setMinutes(start.getMinutes() + 20);
+
+  return {
+    id: i + 1,
+    startTime: start.toISOString(),
+    endTime: end.toISOString(),
+  };
+});
 
 const AppointmentDateSelection = ({
   onNext,
@@ -68,8 +33,6 @@ const AppointmentDateSelection = ({
   setSelectedStartTime,
   setSelectedEndTime,
 }: AppointmentDateSelectionProps) => {
-
-
   return (
     <div className="flex flex-col">
       <TitleSection text="Seleccioná tu cita médica" />
@@ -94,7 +57,11 @@ const AppointmentDateSelection = ({
           <div className="flex flex-col gap-2 px-4 py-2 rounded-sm shadow-sm bg-white my-8 lg:px-8 lg:py-4 lg:gap-0 lg:items-center lg:flex-row lg:justify-between w-full">
             <div className="flex gap-10">
               <p className="text-2xl text-secondary font-bold">
-                {new Date(item.startTime).toLocaleTimeString()}
+                {new Date(item.startTime).toLocaleDateString("es-ES")}
+                <br />
+                {(() => {
+                  return new Date(item.startTime).toLocaleTimeString();
+                })()}
               </p>
               <div className="flex flex-col gap-2">
                 <p className="text-2xl font-bold">Consulta</p>
@@ -103,11 +70,15 @@ const AppointmentDateSelection = ({
               </div>
             </div>
 
-            <Button onClick={() => {
-              setSelectedStartTime(item.startTime);
-              setSelectedEndTime(item.endTime);
-              onNext();
-            }}>Agendar cita</Button>
+            <Button
+              onClick={() => {
+                setSelectedStartTime(item.startTime);
+                setSelectedEndTime(item.endTime);
+                onNext();
+              }}
+            >
+              Agendar cita
+            </Button>
           </div>
         ))}
       </div>

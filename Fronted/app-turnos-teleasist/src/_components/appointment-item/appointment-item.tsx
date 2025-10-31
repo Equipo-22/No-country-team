@@ -51,7 +51,11 @@ const AppointmentItem = ({
           </div>
           <p>{doctors?.content?.find((doctor: any) => doctor.id === appointment.professionalId)?.specialty}</p>
           <p>{new Date(appointment.startTime).toLocaleDateString()}</p>
-          <p>{new Date(appointment.endTime).toLocaleTimeString()}</p>
+          <p>{(() => {
+                  const time = new Date(appointment.startTime);
+                  time.setHours(time.getHours() - 5);
+                  return time.toLocaleTimeString();
+                })()}</p>
           <Button variant="outline">{appointment.status}</Button>
           <Button variant="outline">{appointment.type}</Button>
           <button

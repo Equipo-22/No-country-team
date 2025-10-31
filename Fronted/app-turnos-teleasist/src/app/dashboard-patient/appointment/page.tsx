@@ -138,7 +138,7 @@ const AppointmentDetail = ({
               variant="outline"
               className="text-secondary border-secondary cursor-pointer"
             >
-              <Link href={appointment?.meetingUrl} target="_blank">
+              <Link href={appointment?.meetingUrl ?? ""} target="_blank">
                 <Video className="text-secondary" />
               </Link>
             </Button>
@@ -166,7 +166,11 @@ const AppointmentDetail = ({
         </p>
         <p>
           <strong>Hora:</strong>{" "}
-          {new Date(appointment?.startTime).toLocaleTimeString()}
+           {(() => {
+                  const time = new Date(appointment.startTime);
+                  time.setHours(time.getHours()-3);
+                  return time.toLocaleTimeString();
+                })()}
         </p>
       </div>
 

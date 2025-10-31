@@ -53,7 +53,7 @@ const AppointmentItem = ({
           <p>{new Date(appointment.startTime).toLocaleDateString()}</p>
           <p>{(() => {
                   const time = new Date(appointment.startTime);
-                  time.setHours(time.getHours() - 5);
+                  time.setHours(time.getHours()-3);
                   return time.toLocaleTimeString();
                 })()}</p>
           <Button variant="outline">{appointment.status}</Button>

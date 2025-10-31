@@ -89,7 +89,7 @@ const AppointmentItem = ({
             <p>{new Date(appointment.startTime).toLocaleDateString()}</p>
             <p>{new Date(appointment.endTime).toLocaleTimeString()}</p>
             <Button variant="outline" className="border-muted text-muted lg:w-35 hover:bg-muted hover:text-white">{appointment.status}</Button>
-            <Button variant="outline">{appointment.type}</Button>
+            <Button variant="outline" className="lg:w-35">{appointment.type}</Button>
             <button
               type="button"
               className="cursor-pointer"

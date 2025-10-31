@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import TitleSection from "@/components/ui/TitleSection";
-import { useState, useEffect } from "react";
-import { useUserStore } from "@/store/userStore";
 
 type AppointmentDateSelectionProps = {
   onNext: () => void;
   selectedDoctor: any;
+  setSelectedStartTime: (startTime: string) => void;
+  setSelectedEndTime: (endTime: string) => void;
 };
 
 const availability = [
@@ -65,7 +65,11 @@ const availability = [
 const AppointmentDateSelection = ({
   onNext,
   selectedDoctor,
+  setSelectedStartTime,
+  setSelectedEndTime,
 }: AppointmentDateSelectionProps) => {
+
+
   return (
     <div className="flex flex-col">
       <TitleSection text="Seleccioná tu cita médica" />
@@ -99,7 +103,11 @@ const AppointmentDateSelection = ({
               </div>
             </div>
 
-            <Button onClick={onNext}>Agendar cita</Button>
+            <Button onClick={() => {
+              setSelectedStartTime(item.startTime);
+              setSelectedEndTime(item.endTime);
+              onNext();
+            }}>Agendar cita</Button>
           </div>
         ))}
       </div>

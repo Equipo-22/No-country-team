@@ -49,14 +49,8 @@ const AppointmentCreate = () => {
   const [selectedCategory, setSelectedCategory] = useState<any>(null);
   const [selectedPlace, setSelectedPlace] = useState<any>(null);
   const [selectedMotivo, setSelectedMotivo] = useState<any>(null);
-
-  console.log({
-    apptType,
-    selectedDoctor,
-    selectedCategory,
-    selectedPlace,
-    selectedMotivo,
-  });
+  const [selectedStartTime, setSelectedStartTime] = useState<any>(null);
+  const [selectedEndTime, setSelectedEndTime] = useState<any>(null);
 
   useEffect(() => {
     getDoctors().then((data) => {
@@ -90,18 +84,39 @@ const AppointmentCreate = () => {
           />
         )}
         {step === "date" && (
-          <AppointmentDateSelection onNext={goToConfirmation}
-          selectedDoctor={doctors?.content?.find((doctor: any) => doctor.id === selectedDoctor)}
-          
+          <AppointmentDateSelection
+            onNext={goToConfirmation}
+            selectedDoctor={doctors?.content?.find(
+              (doctor: any) => doctor.id === selectedDoctor
+            )}
+            setSelectedStartTime={setSelectedStartTime}
+            setSelectedEndTime={setSelectedEndTime}
           />
         )}
         {step === "confirmation" && (
           <AppointmentConfirmation
             onBack={goToDateSelection}
             onConfirm={goToSuccess}
+            selectedDoctor={doctors?.content?.find(
+              (doctor: any) => doctor.id === selectedDoctor
+            )}
+            selectedPlace={selectedPlace}
+            selectedStartTime={selectedStartTime}
+            apptType={apptType}
+            selectedMotivo={selectedMotivo}
+            selectedEndTime={selectedEndTime}
           />
         )}
-        {step === "success" && <AppointmentConfirmationSuccess />}
+        {step === "success" && (
+          <AppointmentConfirmationSuccess
+            selectedDoctor={doctors?.content?.find(
+              (doctor: any) => doctor.id === selectedDoctor
+            )}
+            selectedPlace={selectedPlace}
+            selectedStartTime={selectedStartTime}
+            apptType={apptType}
+          />
+        )}
       </div>
 
       <AppointmentModal
@@ -154,6 +169,8 @@ const AppointmentModal = ({
   selectedMotivo,
   setSelectedMotivo,
 }: AppointmentModalProps) => {
+  console.log("doctors", doctors);
+
   const handleNext = () => {
     if (
       selectedCategory === "Seleccionar categoría" ||

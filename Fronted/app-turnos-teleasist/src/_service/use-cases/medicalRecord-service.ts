@@ -1,7 +1,6 @@
 import { apiEHRService } from "../general-api";
-import { MedicalRecordType } from "@/_types/medicalrecord-type";
 
-export const postRecord = async (data: MedicalRecordType) => {
+/* export const postRecord = async (data: MedicalRecordType) => {
   try {
     const res = await apiEHRService.post("/patient/history", data);
     console.log("Se creó un registro de consulta");
@@ -10,7 +9,7 @@ export const postRecord = async (data: MedicalRecordType) => {
     console.log(error);
     throw error;
   }
-};
+}; */
 
 export const getRecordById = async (id: string) => {
   try {

@@ -2,22 +2,11 @@
 import { useMutation } from "@tanstack/react-query";
 import {
   getMedicalRecordByIdPatient,
-  getRecordById,
-  postRecord,
+  getRecordById
 } from "../use-cases/medicalRecord-service";
-import { MedicalRecordType } from "@/_types/medicalrecord-type";
 
 export const MedicalRecordMutationsService = () => {
   
-  const mutationPostRecord = useMutation({
-    mutationFn: (data: MedicalRecordType) => {
-      return postRecord(data);
-    },
-    onSuccess: (data) => {
-      console.log("Se registró una consulta", data);
-    },
-  });
-
   const mutationGetMedicalRecordByIdPatient = useMutation({
     mutationFn: (id: string) => {
       return getMedicalRecordByIdPatient(id);
@@ -37,7 +26,6 @@ export const MedicalRecordMutationsService = () => {
   });
 
   return {
-    mutationPostRecord,
     mutationGetMedicalRecordByIdPatient,
     mutationGetRecordById,
   };

@@ -1,60 +1,54 @@
+"use client"
 import TitleSection from '@/components/ui/TitleSection'
 import React, { useEffect, useState } from 'react'
 import MedicalRecordItem from './MedicalRecordItem'
 import { useUserStore } from '@/store/userStore'
 import { MedicalRecordMutationsService } from '@/_service/use-mutation-services/medicalRecord-mutation-services'
-import { MedicalRecordType } from '@/_types/medicalrecord-type'
+import { MedicalRecordResponse } from '@/_types/medicalrecord-type'
+import { record } from 'zod/v3'
+import { useMutation } from '@tanstack/react-query'
+import { getMedicalRecordByIdPatient } from '@/_service/use-cases/medicalRecord-service'
 
-const records = [
-    {
-        id: "1",
-        professional: "Dr. Juan Cruz Gómez",
-        specialty: "Medicina clínica",
-        date: "09/10/25",
-        time: "08:00hs",
-        subject: "Dolor de cabeza persistente, especialmente en las tardes, acompañado de tensión en el cuello y fatiga visual.",
-        diagnosis: "Migraña tensional leve. No se detectan signos de patología neurológica aguda. Posible relación con estrés laboral y malas posturas frente al ordenador.",
-        treatments: ["Ibuprofeno 400mg. cada 8horas durante 3 días.", "Aplicar calor local en zona cervical 2 veces al día.", "Realizar ejercicios de estiramiento de cuello y hombro (5 minutos diarios).", "Reducir consumo de cafeína y mantener hidratación adecuada."],
-        medicalStudies: ["Análisis de sangre general (hemograma completo).", "Control oftalmológico para descartar fatiga visual."
-        ],
-        observations: ["Se recomienda descanso visual cada 45 minutos frente a pantallas.", "Agendar control dentro de 15 días o antes si los síntomas empeoran."]
-
-    },
-    {
-        id: "2",
-        professional: "Dra. María Julieta Muñoz",
-        specialty: "Ginecología",
-        date: "18/10/25",
-        time: "10:00hs",
-        subject: "Dolor de cabeza persistente, especialmente en las tardes, acompañado de tensión en el cuello y fatiga visual.",
-        diagnosis: "Migraña tensional leve. No se detectan signos de patología neurológica aguda. Posible relación con estrés laboral y malas posturas frente al ordenador.",
-        treatments: ["Ibuprofeno 400mg. cada 8horas durante 3 días.", "Aplicar calor local en zona cervical 2 veces al día.", "Realizar ejercicios de estiramiento de cuello y hombro (5 minutos diarios).", "Reducir consumo de cafeína y mantener hidratación adecuada."],
-        medicalStudies: ["Análisis de sangre general (hemograma completo).", "Control oftalmológico para descartar fatiga visual."
-        ],
-        observations: ["Se recomienda descanso visual cada 45 minutos frente a pantallas.", "Agendar control dentro de 15 días o antes si los síntomas empeoran."]
-
-    },
-
-]
+interface MedicalRecord {
+    fullEncounters: { content: any[] };
+}
 
 const MedicalRecord = () => {
 
-    const { idPatient } = useUserStore()
-    const [records, setRecords] = useState<MedicalRecordType[] | null>(null)
+    const { idPatient, hasHydrated } = useUserStore()
+    const [recordsId, setRecordsId] = useState<string[]>([])
 
-    const { mutationGetMedicalRecordByIdPatient } = MedicalRecordMutationsService()
+    const [isPending, setIsPending] = useState(false);
+
+    const mutationGetMedicalRecordByIdPatient = useMutation({
+        mutationFn: (id: string) => getMedicalRecordByIdPatient(id),
+        onSuccess: () => console.log("Se obtuvo la historia clínica del paciente"),
+    });
+
 
     useEffect(() => {
-
         if (!idPatient) return;
 
+        setIsPending(true);
         mutationGetMedicalRecordByIdPatient.mutate(idPatient, {
             onSuccess: (data) => {
-                setRecords(data)
+                const encountersId = data.fullEncounters.content
+                    .map((item: any) => item.conditions?.[0]?.encounterId)
+                    .filter((id: string | undefined): id is string => id !== undefined)
+                    .map((id: string) => id.replace("Encounter/", ""));
+
+                setRecordsId(encountersId);
+                setIsPending(false);
             },
+            onError: () => {
+                setIsPending(false);
+            }
         });
     }, [idPatient]);
 
+    if (!hasHydrated || isPending) {
+        return <p className='m-auto'>Cargando historial clínico...</p>
+    }
 
     return (
 
@@ -66,18 +60,19 @@ const MedicalRecord = () => {
                     <div className='col-span-4 md:col-span-2 text-sm'>
                         <div className='grid grid-cols-2 gap-3 my-4'>
                             <p >Última cita médica:</p>
-                            <p >09/10/25</p>
+                            <p >22/10/25</p>
                             <p >Última actualización de historia clínica:</p>
-                            <p >15/10/2025</p>
+                            <p >24/10/2025</p>
                         </div>
                     </div>
                 </article>
                 <article className="grid grid-cols-4 gap-2 py-3">
                     <p className="text-secondary font-bold py-2 col-span-4">Actualizaciones</p>
-                    {records && records.length > 0 ? (
-                        records.map((record) => (
-                            <MedicalRecordItem key={record.appointmentId} /* data={record} */ />
-                        ))
+                    {recordsId && recordsId.length > 0 ? (
+                        recordsId.map((recordId, index) => {
+                            return <MedicalRecordItem key={index} encounterId={recordId}
+                            />
+                        })
                     ) : (
                         <p className="col-span-4 text-sm text-muted-foreground">
                             No hay registros disponibles.

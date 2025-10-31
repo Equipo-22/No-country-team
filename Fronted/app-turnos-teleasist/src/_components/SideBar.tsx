@@ -7,7 +7,11 @@ import { RiLogoutBoxLine } from "react-icons/ri";
 import { useUserStore } from "@/store/userStore";
 import React from "react";
 
-const SideBar = () => {
+interface SideBarProps {
+  qtyNotifications: number
+}
+
+const SideBar = ({ qtyNotifications }: SideBarProps) => {
   const path = usePathname();
   const router = useRouter();
   const clearUserData = useUserStore((state) => state.clearUserData);
@@ -42,8 +46,13 @@ const SideBar = () => {
           >
             <IoIosNotificationsOutline className="w-6 h-auto" />
             <span>Notificaciones</span>
-            <div className="bg-white text-[#698be7] rounded-full w-6 h-6 flex justify-center items-center text-sm font-medium ml-auto">
-              {data_dashboard.length}
+            <div
+              className={`${path === "/dashboard-patient/notifications"
+                ? "bg-primary text-white"
+                : "bg-white text-[#698be7]"
+                } rounded-full w-6 h-6 flex justify-center items-center text-sm font-medium ml-auto`}
+            >
+              {qtyNotifications}
             </div>
           </Link>
         </div>

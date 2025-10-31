@@ -1,5 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { deleteNotificationById, getNotificationsByIdPatient, postNotificationAsReaded } from "../use-cases/notifications-service";
+import { NotificationType } from "@/_types";
 
 
 export const NotificationMutationsService = () => {
@@ -12,14 +13,23 @@ export const NotificationMutationsService = () => {
     },
   });
 
-  const mutationGetNotificationsByIdPatient = useMutation({
+ /*  const mutationGetNotificationsByIdPatient = useMutation({
     mutationFn: (id: string) => {
       return getNotificationsByIdPatient(id);
     },
     onSuccess: function Exito() {
       console.log("Se obtuvo las notificaciones del paciente");
     },
+  }); */
+
+  const useGetNotificationsByIdPatient= (idPatient: string | undefined) => {
+  return useQuery<NotificationType[]>({
+    queryKey: ["notifications", idPatient],
+    queryFn: () => getNotificationsByIdPatient(idPatient!),
+    enabled: !!idPatient, 
+    refetchInterval: 60000, // se actualiza cada 60 segundos
   });
+};
 
    const mutationDeleteNotificationsById = useMutation({
     mutationFn: (id: string) => {
@@ -33,7 +43,7 @@ export const NotificationMutationsService = () => {
 
   return {
     mutationPostNotificationAsReaded,
-    mutationGetNotificationsByIdPatient,
+   useGetNotificationsByIdPatient,
     mutationDeleteNotificationsById
   };
 };

@@ -1,26 +1,56 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
 import SideBar from '@/_components/SideBar';
 import SideBarMobile from '@/_components/SideBarMobile';
 import { useUserStore } from '@/store/userStore';
+import { useGetNotificationsByIdPatient } from '@/_service/use-queries-services/notification-querie-service';
+import { NotificationMutationsService } from '@/_service/use-mutation-services/notification-mutation-services';
+
 
 const DashboardPatient = ({ children }: { children: React.ReactNode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [quantityNotifications, setQuantityNotifications] = useState(0)
 
-  const { email, username} = useUserStore()
+  const { idPatient, email, username } = useUserStore()
+  const { data: notifications = [], isLoading, refetch } = useGetNotificationsByIdPatient(idPatient);
+  const { mutationPostNotificationAsReaded, mutationDeleteNotificationsById } = NotificationMutationsService();
+
+  const notReaded = notifications.filter((n) => !n.read);
+  const qtyNotifications = notReaded.length;
+
+  const handleMarkAsRead = (id: string) => {
+    mutationPostNotificationAsReaded.mutate(id, {
+      onSuccess: () => refetch(), // 🔁 actualiza lista después de marcar como leída
+    });
+  };
+
+  const handleDelete = (id: string) => {
+    mutationDeleteNotificationsById.mutate(id, {
+      onSuccess: () => refetch(), 
+    });
+  };
+
+
+  useEffect(() => {
+
+    const notReaded = notifications.filter((notification) => notification.read === false)
+
+    setQuantityNotifications(notReaded.length)
+
+  }, [!idPatient, notifications])
 
   return (
     <div className="min-h-screen flex flex-col lg:grid lg:grid-cols-[280px_1fr] bg-gray-50">
 
       {/* Sidebar Mobile */}
-      <SideBarMobile open={isMenuOpen} setOpen={setIsMenuOpen} />
+      <SideBarMobile open={isMenuOpen} setOpen={setIsMenuOpen} qtyNotifications={quantityNotifications} />
 
       {/* Sidebar Desktop */}
       <aside className="hidden lg:block bg-white shadow-md">
-        <SideBar />
+        <SideBar qtyNotifications={quantityNotifications} />
       </aside>
 
       <main className="flex flex-col w-full">

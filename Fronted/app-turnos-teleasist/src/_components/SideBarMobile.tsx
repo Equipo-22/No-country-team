@@ -11,9 +11,10 @@ import React, { Dispatch, SetStateAction } from "react"
 interface SideBarMobileProps {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
+  qtyNotifications: number
 }
 
-const SideBarMobile = ({ open, setOpen }: SideBarMobileProps) => {
+const SideBarMobile = ({ open, setOpen, qtyNotifications }: SideBarMobileProps) => {
   const path = usePathname()
   const router = useRouter()
   const clearUserData = useUserStore((state) => state.clearUserData)
@@ -35,7 +36,7 @@ const SideBarMobile = ({ open, setOpen }: SideBarMobileProps) => {
   return (
     <section className={`${styleSection} ${open ? "slide_open top-0 h-screen z-30 fixed left-0 w-64" : "slide_close hidden"}`}>
       <div className="mt-2 flex flex-col h-full">
-       
+
         <div className="border-b border-gray-300 pb-2 mt-2">
           {data_dashboard.map(({ Icon, href, id, info }) => (
             <Link
@@ -56,8 +57,13 @@ const SideBarMobile = ({ open, setOpen }: SideBarMobileProps) => {
           >
             <IoIosNotificationsOutline className="w-6 h-auto" />
             <span>Notificaciones</span>
-            <div className="bg-white text-[#698be7] rounded-full w-6 h-6 flex justify-center items-center text-sm font-medium ml-auto">
-              {data_dashboard.length}
+            <div
+              className={`${path === "/dashboard-patient/notifications"
+                ? "bg-primary text-white"
+                : "bg-white text-[#698be7]"
+                } rounded-full w-6 h-6 flex justify-center items-center text-sm font-medium ml-auto`}
+            >
+              {qtyNotifications}
             </div>
           </Link>
         </div>

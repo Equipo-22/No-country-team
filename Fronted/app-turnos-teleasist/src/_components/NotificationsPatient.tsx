@@ -1,19 +1,23 @@
 import {
+  CheckCheck,
   Eye,
   EyeClosed,
+  Trash2,
 } from "lucide-react";
 import TitleSection from "@/components/ui/TitleSection";
 import { useUserStore } from "@/store/userStore";
-import { useEffect, useState } from "react";
 import { NotificationMutationsService } from "@/_service/use-mutation-services/notification-mutation-services";
-import { NotificationType } from "@/_types";
+import { useGetNotificationsByIdPatient } from "@/_service/use-queries-services/notification-querie-service";
+import { useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 const NotificationsPatient = () => {
 
-  const [notifications, setNotifications] = useState<NotificationType[]>([])
   const { idPatient } = useUserStore()
+  const queryClient = useQueryClient();
 
-  const { mutationGetNotificationsByIdPatient } = NotificationMutationsService()
+  const { data: notifications = [],  refetch } = useGetNotificationsByIdPatient(idPatient);
+  const { mutationPostNotificationAsReaded, mutationDeleteNotificationsById } = NotificationMutationsService();
 
   const getElapsedTime = (date: string | Date) => {
     const past = typeof date === 'string' ? new Date(date) : date;
@@ -31,17 +35,32 @@ const NotificationsPatient = () => {
     return `hace unos segundos`;
   };
 
-  useEffect(() => {
-    if (!idPatient) return;
+const handleMarkAsRead = (id: string) => {
+  mutationPostNotificationAsReaded.mutate(id, {
+    onSuccess: () => {
+      queryClient.setQueryData(["notifications", idPatient], (oldData: any) => {
+        if (!oldData) return [];
+        return oldData.map((n: any) =>
+          n.id === id ? { ...n, read: true } : n
+        );
+      });
+      refetch();
+    },
+  });
+};
 
-    mutationGetNotificationsByIdPatient.mutate(idPatient, {
-      onSuccess: (data) => {
-        setNotifications(data)
+  const handleDelete = (id: string) => {
+    mutationDeleteNotificationsById.mutate(id, {
+      onSuccess: () => {
+        refetch(),
+        console.log('Se eliminó');
       }
-    })
+    });
+  };
 
-  }, [!idPatient])
+  useEffect(() => {
 
+  }, [notifications])
 
   return (
     <>
@@ -61,7 +80,17 @@ const NotificationsPatient = () => {
               <p className="font-bold">{notification.title}</p>
               <p>{notification.description}</p>
             </div>
-            <p className="text-sm text-gray-500 flex justify-end">{getElapsedTime(notification.date)}</p>
+            <div className="flex justify-end gap-4 mt-3 mb-2 md:mt-0">
+              {notification.read ? "" : <CheckCheck
+                className="text-accent cursor-pointer hover:opacity-70 transition"
+                onClick={() => handleMarkAsRead(notification.id)}
+              />}
+              <Trash2
+                className="text-destructive cursor-pointer hover:opacity-70 transition"
+                onClick={() => handleDelete(notification.id)}
+              />
+              <p className="text-sm text-gray-500 ">{getElapsedTime(notification.date)}</p>
+            </div>
           </div>
         </div>
       ))}
@@ -71,31 +100,3 @@ const NotificationsPatient = () => {
 
 export default NotificationsPatient;
 
-
-{/* <div
-          className="flex gap-5 px-4 py-2 rounded-sm shadow-sm bg-white my-1.5"
-          key={e.time}
-        >
-          <div className="w-10 h-10 rounded-md bg-blue-100 flex items-center justify-center">
-            {e.typeInfo === "disponibilidad" && (
-              <ClockFading className="text-blue-900" />
-            )}
-            {e.typeInfo === "historial" && (
-              <NotepadText className="text-emerald-500" />
-            )}
-            {e.typeInfo === "recordatorio" && (
-              <BellRing className="text-cyan-500" />
-            )}
-            {e.typeInfo === "reprogramada" && (
-              <Repeat2 className="text-secondary" />
-            )}
-            {e.typeInfo === "cancelada" && <CircleX className="text-red-500" />}
-          </div>
-          <div className="flex flex-col gap-2 w-full">
-            <div className="flex flex-col gap-2">
-              <p className="font-bold">{e.title}</p>
-              <p>{e.body}</p>
-            </div>
-            <p className="text-sm text-gray-500 flex justify-end">{e.time}</p>
-          </div>
-        </div> */}

@@ -19,3 +19,7 @@ export const apiDoctorService = axios.create({
 export const apiEHRService = axios.create({
     baseURL: `${process.env.NEXT_PUBLIC_URL_BASE}/ehr`
 })
+
+export const apiNotificationService = axios.create({
+    baseURL: `${process.env.NEXT_PUBLIC_URL_BASE}/notification`
+})

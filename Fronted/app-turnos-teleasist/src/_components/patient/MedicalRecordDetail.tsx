@@ -1,7 +1,7 @@
 "use client"
 import TitleSection from '@/components/ui/TitleSection'
 import Link from 'next/link';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { SlNotebook } from "react-icons/sl";
 import { IoIosArrowForward } from "react-icons/io";
 import { CircleUser } from 'lucide-react';
@@ -9,44 +9,41 @@ import { GrDocumentPdf } from "react-icons/gr";
 import { LuDownload } from "react-icons/lu";
 import { useParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { MedicalRecordMutationsService } from '@/_service/use-mutation-services/medicalRecord-mutation-services';
+import { DataRecordType } from '@/_types/medicalrecord-type';
 
-const records = [
-    {
-        id: "1",
-        professional: "Dr. Juan Cruz Gómez",
-        specialty: "Medicina clínica",
-        date: "09/10/25",
-        time: "08:00hs",
-        subject: "Dolor de cabeza persistente, especialmente en las tardes, acompañado de tensión en el cuello y fatiga visual.",
-        diagnosis: "Migraña tensional leve. No se detectan signos de patología neurológica aguda. Posible relación con estrés laboral y malas posturas frente al ordenador.",
-        treatments: ["Ibuprofeno 400mg. cada 8horas durante 3 días.", "Aplicar calor local en zona cervical 2 veces al día.", "Realizar ejercicios de estiramiento de cuello y hombro (5 minutos diarios).", "Reducir consumo de cafeína y mantener hidratación adecuada."],
-        medicalStudies: ["Análisis de sangre general (hemograma completo).", "Control oftalmológico para descartar fatiga visual."
-        ],
-        observations: ["Se recomienda descanso visual cada 45 minutos frente a pantallas.", "Agendar control dentro de 15 días o antes si los síntomas empeoran."]
-
-    },
-    {
-        id: "2",
-        professional: "Dra. María Julieta Muñoz",
-        specialty: "Ginecología",
-        date: "18/10/25",
-        time: "10:00hs",
-        subject: "Dolor de cabeza persistente, especialmente en las tardes, acompañado de tensión en el cuello y fatiga visual.",
-        diagnosis: "Migraña tensional leve. No se detectan signos de patología neurológica aguda. Posible relación con estrés laboral y malas posturas frente al ordenador.",
-        treatments: ["Ibuprofeno 400mg. cada 8horas durante 3 días.", "Aplicar calor local en zona cervical 2 veces al día.", "Realizar ejercicios de estiramiento de cuello y hombro (5 minutos diarios).", "Reducir consumo de cafeína y mantener hidratación adecuada."],
-        medicalStudies: ["Análisis de sangre general (hemograma completo).", "Control oftalmológico para descartar fatiga visual."
-        ],
-        observations: ["Se recomienda descanso visual cada 45 minutos frente a pantallas.", "Agendar control dentro de 15 días o antes si los síntomas empeoran."]
-
-    },
-
-]
 
 const MedicalRecordDetail = () => {
     const params = useParams();
-    const id = params?.id;
+    const idParam = params?.id;
+    const idRecord = Array.isArray(idParam) ? idParam[0] : idParam;
 
-    const recordSelected = records.find((record) => record.id === id);
+    const [recordSelected, setRecordSelected] = useState<DataRecordType | null>(null)
+    const [recordDate, setRecordDate] = useState<string>("")
+
+    const { mutationGetRecordById } = MedicalRecordMutationsService()
+
+    useEffect(() => {
+        if (!idRecord) return;
+
+        mutationGetRecordById.mutate(idRecord, {
+            onSuccess: (data) => {
+                setRecordSelected(data)
+                console.log({ data })
+
+                if (data?.appointment?.startTime) {
+                    const rawDate = data.appointment.startTime
+                    const formattedDate = new Date(rawDate).toLocaleDateString("es-AR", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                    })
+                    setRecordDate(formattedDate)
+                }
+            },
+        })
+    }, [idRecord])
+
 
     if (!recordSelected) {
         return <div>Registro no encontrado</div>;
@@ -62,7 +59,7 @@ const MedicalRecordDetail = () => {
                 </Link>
                 <IoIosArrowForward />
                 <span className='font-semibold'>
-                    Ver detalle de {recordSelected.id}
+                    Ver detalle
                 </span>
             </div>
             <TitleSection text="Detalle" />
@@ -72,33 +69,44 @@ const MedicalRecordDetail = () => {
                         <CircleUser className="text-gray-500" />
                     </p>
                     <div className="pb-2 md:col-span-2">
-                        <p className='font-semibold'>{recordSelected.professional}</p>
-                        <p className='font-light'>{recordSelected.specialty}</p>
-                        <p>Fecha: {recordSelected.date} <span>Hora: {recordSelected.time}</span></p>
-                        <p><strong>Motivo:</strong> {recordSelected.subject}</p>
-                        <p><strong>Diagnóstico:</strong> {recordSelected.diagnosis}</p>
-                        <p><strong>Tratamiento indicado:</strong>
-                            <ul className="list-disc list-inside ml-4">{recordSelected.treatments.map((treatment, index) => {
-                                return <li key={index}>{treatment}</li>
-                            })}
+                        {recordSelected ? (
+                            <div>
+                                <p className="font-semibold">{recordSelected.doctor.name}</p>
+                                <p className="font-light">{recordSelected.doctor.specialty}</p>
+                                <p>
+                                    Fecha: {recordDate}{" "}
+                                    <span>Hora: {recordSelected.appointment.startTime.slice(11, 16)}</span>
+                                </p>
+                                <p>
+                                    <strong>Motivo:</strong> {recordSelected.appointment.motivo}
+                                </p>
+                                {recordSelected.conditions?.[0] && (
+                                    <p>
+                                        <strong>Diagnóstico:</strong> {recordSelected.conditions[0].description}
+                                    </p>
+                                )}
+                                {(recordSelected.observations?.length ?? 0) > 0 && (
+                                    <p>
+                                        <strong>Tratamiento indicado:</strong>
+                                        <ul className="list-disc list-inside ml-4">
+                                            {recordSelected.observations?.map((treatment, index) => (
+                                                <li key={index}>{treatment.descripcion}</li>
+                                            ))}
+                                        </ul>
+                                    </p>
+                                )}
+                            </div>
+                        ) : (
+                            <p className="text-sm text-muted-foreground">
+                                No hay información disponible.
+                            </p>
+                        )}
 
-                            </ul></p>
-                        <p><strong>Estudios médicos:</strong>
-                            <ul className="list-disc list-inside ml-4">{recordSelected.medicalStudies.map((studie, index) => {
-                                return <li key={index}>{studie}</li>
-                            })}
-                            </ul></p>
-                        <p><strong>Observaciones:</strong>
-                            <ul className="list-disc list-inside ml-4">{recordSelected.observations.map((observation, index) => {
-                                return <li key={index}>{observation}</li>
-                            })}
-                            </ul></p>
                     </div>
                 </div>
             </section>
-            <h3 className='text-lg font-semibold text-muted-foreground my-4'>Documentos adjuntos</h3>
+            {/*    <h3 className='text-lg font-semibold text-muted-foreground my-4'>Documentos adjuntos</h3>
             <section className='md:col-span-2 md:py-2'>
-
                 <article className='flex justify-between items-center mb-2 bg-background md:w-[50%] h-min rounded-md p-4'>
                     <div className='flex items-center gap-3'>
                         <p className="self-start w-8 h-8 rounded bg-gray-200 flex items-center justify-center">
@@ -110,7 +118,7 @@ const MedicalRecordDetail = () => {
                         <LuDownload className="text-secondary" />
                     </Button>
                 </article>
-                 <article className='flex justify-between items-center mb-2 bg-background md:w-[50%] h-min rounded-md p-4'>
+                <article className='flex justify-between items-center mb-2 bg-background md:w-[50%] h-min rounded-md p-4'>
                     <div className='flex items-center gap-3' >
                         <p className="self-start w-8 h-8 rounded bg-gray-200 flex items-center justify-center">
                             <GrDocumentPdf className="text-gray-500" />
@@ -121,8 +129,7 @@ const MedicalRecordDetail = () => {
                         <LuDownload className="text-secondary" />
                     </Button>
                 </article>
-            </section>
-
+            </section> */}
         </div>
     )
 }

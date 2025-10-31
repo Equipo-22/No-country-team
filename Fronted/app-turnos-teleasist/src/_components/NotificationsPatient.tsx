@@ -73,7 +73,7 @@ const handleMarkAsRead = (id: string) => {
           key={notification.id}
         >
           <div className="w-10 h-10 rounded-md bg-blue-100 flex items-center justify-center">
-            {notification.read === false ? <EyeClosed /> : <Eye />}
+            {notification.read === false ? <EyeClosed className="text-secondary"/> : <Eye className="text-accent"/>}
 
           </div>
           <div className="flex flex-col gap-2 w-full">

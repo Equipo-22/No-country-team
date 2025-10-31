@@ -7,7 +7,6 @@ import SideBar from '@/_components/SideBar';
 import SideBarMobile from '@/_components/SideBarMobile';
 import { useUserStore } from '@/store/userStore';
 import { useGetNotificationsByIdPatient } from '@/_service/use-queries-services/notification-querie-service';
-import { NotificationMutationsService } from '@/_service/use-mutation-services/notification-mutation-services';
 
 
 const DashboardPatient = ({ children }: { children: React.ReactNode }) => {
@@ -15,25 +14,9 @@ const DashboardPatient = ({ children }: { children: React.ReactNode }) => {
   const [quantityNotifications, setQuantityNotifications] = useState(0)
 
   const { idPatient, email, username } = useUserStore()
-  const { data: notifications = [], isLoading, refetch } = useGetNotificationsByIdPatient(idPatient);
-  const { mutationPostNotificationAsReaded, mutationDeleteNotificationsById } = NotificationMutationsService();
-
-  const notReaded = notifications.filter((n) => !n.read);
-  const qtyNotifications = notReaded.length;
-
-  const handleMarkAsRead = (id: string) => {
-    mutationPostNotificationAsReaded.mutate(id, {
-      onSuccess: () => refetch(), // 🔁 actualiza lista después de marcar como leída
-    });
-  };
-
-  const handleDelete = (id: string) => {
-    mutationDeleteNotificationsById.mutate(id, {
-      onSuccess: () => refetch(), 
-    });
-  };
-
-
+  const { data: notifications = [] } = useGetNotificationsByIdPatient(idPatient);
+ 
+ 
   useEffect(() => {
 
     const notReaded = notifications.filter((notification) => notification.read === false)

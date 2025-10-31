@@ -102,3 +102,11 @@ export interface DataRecordType {
   observations?: Observation[];
   medications?: Medication[];
 }
+
+export interface DataRecordType {
+  appointment: Appointment;
+  doctor: Doctor;
+  conditions?: Condition[];
+  observations?: Observation[];
+  medications?: Medication[];
+}

@@ -9,8 +9,9 @@ import { GrDocumentPdf } from "react-icons/gr";
 import { LuDownload } from "react-icons/lu";
 import { useParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { MedicalRecordMutationsService } from '@/_service/use-mutation-services/medicalRecord-mutation-services';
 import { DataRecordType } from '@/_types/medicalrecord-type';
+import { useMutation } from '@tanstack/react-query';
+import { getRecordById } from '@/_service/use-cases/medicalRecord-service';
 
 
 const MedicalRecordDetail = () => {
@@ -21,11 +22,17 @@ const MedicalRecordDetail = () => {
     const [recordSelected, setRecordSelected] = useState<DataRecordType | null>(null)
     const [recordDate, setRecordDate] = useState<string>("")
 
-    const { mutationGetRecordById } = MedicalRecordMutationsService()
+    const [isPending, setIsPending] = useState(false);
+
+    const mutationGetRecordById = useMutation({
+        mutationFn: (id: string) => getRecordById(id),
+        onSuccess: () => console.log("Se obtuvo la historia clínica del paciente"),
+    });
 
     useEffect(() => {
         if (!idRecord) return;
 
+        setIsPending(true);
         mutationGetRecordById.mutate(idRecord, {
             onSuccess: (data) => {
                 setRecordSelected(data)
@@ -40,10 +47,17 @@ const MedicalRecordDetail = () => {
                     })
                     setRecordDate(formattedDate)
                 }
+                setIsPending(false);
             },
+            onError: () => {
+                setIsPending(false);
+            }
         })
     }, [idRecord])
 
+    if (isPending) {
+        return <p className='m-auto'>Cargando datos...</p>
+    }
 
     if (!recordSelected) {
         return <div>Registro no encontrado</div>;

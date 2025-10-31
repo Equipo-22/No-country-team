@@ -1,8 +1,9 @@
 "use client"
 
-import { MedicalRecordMutationsService } from '@/_service/use-mutation-services/medicalRecord-mutation-services'
+import { getRecordById } from '@/_service/use-cases/medicalRecord-service'
 import { DataRecordType } from '@/_types/medicalrecord-type'
 import { Button } from '@/components/ui/button'
+import { useMutation } from '@tanstack/react-query'
 import { CircleUser } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
@@ -19,29 +20,42 @@ const MedicalRecordItem = ({ encounterId }: MedicalRecordItemProps) => {
     const [dataRecord, setDataRecord] = useState<DataRecordType | null>(null)
     const [recordDate, setRecordDate] = useState<string>("")
 
-    const { mutationGetRecordById } = MedicalRecordMutationsService()
 
-   useEffect(() => {
-    if (!encounterId) return;
+    const [isPending, setIsPending] = useState(false);
 
-    mutationGetRecordById.mutate(encounterId, {
-        onSuccess: (data) => {
-            setDataRecord(data)
-         
-            if (data?.appointment?.startTime) {
-                const rawDate = data.appointment.startTime
-                const formattedDate = new Date(rawDate).toLocaleDateString("es-AR", {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                })
-                setRecordDate(formattedDate)
+    const mutationGetRecordById = useMutation({
+        mutationFn: (id: string) => getRecordById(id),
+        onSuccess: () => console.log("Se obtuvo la historia clínica del paciente"),
+    });
+
+    useEffect(() => {
+        if (!encounterId) return;
+
+        setIsPending(true);
+        mutationGetRecordById.mutate(encounterId, {
+            onSuccess: (data) => {
+                setDataRecord(data)
+
+                if (data?.appointment?.startTime) {
+                    const rawDate = data.appointment.startTime
+                    const formattedDate = new Date(rawDate).toLocaleDateString("es-AR", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                    })
+                    setRecordDate(formattedDate)
+                }
+                setIsPending(false);
+            },
+            onError: () => {
+                setIsPending(false);
             }
-        },
-    })
-}, [encounterId])
+        })
+    }, [encounterId])
 
-
+    if (isPending) {
+        return <p className='m-auto'>Cargando datos</p>
+    }
 
     return (
 
@@ -73,7 +87,7 @@ const MedicalRecordItem = ({ encounterId }: MedicalRecordItemProps) => {
                 <Button
                     className="cursor-pointer col-span-2 md:col-span-1 md:col-start-4 w-full md:max-w-[200px] justify-self-end"
                     variant="outline"
-                onClick={() => router.push(`/dashboard-patient/medical-record/detail/${encounterId}`)}
+                    onClick={() => router.push(`/dashboard-patient/medical-record/detail/${encounterId}`)}
                 >
                     Ver detalle
                 </Button>

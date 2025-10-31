@@ -22,12 +22,13 @@ type itemProps = {
     }
 }
 
-const MedicalRecordItem = ({data}: itemProps) => {
+const MedicalRecordItem = (/* {data} */) => {
 
     const router = useRouter()
 
     return (
-        <div className="col-span-4 text-sm bg-background w-full h-min rounded-md md:order-3 p-3.5 md:py-6 md:px-14  mt-2 shadow-md shadow-muted">
+        <></>
+       /*  <div className="col-span-4 text-sm bg-background w-full h-min rounded-md md:order-3 p-3.5 md:py-6 md:px-14  mt-2 shadow-md shadow-muted">
             <div className="grid grid-cols-[40px_1fr] md:grid-cols-[40px_1fr_1fr_1fr] gap-3 items-start my-2">
                 
                 <p className="self-start w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
@@ -48,7 +49,7 @@ const MedicalRecordItem = ({data}: itemProps) => {
                     Ver detalle
                 </Button>
             </div>
-        </div>
+        </div> */
     )
 }
 

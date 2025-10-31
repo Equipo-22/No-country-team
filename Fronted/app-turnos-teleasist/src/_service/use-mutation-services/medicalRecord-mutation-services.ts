@@ -7,7 +7,8 @@ import {
 } from "../use-cases/medicalRecord-service";
 import { MedicalRecordType } from "@/_types/medicalrecord-type";
 
-export const medicalRecordMutationsService = () => {
+export const MedicalRecordMutationsService = () => {
+  
   const mutationPostRecord = useMutation({
     mutationFn: (data: MedicalRecordType) => {
       return postRecord(data);

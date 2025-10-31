@@ -1,6 +1,9 @@
 import TitleSection from '@/components/ui/TitleSection'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import MedicalRecordItem from './MedicalRecordItem'
+import { useUserStore } from '@/store/userStore'
+import { MedicalRecordMutationsService } from '@/_service/use-mutation-services/medicalRecord-mutation-services'
+import { MedicalRecordType } from '@/_types/medicalrecord-type'
 
 const records = [
     {
@@ -35,7 +38,26 @@ const records = [
 ]
 
 const MedicalRecord = () => {
+
+    const { idPatient } = useUserStore()
+    const [records, setRecords] = useState<MedicalRecordType[] | null>(null)
+
+    const { mutationGetMedicalRecordByIdPatient } = MedicalRecordMutationsService()
+
+    useEffect(() => {
+
+        if (!idPatient) return;
+
+        mutationGetMedicalRecordByIdPatient.mutate(idPatient, {
+            onSuccess: (data) => {
+                setRecords(data)
+            },
+        });
+    }, [idPatient]);
+
+
     return (
+
         <div className='grid grid-cols-1 md:grid-cols-[auto_minmax(0,200px)] grid-rows-[1fr, auto-rows-min, 1fr] md:grid-rows-[auto_auto]'>
             <TitleSection text="Historia clínica" />
             <section className='bg-background w-full h-min rounded-md md:order-3 md:col-span-2 p-3.5 md:py-6 md:px-16  mt-2 shadow-md shadow-muted'>
@@ -52,9 +74,15 @@ const MedicalRecord = () => {
                 </article>
                 <article className="grid grid-cols-4 gap-2 py-3">
                     <p className="text-secondary font-bold py-2 col-span-4">Actualizaciones</p>
-                    {records.map(record =>
-                        <MedicalRecordItem key={record.id} data={record} />
-                    )}                  
+                    {records && records.length > 0 ? (
+                        records.map((record) => (
+                            <MedicalRecordItem key={record.appointmentId} /* data={record} */ />
+                        ))
+                    ) : (
+                        <p className="col-span-4 text-sm text-muted-foreground">
+                            No hay registros disponibles.
+                        </p>
+                    )}
                 </article>
             </section>
         </div>

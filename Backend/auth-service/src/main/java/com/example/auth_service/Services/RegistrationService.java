@@ -9,15 +9,14 @@ import com.example.auth_service.Models.Entities.User;
 import com.example.auth_service.Repositories.RoleRepository;
 import com.example.auth_service.Repositories.UserRepository;
 import jakarta.mail.MessagingException;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -29,10 +28,7 @@ public class RegistrationService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     public void register(RegisterUserRequestDTO registerUserRequestDTO) throws MessagingException {
-
-        if(userRepository.existsByUsername(registerUserRequestDTO.getUsername())){
-            throw new UserAlreadyExistsException(registerUserRequestDTO.getUsername());
-        }
+        
         if(userRepository.existsByEmail(registerUserRequestDTO.getEmail())){
             throw new UserAlreadyExistsException(registerUserRequestDTO.getEmail());
         }
@@ -103,15 +99,16 @@ public class RegistrationService {
 
     //envia el codigo de verificacion
     public void enviarVerificacionEmail(User user) throws MessagingException {
-        String subject = "Verificacion de cuenta";
+        String subject = "Verificación de cuenta";
         String htmlMessage = "<html>"
                 + "<body style=\"font-family: Arial, sans-serif;\">"
-                + "<div style=\"background-color: #f5f5f5; padding: 20px;\">"
-                + "<h2 style=\"color: #333;\">Bienvenido a tu app!</h2>"
-                + "<p style=\"font-size: 16px;\">Ingrese el código de verificación a continuación para continuar:</p>"
+               + "<div style=\"background-color: #f5f5f5; padding: 20px; border-bottom: solid 4px #11C4D4;\">"
+                + "<h2 style=\"color: #0C4E8C;\">Bienvenido a Medihub</h2>"
+                + "<p style=\"font-size: 16px;\">Ingrese el siguiente código de verificación para continuar:</p>"
                 + "<div style=\"background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1);\">"
-                + "<h3 style=\"color: #333;\">Codigo de verificacion:</h3>"
-                + "<p style=\"font-size: 18px; font-weight: bold; color: #007bff;\">" + user.getVerificationCode() + "</p>"
+                + "<h3 style=\"color: #333;\">Codigo de verificación:</h3>"
+                + "<p style=\"font-size: 18px; font-weight: bold; color: #0D81E4;\">" + user.getVerificationCode() + "</p>"
+                 + "<p style=\"font-size: 12px; font-weight: bold; color: #333;\">Tiempo de vigencia: 15 minutos </p>"
                 + "</div>"
                 + "</div>"
                 + "</body>"
@@ -124,6 +121,20 @@ public class RegistrationService {
         Random random = new Random();
         int code = random.nextInt(900000) + 100000;
         return String.valueOf(code);
+    }
+
+    @Transactional
+    public void addRoleToUser(UUID userId, ERole roleName) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User no encontrado con ID: " + userId));
+
+        Role role = roleRepository.findByName(roleName)
+                .orElseThrow(() -> new RoleNotFoundException(roleName.toString()));
+
+        // Solo agregar si no existe
+        if (user.getRoles().stream().noneMatch(r -> r.getName() == roleName)) {
+            user.getRoles().add(role);
+        }
     }
 
 }

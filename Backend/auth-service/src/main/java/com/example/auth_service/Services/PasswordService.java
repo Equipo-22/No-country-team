@@ -53,9 +53,22 @@ public class PasswordService {
 
             userRepository.save(user);
 
-            //se envia un mail con link que redirecciona a la pantalla de cambiar password.
-            String resetLink = resetPasswordBaseUrl + "?token=" + token;
-            emailService.enviarNotificacionMail(user.getEmail(),"resetLink", resetLink);
+            //se envia un mail con link que redirecciona a la pantalla de cambiar password.;
+            String subject = "Solicitud cambio de contraseña";
+            String htmlMessage = "<html>"
+                + "<body style=\"font-family: Arial, sans-serif;\">"
+                + "<div style=\"background-color: #f5f5f5; padding: 20px; border-bottom: solid 4px #11C4D4;\">"
+                + "<h2 style=\"color: #0C4E8C;\">Cambio de contraseña</h2>"
+                + "<p style=\"font-size: 16px;\">Ingrese el siguiente token para continuar:</p>"
+                + "<div style=\"background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1);\">"
+                + "<h3 style=\"color: #333;\">Token:</h3>"
+                + "<p style=\"font-size: 18px; font-weight: bold; color: #0D81E4;\">" + token + "</p>"
+                + "<p style=\"font-size: 12px; font-weight: bold; color: #333;\">Tiempo de vigencia: 30 minutos </p>"
+                + "</div>"
+                + "</div>"
+                + "</body>"
+                + "</html>";
+            emailService.enviarNotificacionMail(user.getEmail(), subject, htmlMessage);
         }
     }
 

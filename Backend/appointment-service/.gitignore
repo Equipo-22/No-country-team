@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### GOOGLE ###
+/src/main/resources/google/credentials.json

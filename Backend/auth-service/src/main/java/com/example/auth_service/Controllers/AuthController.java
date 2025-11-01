@@ -5,6 +5,7 @@ import com.example.auth_service.Services.AuthService;
 import com.example.auth_service.Services.PasswordService;
 import com.example.auth_service.Services.RegistrationService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,7 @@ import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/auth")
+@Tag(name = "Auth Service", description = "Endpoints de autenticación y registro (usar prefijo /api/auth/). Acordarse de crear roles: ROLE_USER, ROLE_PACIENTE y ROLE_PERSONAL_MEDICO")
 public class AuthController {
 
     private final AuthService authService;
@@ -25,6 +26,12 @@ public class AuthController {
     @ResponseStatus(HttpStatus.CREATED)
     public void register(@RequestBody RegisterUserRequestDTO registerUserRequestDTO) throws MessagingException {
         registrationService.register(registerUserRequestDTO);
+    }
+
+    @GetMapping("/test")
+    @ResponseStatus(HttpStatus.OK)
+    public String test(){
+        return "test funciono!";
     }
 
     @PostMapping("/login")
@@ -52,7 +59,7 @@ public class AuthController {
     }
 
     @PostMapping("/change-password")
-    @SecurityRequirement(name = "bearerAuth")
+    @SecurityRequirement(name = "bearer-key")
     @ResponseStatus(HttpStatus.OK)
     public void changePassword(@RequestBody ChangePasswordRequestDTO dto, Principal principal){
         passwordService.cambiarPassword(principal.getName(),dto);
